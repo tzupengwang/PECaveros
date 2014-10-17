@@ -20,15 +20,15 @@ void countingSort( int k ) {
 }
 
 void constructSA() {
-	int i, k, r;
-	for ( i = 0 ; i < n ; i ++ ) RA[ i ] = T[ i ] - '.' ;
-	for ( i = 0 ; i < n ; i ++ ) SA[ i ] = i ;
-	for ( k = 1 ; k < n ; k <<= 1 ) {
+	int r;
+	for ( int i = 0 ; i < n ; i ++ ) RA[ i ] = T[ i ] - '.' ;
+	for ( int i = 0 ; i < n ; i ++ ) SA[ i ] = i ;
+	for ( int k = 1 ; k < n ; k <<= 1 ) {
 		countingSort( k ) ; countingSort( 0 ) ;
 		tempRA[ SA[ 0 ] ] = r = 0;
-		for ( i = 1 ; i < n ; i ++ )
+		for ( int i = 1 ; i < n ; i ++ )
 			tempRA[ SA[ i ] ] = ( RA[ SA[ i ] ] == RA[ SA[ i - 1 ] ] && RA[ SA[ i ] + k ] == RA[ SA[ i - 1 ] + k ] ) ? r : ++ r ;
-		for ( i = 0 ; i < n ; i ++ ) RA[ i ] = tempRA[ i ] ;
+		for ( int i = 0 ; i < n ; i ++ ) RA[ i ] = tempRA[ i ] ;
 	}
 }
 
