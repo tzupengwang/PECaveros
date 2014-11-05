@@ -1,15 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-#define N 100010                              // second approach: O(n log n)
-
+#define N 100010
 char T[ N ];
-int n;
-int RA[ N ], tempRA[ N ];
-int SA[ N ], tempSA[ N ];
-int c[ N ];
-
-void countingSort( int k ) {
+int n , RA[ N ], tempRA[ N ] , SA[ N ], tempSA[ N ] , c[ N ];
+void countingSort( int k ){
 	int i , sum , maxi = max( 300 , n ) ;
 	memset( c , 0 , sizeof c ) ;
 	for ( i = 0 ; i < n ; i ++ ) c[ ( i + k < n ) ? RA[i + k] : 0 ] ++ ;
@@ -18,8 +12,7 @@ void countingSort( int k ) {
 		tempSA[ c[ ( SA[ i ] + k < n ) ? RA[ SA[ i ] + k ] : 0 ] ++ ] = SA[ i ] ;
 	for ( i = 0 ; i < n ; i ++ ) SA[ i ] = tempSA[ i ] ;
 }
-
-void constructSA() {
+void constructSA(){
 	int r;
 	for ( int i = 0 ; i < n ; i ++ ) RA[ i ] = T[ i ] - '.' ;
 	for ( int i = 0 ; i < n ; i ++ ) SA[ i ] = i ;
@@ -31,12 +24,9 @@ void constructSA() {
 		for ( int i = 0 ; i < n ; i ++ ) RA[ i ] = tempRA[ i ] ;
 	}
 }
-
 int main() {
   n = (int)strlen( gets( T ) ) ;
-
   T[ n ++ ] = '.' ; // important bug fix!
   constructSA() ;
   return 0;
 }
-

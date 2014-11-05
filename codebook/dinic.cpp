@@ -1,11 +1,9 @@
-#include <iostream>
-#include <stdio.h>
-#include <string.h>
+#include <bits/stdc++.h>
+using namespace std;
 #define N 5010
 #define M 60010
 #define ll long long
 #define inf 1ll<<62
-using namespace std;
 ll to[ M ] , next[ M ] , head[ M ];
 ll cnt , ceng[ M ] , que[ M ] , w[ M ];
 ll n , m , start , end;

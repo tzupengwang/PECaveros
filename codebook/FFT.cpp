@@ -1,15 +1,9 @@
-# include<stdio.h>
-# include<string.h>
-# include<string>
-# include<cmath>
-# include<vector>
-# include<algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 typedef unsigned int uint;
-
-# define maxn 310010
-# define nmaxn 141073
+#define maxn 310010
+#define nmaxn 141073
 struct comp{
     double a , b ;
     comp( double a_ = 0.0 , double b_ = 0.0 ) : a( a_ ) , b( b_ ){ }
@@ -17,14 +11,12 @@ struct comp{
 comp operator+ ( const comp &a , const comp &b ) { return comp(a.a+b.a,a.b+b.b); }
 comp operator- ( const comp &a , const comp &b ) { return comp(a.a-b.a,a.b-b.b); }
 comp operator* ( const comp &a , const comp &b ) { return comp(a.a*b.a-a.b*b.b,a.a*b.b+a.b*b.a); }
-
 char s[ maxn ] ;
 int n ;
 comp A[ nmaxn ] , B[ nmaxn ] , C[ nmaxn ] ;
 const double pi = acos( -1 ) ;
 int L = 6 ;
 ll base[ 10 ] , M = 1000000 ;
-
 int get( comp *A ){
 	if ( scanf( "%s" , s ) == EOF ) return 0 ;
 	int a = 0 , p = 0 , l = 0 ;
@@ -35,7 +27,6 @@ int get( comp *A ){
 	if ( a ) A[ l ++ ] = comp( a , 0 ) ;
 	return l;
 }
-
 bool init( ){
 	base[ 0 ] = 1 ;
 	for ( register int i = 1 ; i <= L ; i ++ ) base[ i ] = base[ i - 1 ] * 10 ;
@@ -45,10 +36,7 @@ bool init( ){
 	//printf( "%d\n" , n ) ;
 	return true ;
 }
-
-comp p[ 2 ][ nmaxn ];
-int typ;
-
+comp p[ 2 ][ nmaxn ]; int typ;
 uint rev( uint a ){
 	a = ( ( a & 0x55555555U ) << 1 ) | ( ( a & 0xAAAAAAAAU ) >> 1 ) ;
 	a = ( ( a & 0x33333333U ) << 2 ) | ( ( a & 0xCCCCCCCCU ) >> 2 ) ;
@@ -57,7 +45,6 @@ uint rev( uint a ){
 	a = ( ( a & 0x0000FFFFU ) << 16 ) | ( ( a & 0xFFFF0000U ) >> 16 ) ;
 	return a;
 }
-
 void FFT( comp *s , comp *bac , int n ){
 	register int d = log2( n );
 	for ( register int i = 0 ; i < n ; i ++ ) s[ rev( i ) >> ( 32 - d ) ] = bac[ i ];
@@ -73,11 +60,9 @@ void FFT( comp *s , comp *bac , int n ){
 		}
 	}
 }
-
 ll ans[ 4 * maxn ];
-
-bool work( ){
-	if ( !init( ) ) return false ;
+bool work(){
+	if ( !init() ) return false ;
 	p[ 0 ][ 0 ] = comp( 1 , 0 ) , p[ 1 ][ 0 ] = comp( 1 , 0 );
 	for ( register int i = 1 ; i < n ; i ++ ) {
 		p[ 0 ][ i ] = comp( cos( 2 * i * pi / n ) , sin( 2 * i * pi / n ) );
@@ -96,14 +81,6 @@ bool work( ){
 	puts( "" ) ;
 	return true ;
 }
-
 int main(){
-	//freopen( "input.txt" , "r" , stdin ) ;
-	//freopen( "output.txt" , "w" , stdout ) ;
-	//int cases ;
-	//scanf( "%d" , &cases ) ;
-	//while( cases-- ) work( ) ;
 	while ( work() ) ;
-	return 0;
 }
-

@@ -1,6 +1,5 @@
-#include <time.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <bits/stdc++.h>
+using namespace std;
 #define inf 1023456789
 int getint(){
 	int x=0,tmp=1; char c=getchar();
@@ -9,7 +8,6 @@ int getint(){
 	while(c>='0'&&c<='9') x*=10,x+=(c-'0'),c=getchar();
 	return x*tmp;
 }
-int max( int x , int y ){ return x>y?x:y; }
 struct Treap{
 	int lsum , rsum , sum , maxsum;
 	int sz , num , val , pri , tag;
@@ -104,8 +102,7 @@ void Delete( Treap *t ){
 	if( t->r ) Delete( t->r );
 	delete t;
 }
-char c[ 20 ];
-int n , m;
+char c[ 20 ]; int n , m;
 void solve(){
 	Treap *t = NULL , *tl = NULL , *tr = NULL;
 	n = getint(); m = getint();

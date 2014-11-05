@@ -1,13 +1,13 @@
-#include <math.h>
-#include <stdio.h>
+#include <bits/stdc++.h>
+using namespace std;
 #define N 64
 #define ll unsigned long long
 ll nb[ N ];
 ll getint(){
-ll x=0LLU; char c=getchar();
-while(c<'0'||c>'9') c=getchar();
-while(c>='0'&&c<='9') x*=10LLU,x+=(c-'0'),c=getchar();
-return x;
+    ll x=0LLU; char c=getchar();
+    while( c<'0'||c>'9' ) c=getchar();
+    while(c>='0'&&c<='9') x*=10LLU,x+=(c-'0'),c=getchar();
+    return x;
 }
 ll n , ans , tmp;
 void init(){
@@ -21,17 +21,13 @@ void init(){
     }
 }
 void B( ll r , ll p , ll x , ll cnt , ll res ){
-
     if( cnt + res < ans ) return;
-
     if( p == 0LLU && x == 0LLU ){
         if( cnt > ans ) ans = cnt;
         return;
     }
-
     ll y = p | x; y &= -y;
     ll q = p & ( ~nb[ int( log2( y ) ) ] );
-
     while( q ){
         ll i = int( log2( q & (-q) ) );
         B( r | ( 1LLU << i ) , p & nb[ i ] , x & nb[ i ]
