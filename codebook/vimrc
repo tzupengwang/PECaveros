@@ -1,0 +1,7 @@
+
+syn on
+se ai nu ru cul mouse=a
+se cin et ts=4 sw=4 sts=4
+so $VIMRUNTIME/mswin.vim
+colo desert
+se gfn=Monospace\ 14
