@@ -17,6 +17,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | NWERC 2009    | 2015/09/26    | A | B | C | D | **E** | F |   | H | I |   |
 | NWERC 2013    | 2015/09/29    | A | B | C | D | E | F | G | H | I | J |
 | NEERC 2006    | 2015/10/06    | A | B |   | D | E | F | G |   | I | J |
+| NEERC 2012    | 2015/10/09    | A | B | C | D | E |   | G |   | I |   | K |   |
 
 - A : 賽內AC  
 - **A** : 賽後AC  
