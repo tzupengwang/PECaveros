@@ -6,7 +6,7 @@ codebook by eddy1021, c2251393, tzupengwang
 
 # Result
 
-| Contest       | Date          |   |   |   |   |   |   |   |   |   |   |   |
+| Contest       | Date          |   |   |   |   |   |   |   |   |   |   |   |   |   |
 | ------------- |:-------------:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | ASC 47        | 2015/07/12    | **A** | **B** |   | **D** | E |   | G |   |   | **J** |
 | ASC 46        | 2015/07/30    | A |   |   |   | E | F | G |   |   | J |
@@ -19,6 +19,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | NEERC 2006    | 2015/10/06    | A | B |   | D | E | F | G |   | I | J |
 | NEERC 2012    | 2015/10/09    | A | B | C | D | E |   | G |   | I |   | K |   |
 | NCPC 2015     | 2015/10/17    | A | B | C | D | E | F | G | H | I | . | K |   |
+| GCPC 2015     | 2015/10/20    | A | B | C | D | E | F | G | H | I | J | K |   | M |
 
 - A : 賽內AC  
 - **A** : 賽後AC  
