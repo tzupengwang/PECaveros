@@ -20,6 +20,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | NEERC 2012    | 2015/10/09    | A | B | C | D | E | . | G | . | I | . | K | . |
 | NCPC 2015     | 2015/10/17    | A | B | C | D | E | F | G | H | I | . | K |   |
 | GCPC 2015     | 2015/10/20    | A | B | C | D | E | F | G | H | I | J | K | . | M |
+| katarJa 2014  | 2015/10/24    | A | B | C | D | E | F | G | H | I | J | K | 
 
 - A : 賽內AC  
 - **A** : 賽後AC  
