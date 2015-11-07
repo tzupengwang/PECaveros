@@ -23,7 +23,9 @@ codebook by eddy1021, c2251393, tzupengwang
 | katarJa 2014  | 2015/10/24    | A | B | C | D | E | F | G | H | I | J | K | 
 | Baltic 2015   | 2015/10/27    | A | B | C | D | E | F | G | H | I | J | K | L |
 | Japan 2014    | 2015/10/31    | A | B | C | D | **E** | F | G | . | . | . | . |  |
+| Bangkok 2014  | 2015/11/07    | A | B | ? | D | E | F | G | H | I | J | K | L |
 
 - A : 賽內AC  
 - **A** : 賽後AC  
 - . : concon
+- ? : ??
