@@ -24,6 +24,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Baltic 2015   | 2015/10/27    | A | B | C | D | E | F | G | H | I | J | K | L |
 | Japan 2014    | 2015/10/31    | A | B | C | D | **E** | F | G | **H** | **I** | **J** | . |  |
 | Bangkok 2014  | 2015/11/07    | A | B | ? | D | E | F | G | H | I | J | K | L |
+| Dhaka 2014    | 2015/11/14    | A | B | C | .  | E | F | . | H | I | J |   |   |
 
 - A : 賽內AC  
 - **A** : 賽後AC  
