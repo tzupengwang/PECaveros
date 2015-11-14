@@ -45,13 +45,11 @@ void build(){
     lvl[ i ] = ( lvl[ i - 1 ] * i ) % mod7;
   for( ll i = 0 ; i < N ; i ++ ) c[ i ][ i ] = c[ i ][ 0 ] = 1ll;
   for( ll i = 2 ; i < N ; i ++ )
-    for( ll j = 1 ; j < i ; j ++ )
+    for( ll j = 1 ; j < i ; j ++ ){
       c[ i ][ j ] = ( c[ i - 1 ][ j - 1 ] +
-          c[ i - 1 ][ j ] ) % mod7;
-  // dp[ 0 ] = 1;
-  // dp[ 1 ] = 0;
-  // for( int i = 2 ; i < N ; i ++ )
-    // dp[ i ] = ( ( i - 1 ) * ( dp[ i - 1 ] + dp[ i - 2 ] ) ) % mod7;
+                      c[ i - 1 ][ j ] );
+      if( c[ i ][ j ] >= mod7 ) c[ i ][ j ] -= mod7;
+    }
 // 0 1 2 3
 // X < _ >
   for( ll i = 0 ; i < 4 ; i ++ )
@@ -65,7 +63,6 @@ void build(){
       if( i == 2 || j == 1 ) msk2 += 2;
       if( i == 1 ) msk2 ++;
       dp[ msk2 ][ 2 ][ ( i != 0 ) + ( j != 0 ) ][ nmsk ] ++;
-      // printf( "%d %d %d %d %d\n" , msk2 , 2 , ( i != 0 ) + ( j != 0 ) , nmsk , dp[ msk2 ][ 2 ][ ( i != 0 ) + ( j != 0 ) ][ nmsk ] );
     }
   for( ll i = 0 ; i < 4 ; i ++ )
     for( ll j = 2 ; j + 1 < N ; j ++ )
@@ -90,37 +87,31 @@ void build(){
             if( nxt == 3 && ( i >= 2 ) ) continue;
             if( npre > 0 && ( i & 1 ) ) continue;
             ll nxtk = k + ( nxt != 0 );
-            //ans[ j + 1 ][ nxtk ] += ( dp[ i ][ j ][ k ][ msk ] * lvl[ ( j + 1 ) - nxtk ] ) % mod7;
-            ans[ j + 1 ][ nxtk ] += ( dp[ i ][ j ][ k ][ msk ] ) % mod7;
+            ans[ j + 1 ][ nxtk ] += ( dp[ i ][ j ][ k ][ msk ] * lvl[ ( j + 1 ) - nxtk ] ) % mod7;
             ans[ j + 1 ][ nxtk ] %= mod7;
-            // if( j + 1 == 4 && nxtk == 4 )
-              // printf( "%d %d %d %d : %d\n" , i , j , k , msk , dp[ i ][ j ][ k ][ msk ] );
           }
         }
-  for( int i = 3 ; i <= 5 ; i ++ )
-    for( int j = 0 ; j <= i ; j ++ )
-      printf( "%d %d %lld\n" , i , j , ans[ i ][ j ] );
 }
 int n , k;
 void init(){
   n = getint();
   k = getint();
 }
-ll cal( ll tn , ll tk ){
-  ll nans = ( ans[ tn ][ tk ] * lvl[ tn - tk ] ) % mod7;
-  for( int i = tk + 1 , j = -1 ; i <= tn ; i ++ , j *= -1 ){
-    ll dlt = ( c[ i ][ tk ] * ans[ tn ][ i ] ) % mod7;
-    nans = ( nans + dlt * j + mod7 ) % mod7;
-  }
-  return nans;
-}
+ll par[ N ];
 void solve(){
-  // ll nans = ans[ n ][ k ];
-  // for( int i = k + 1 , j = -1 ; i <= n ; i ++ , j *= -1 )
-    // nans = ( nans + ans[ n ][ i ] * j + mod7 ) % mod7;
-  ll nans = 0;
-  for( int i = k ; i <= n ; i ++ )
-    nans = ( nans + cal( n , i ) ) % mod7;
+  ll nans = ans[ n ][ k ];
+  par[ k ] = 1;
+  for( ll i = k + 1 ; i <= n ; i ++ ){
+    ll tk = c[ i ][ k ];
+    for( ll j = k + 1 ; j < i ; j ++ ){
+      ll dk = ( c[ i ][ j ] * par[ j ] ) % mod7;
+      tk = ( tk + dk + mod7 ) % mod7;
+    }
+    tk = 1 - tk;
+    par[ i ] = ( tk + mod7 ) % mod7;
+    ll dans = ( par[ i ] * ans[ n ][ i ] ) % mod7;
+    nans = ( nans + dans ) % mod7;
+  }
   printf( "Case %d: %lld\n" , ++ cs , nans );
 }
 int main(){
