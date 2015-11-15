@@ -5,6 +5,8 @@ using namespace std;
 #define REP(i, s, e) for(int i = (s); i <= (e); i++)
 #define REPD(i, s, e) for(int i = (s); i >= (e); i--)
 
+typedef tuple< int , int > tii;
+
 const int MAXN = 100010;
 const int LOG  = 19;
 
@@ -14,7 +16,12 @@ struct HLD
   vector<int> g[MAXN];
   int sz[MAXN], dep[MAXN];
   int ts, tid[MAXN], tdi[MAXN], tl[MAXN], tr[MAXN];
+  //  ts : timestamp , useless after yutruli
+  //  tid[ u ] : pos. of node u in the seq.
+  //  tdi[ i ] : node at pos i of the seq.
+  //  tl , tr[ u ] : subtree interval in the seq. of node u
   int mom[MAXN][LOG], head[MAXN];
+  // head[ u ] : head of the chain contains u
   void dfssz(int u, int p)
   {
     dep[u] = dep[p] + 1;
@@ -90,5 +97,17 @@ struct HLD
     res.push_back( tii( tid[ u ] , tid[ v ] ) );
     reverse( ALL( res ) );
     return res;
+    /*
+     * res : list of intervals from u to v
+     * u must be ancestor of v
+     * usage :
+     * vector< tii >& path = tree.getPath( u , v )
+     * for( tii tp : path ) {
+     *   int l , r;tie( l , r ) = tp;
+     *   upd( l , r );
+     *   uu = tree.tdi[ l ] , vv = tree.tdi[ r ];
+     *   uu ~> vv is a heavy path on tree
+     * }
+     */
   }
 } tree;
