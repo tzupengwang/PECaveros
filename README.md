@@ -26,6 +26,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Bangkok 2014   | 2015/11/07    | A | B | ? | D | E | F | G | H | I | J | K | L |
 | Dhaka 2014     | 2015/11/14    | A | B | C | . | E | F | **G** | H | I | J |   |   |
 | Mudanjiang 2014| 2015/11/21    | A | B | . | D | . | . | . | **H** | I | . | K |   |
+| JAG autumn 2015| 2015/11/22    | A | B | C | D | E | F | . | H | . | . | K |   |
 
 - A : 賽內AC  
 - **A** : 賽後AC  
