@@ -1,0 +1,150 @@
+\documentclass[10pt,twocolumn,oneside]{article}
+\setlength{\columnsep}{10pt}                                                                    %兩欄模式的間距
+\setlength{\columnseprule}{0pt}                                                                %兩欄模式間格線粗細
+
+\usepackage{amsthm}								%定義，例題
+\usepackage{amssymb}
+%\usepackage[margin=2cm]{geometry}
+\usepackage{fontspec}								%設定字體
+\usepackage{color}
+\usepackage[x11names]{xcolor}
+\usepackage{xeCJK}								%xeCJK
+\usepackage{listings}								%顯示code用的
+%\usepackage[Glenn]{fncychap}						%排版，頁面模板
+\usepackage{fancyhdr}								%設定頁首頁尾
+\usepackage{graphicx}								%Graphic
+\usepackage{enumerate}
+\usepackage{titlesec}
+\usepackage{amsmath}
+\usepackage[CheckSingle, CJKmath]{xeCJK}
+% \usepackage{CJKulem}
+
+%\usepackage[T1]{fontenc}
+\usepackage{amsmath, courier, listings, fancyhdr, graphicx}
+\topmargin=0pt
+\headsep=5pt
+\textheight=780pt
+\footskip=0pt
+\voffset=-40pt
+\textwidth=545pt
+\marginparsep=0pt
+\marginparwidth=0pt
+\marginparpush=0pt
+\oddsidemargin=0pt
+\evensidemargin=0pt
+\hoffset=-42pt
+
+%\renewcommand\listfigurename{圖目錄}
+%\renewcommand\listtablename{表目錄} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setmainfont{Consolas}				%主要字型
+\setCJKmainfont{Source Han Sans}
+% \setCJKmainfont{Consolas}			%中文字型
+%\setmainfont{sourcecodepro}
+\XeTeXlinebreaklocale "zh"						%中文自動換行
+\XeTeXlinebreakskip = 0pt plus 1pt				%設定段落之間的距離
+\setcounter{secnumdepth}{3}						%目錄顯示第三層
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\lst@CCPutMacro\lst@ProcessOther {"2D}{\lst@ttfamily{-{}}{-{}}}
+\@empty\z@\@empty
+\makeatother
+\lstset{											% Code顯示
+language=C++,										% the language of the code
+basicstyle=\footnotesize, 						% the size of the fonts that are used for the code
+%numbers=left,										% where to put the line-numbers
+numberstyle=\footnotesize,						% the size of the fonts that are used for the line-numbers
+stepnumber=1,										% the step between two line-numbers. If it's 1, each line  will be numbered
+numbersep=5pt,										% how far the line-numbers are from the code
+backgroundcolor=\color{white},					% choose the background color. You must add \usepackage{color}
+showspaces=false,									% show spaces adding particular underscores
+showstringspaces=false,							% underline spaces within strings
+showtabs=false,									% show tabs within strings adding particular underscores
+frame=false,											% adds a frame around the code
+tabsize=2,											% sets default tabsize to 2 spaces
+captionpos=b,										% sets the caption-position to bottom
+breaklines=true,									% sets automatic line breaking
+breakatwhitespace=false,							% sets if automatic breaks should only happen at whitespace
+escapeinside={\%*}{*)},							% if you want to add a comment within your code
+morekeywords={*},									% if you want to add more keywords to the set
+keywordstyle=\bfseries\color{Blue1},
+commentstyle=\itshape\color{Red4},
+stringstyle=\itshape\color{Green4},
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\pagestyle{fancy}
+\fancyfoot{}
+%\fancyfoot[R]{\includegraphics[width=20pt]{ironwood.jpg}}
+\fancyhead[L]{National Taiwan University PECaveros}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\contentsname}{Contents} 
+
+\scriptsize
+\tableofcontents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{Basic}
+\subsection{.vimrc}
+\lstinputlisting{vimrc}
+
+\section{flow}
+\subsection{Dinic}
+\lstinputlisting{dinic.cpp}
+
+\subsection{DMST}
+\lstinputlisting{DMST.cpp}
+
+\subsection{generalWeightedGraphMaxmatching}
+\lstinputlisting{generalWeightedGraphMaxMatching.cpp}
+
+\subsection{ISAP}
+\lstinputlisting{isap.cpp}
+
+\subsection{MinCostFlow}
+\lstinputlisting{MinCostFlow.cpp}
+
+\section{Math}
+\subsection{FFT}
+\lstinputlisting{FFT.cpp}
+
+\subsection{NTT}
+\lstinputlisting{ntt.cpp}
+
+\newpage
+
+\section{Geometry}
+\subsection{halfPlaneIntersection}
+\lstinputlisting{halfPlaneIntersection.cpp}
+
+\section{Graph}
+\subsection{HeavyLightDecomp}
+\lstinputlisting{HeavyLightDecomp.cpp}
+
+\subsection{MaxClique}
+\lstinputlisting{MaxClique.cpp}
+
+\section{String}
+\subsection{PalTree}
+\lstinputlisting{PalTree.cpp}
+
+\subsection{SuffixArray}
+\lstinputlisting{sa.cpp}
+
+\subsection{SuffixAutomata}
+\lstinputlisting{SAM.cpp}
+
+\section{Data Structrue}
+
+\subsection{Treap}
+\lstinputlisting{treap.cpp}
+
+\end{document}
