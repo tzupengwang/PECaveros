@@ -40,6 +40,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \setmainfont{Consolas}				%主要字型
+\setmonofont{Monaco}				%主要字型
 \setCJKmainfont{Source Han Sans}
 % \setCJKmainfont{Consolas}			%中文字型
 %\setmainfont{sourcecodepro}
@@ -54,7 +55,7 @@
 \makeatother
 \lstset{											% Code顯示
 language=C++,										% the language of the code
-basicstyle=\footnotesize, 						% the size of the fonts that are used for the code
+basicstyle=\footnotesize\ttfamily, 						% the size of the fonts that are used for the code
 %numbers=left,										% where to put the line-numbers
 numberstyle=\footnotesize,						% the size of the fonts that are used for the line-numbers
 stepnumber=1,										% the step between two line-numbers. If it's 1, each line  will be numbered
@@ -103,14 +104,32 @@ stringstyle=\itshape\color{Green4},
 \subsection{DMST}
 \lstinputlisting{DMST.cpp}
 
-\subsection{generalWeightedGraphMaxmatching}
-\lstinputlisting{generalWeightedGraphMaxMatching.cpp}
-
 \subsection{ISAP}
 \lstinputlisting{isap.cpp}
 
 \subsection{MinCostFlow}
 \lstinputlisting{MinCostFlow.cpp}
+
+\subsection{SW min-cut}
+\lstinputlisting{bcw/SW-mincut.cpp}
+
+\subsection{HLPPA}
+\lstinputlisting{HLPPA.cpp}
+
+\subsection{Hungarian}
+\lstinputlisting{Hungarian.cpp}
+
+\subsection{Hungarian Unbalanced}
+\lstinputlisting{HungarianUnbalanced.cpp}
+
+\subsection{Gusfield}
+\lstinputlisting{gusfield.cpp}
+
+\subsection{Relabel to Front}
+\lstinputlisting{relabelToFront.cpp}
+
+\subsection{Flow Method}
+\lstinputlisting{FlowMethod.txt}
 
 \section{Math}
 \subsection{FFT}
@@ -119,15 +138,76 @@ stringstyle=\itshape\color{Green4},
 \subsection{NTT}
 \lstinputlisting{ntt.cpp}
 
-\newpage
+\subsection{BigInt}
+\lstinputlisting{bcw/Bigint.cpp}
+
+\subsection{Linear Recurrence}
+\lstinputlisting{linearRecurrence.cpp}
+
+\subsection{Miller Rabin}
+\lstinputlisting{bcw/Miller_Rabin.cpp}
+
+\subsection{PollardRho}
+\lstinputlisting{bcw/p1_PollardRho.cpp}
+
+\subsection{Simplex}
+\lstinputlisting{bcw/Simplex.cpp}
+
+\subsection{Faulhaber}
+\lstinputlisting{Faulhaber.cpp}
+
+\subsection{Chinese Remainder}
+\lstinputlisting{chineseRemainder.cpp}
+
+\subsection{Pollard Rho}
+\lstinputlisting{pollardRho.cpp}
+
+\subsection{Result}
+\lstinputlisting{bcw/theorem.cpp}
+\lstinputlisting{math.txt}
 
 \section{Geometry}
+
 \subsection{halfPlaneIntersection}
 \lstinputlisting{halfPlaneIntersection.cpp}
+\lstinputlisting{bcw/Geometry/Half_plane_intersection.cpp}
+
+\subsection{Convex Hull}
+\lstinputlisting{bcw/Geometry/convex_hull.cpp}
+
+\subsection{Intersection of 2 lines}
+\lstinputlisting{bcw/Geometry/Intersection_of_two_lines.cpp}
+
+\subsection{KD Tree}
+\lstinputlisting{bcw/Geometry/KD_Tree.cpp}
+
+\subsection{Poly Union}
+\lstinputlisting{polyUnion.cpp}
+
+\subsection{Lower Concave Hull}
+\lstinputlisting{lowerConcaveHull.cpp}
+
+\subsection{MCC}
+\lstinputlisting{bcw/Geometry/mcc.cpp}
+
+\subsection{Minkowski sum}
+\lstinputlisting{bcw/Geometry/Minkowski_Sum.cpp}
+
+\subsection{Min Enclosing Circle}
+\lstinputlisting{minEnclosingCircle.cpp}
+
+\subsection{Min/Max Enclosing Rectangle}
+\lstinputlisting{minMaxEnclosingRectangle.cpp}
 
 \section{Graph}
 \subsection{HeavyLightDecomp}
 \lstinputlisting{HeavyLightDecomp.cpp}
+
+\subsection{DominatorTree}
+\lstinputlisting{dominatorTree.cpp}
+
+\subsection{generalWeightedGraphMaxmatching}
+\lstinputlisting{generalWeightedGraphMaxMatching.cpp}
 
 \subsection{MaxClique}
 \lstinputlisting{MaxClique.cpp}
@@ -137,14 +217,43 @@ stringstyle=\itshape\color{Green4},
 \lstinputlisting{PalTree.cpp}
 
 \subsection{SuffixArray}
-\lstinputlisting{sa.cpp}
+\lstinputlisting{bcw/Suffix_Array.cpp}
+
+\subsection{SAIS}
+\lstinputlisting{SAIS.cpp}
 
 \subsection{SuffixAutomata}
 \lstinputlisting{SAM.cpp}
+
+\subsection{Aho-Corasick}
+\lstinputlisting{bcw/Aho-Corasick.cpp}
+
+\subsection{Z Value}
+\lstinputlisting{bcw/zvalue.cpp}
+
+\subsection{ZValue Palindrome}
+\lstinputlisting{bcw/zvalue_palindrome.cpp}
+
+\subsection{Smallest Rotation}
+\lstinputlisting{bcw/smallest_rotation.cpp}
+
+\subsection{Baker Bird}
+\lstinputlisting{bakerBird.cpp}
+
+\subsection{Cyclic LCS}
+\lstinputlisting{cyclicLCS.cpp}
 
 \section{Data Structrue}
 
 \subsection{Treap}
 \lstinputlisting{treap.cpp}
+
+\subsection{Black Magic}
+\lstinputlisting{bcw/extc_bt.cpp}
+
+% \section{Others}
+
+% \subsection{Exact Cover Set}
+% \lstinputlisting{exactCoverSet.cpp}
 
 \end{document}
