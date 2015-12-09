@@ -1,54 +1,40 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define N 64
-#define ll unsigned long long
-ll nb[ N ];
-ll getint(){
-    ll x=0LLU; char c=getchar();
-    while( c<'0'||c>'9' ) c=getchar();
-    while(c>='0'&&c<='9') x*=10LLU,x+=(c-'0'),c=getchar();
-    return x;
-}
-ll n , ans , tmp;
-void init(){
-    n = getint(); ans = 1LLU;
-    for( ll i = 0LLU ; i < n ; i ++ ){
-        nb[ i ] = 0LLU;
-        for( ll j = 0LLU ; j < n ; j ++ ){
-            tmp = getint();
-            if( tmp ) nb[ i ] |= ( 1LLU << j );
-        }
-    }
-}
-void B( ll r , ll p , ll x , ll cnt , ll res ){
+// max N = 64
+typedef unsigned long long ll;
+struct MaxClique{
+  ll nb[ N ] , n , ans;
+  void init( ll _n ){
+    n = _n;
+    for( int i = 0 ; i < n ; i ++ ) nb[ i ] = 0LLU;
+  }
+  void add_edge( ll _u , ll _v ){
+    nb[ _u ] |= ( 1LLU << _v );
+    nb[ _v ] |= ( 1LLU << _u );
+  }
+  void B( ll r , ll p , ll x , ll cnt , ll res ){
     if( cnt + res < ans ) return;
     if( p == 0LLU && x == 0LLU ){
-        if( cnt > ans ) ans = cnt;
-        return;
+      if( cnt > ans ) ans = cnt;
+      return;
     }
     ll y = p | x; y &= -y;
     ll q = p & ( ~nb[ int( log2( y ) ) ] );
     while( q ){
-        ll i = int( log2( q & (-q) ) );
-        B( r | ( 1LLU << i ) , p & nb[ i ] , x & nb[ i ]
-        , cnt + 1LLU , __builtin_popcountll( p & nb[ i ] ) );
-        q &= ~( 1LLU << i );
-        p &= ~( 1LLU << i );
-        x |= ( 1LLU << i );
+      ll i = int( log2( q & (-q) ) );
+      B( r | ( 1LLU << i ) , p & nb[ i ] , x & nb[ i ]
+          , cnt + 1LLU , __builtin_popcountll( p & nb[ i ] ) );
+      q &= ~( 1LLU << i );
+      p &= ~( 1LLU << i );
+      x |= ( 1LLU << i );
     }
-}
-void process(){
-    if( n < 64LLU ) B( 0LLU , ( 1LLU << n ) - 1LLU , 0LLU , 0LLU , n );
+  }
+  int solve(){
+    ans = 0;
+    ll _set = 0;
+    if( n < 64 ) _set = ( 1LLU << n ) - 1;
     else{
-        ll b = 0LLU;
-        for( ll i = 0LLU ; i < 64LLU ; i ++ )
-            b |= ( 1LLU << i );
-        B( 0LLU , b , 0LLU , 0LLU , n );
+      for( ll i = 0 ; i < n ; i ++ ) _set |= ( 1LLU << i );
     }
-    printf( "%llu\n" , ans );
-}
-int main(){
-    ll t; t = getint(); while( t -- ){
-        init(); process();
-    }
-}
+    B( 0LLU , _set , 0LLU , 0LLU , n );
+    return ans;
+  }
+}maxClique;
