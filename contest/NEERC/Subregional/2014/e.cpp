@@ -1,80 +1,171 @@
-// eddy1021
+
+// default code for competitive programming
+// ver 3.141 {{{
+
+// Includes
 #include <bits/stdc++.h>
-using namespace std;
-typedef double D;
-typedef long double LD;
-typedef long long ll;
-typedef long long LL;
-typedef pair<int,int> PII;
-typedef pair<ll,ll> PLL;
-typedef pair<LD,LD> Pt;
-#define mod9 1000000009ll
-#define mod7 1000000007ll
-#define INF  1023456789ll
-#define INF16 10000000000000000ll
-#define FI first
-#define SE second
-#define X FI
-#define Y SE
-#define PB push_back
-#define MP make_pair
-#define MT make_tuple
-#define eps 1e-9
-#define SZ(x) (int)(x).size()
-#define ALL(x) (x).begin(), (x).end()
-#ifndef ONLINE_JUDGE
-#define debug(...) printf(__VA_ARGS__)
-#else 
-#define debug(...)
+
+// Defines
+#define NAME(x) #x
+#define SZ(c) (int)(c).size()
+#define ALL(c) (c).begin(), (c).end()
+#define FOR(i, e) for( int i = 0 ; i < (e) ; i++ )
+#define ITER(it, c) for(__typeof((c).begin()) it = (c).begin(); it != (c).end(); it++)
+#define REP(i, s, e) for(int i = (s); i <= (e); i++)
+#define REPD(i, s, e) for(int i = (s); i >= (e); i--)
+#define IOS ios_base::sync_with_stdio( 0 )
+#define DEBUG 1
+#define fst first
+#define snd second
+#ifdef ONLINE_JUDGE
+#define FILE( fn ) \
+    freopen(fn".in","r",stdin); \
+    freopen(fn".out","w",stdout);
+#else
+#define FILE( fn )
 #endif
-inline ll getint(){
-  ll _x=0,_tmp=1; char _tc=getchar();    
-  while( (_tc<'0'||_tc>'9')&&_tc!='-' ) _tc=getchar();
-  if( _tc == '-' ) _tc=getchar() , _tmp = -1;
-  while(_tc>='0'&&_tc<='9') _x*=10,_x+=(_tc-'0'),_tc=getchar();
-  return _x*_tmp;
-}
-ll mypow( ll _a , ll _x , ll _mod ){
-  if( _x == 0 ) return 1ll;
-  ll _tmp = mypow( _a , _x / 2 , _mod );
-  _tmp = ( _tmp * _tmp ) % _mod;
-  if( _x & 1 ) _tmp = ( _tmp * _a ) % _mod;
-  return _tmp;
-}
-inline ll add( ll _x , ll _y , ll _mod = mod7 ){
-  ll _ = _x + _y;
-  if( _ >= _mod ) _ -= _mod;
-  return _;
-}
-inline ll sub( ll _x , ll _y , ll _mod = mod7 ){
-  ll _ = _x - _y;
-  if( _ < 0 ) _ += _mod;
-  return _;
-}
-inline ll mul( ll _x , ll _y , ll _mod = mod7 ){
-  ll _ = _x * _y;
-  if( _ >= _mod ) _ %= _mod;
-  return _;
-}
-inline bool equal( D _x ,  D _y ){
-  return _x > _y - eps && _x < _y + eps;
-}
-int __ = 1 , cs;
-/*********default*********/
-void build(){
 
-}
-void init(){
+#ifdef AKAI
+#define debug( ... ) fprintf( stderr , __VA_ARGS__ )
+#else
+#define debug( ... )
+#endif
 
-}
-void solve(){
+using namespace std;
 
+// Typedefs
+typedef double real;
+typedef long long ll;
+typedef pair<ll, int> pli;
+typedef tuple<ll, int> tli;
+typedef pair<int, int> pii;
+typedef tuple<int, int> tii;
+typedef unsigned long long ull;
+
+// Some common const.
+const double EPS = -1e8;
+const double Pi = acos(-1);
+
+// Equal for double
+bool inline equ(double a, double b)
+{return fabs(a - b) < EPS;}
+
+void RI() {}
+
+template< typename... T >
+void RI( int& x , T&... tail )
+{
+  assert( scanf( "%d" , &x ) == 1 );
+  RI( tail... );
 }
-int main(){
-  build();
-  //__ = getint();
-  while( __ -- ){
-    init();
-    solve();
+
+template< typename Iter , typename F >
+inline void out( Iter s , Iter e , F of )
+{
+  bool flag = 0;
+  for( Iter it = s ; it != e ; it++ )
+  {
+    if( flag ) printf( " " );
+    else flag = 1;
+    of( *it );
+  }
+  puts( "" );
+}
+
+// }}}
+// start ~~QAQ~~
+
+const int MAXN = 500010;
+const int MAXV = 1000010;
+
+struct BIT
+{
+  int sz;
+  ll *dat;
+  void init( int _sz )
+  {
+    sz = _sz;
+    dat = new ll[ sz + 1 ];
+  }
+  void upd( int id , ll x )
+  {
+    for( int i = id ; i <= sz ; i += i&-i )
+      dat[ i ] += x;
+  }
+  ll qry( int id )
+  {
+    ll res = 0ll;
+    for( int i = id ; i > 0 ; i -= i & -i )
+      res += dat[ i ];
+    return res;
+  }
+} bit;
+
+int n , m;
+int mx;
+int a[ MAXN ];
+ll f[ MAXN ];
+set< int > st[ MAXV ];
+
+inline void ins( int id , int x )
+{
+  for( int i = id ; i <= mx+10 ; i += i&-i )
+    st[ i ].insert( x );
+}
+
+inline void del( int id , int x )
+{
+  for( int i = id ; i <= mx+10 ; i += i&-i )
+    st[ i ].erase( x );
+}
+
+inline ll qry( int id , int x )
+{
+  static int buf[ MAXN ];
+  ll res = 0ll;
+  int cnt = 0;
+  for( int i = id ; i > 0 ; i -= i&-i )
+  {
+    auto it = st[ i ].lower_bound( x );
+    while( it != st[ i ].end() )
+    {
+      res += f[ *it ];
+      buf[ cnt++ ] = *it;
+      it++;
+    }
+  }
+  FOR( j , cnt ) del( a[ buf[ j ] ] , buf[ j ] );//st[ i ].erase( buf[ j ] );
+  return res;
+}
+
+vector< int > R;
+inline int id( int x ) { return lower_bound( ALL( R ) , x ) - R.begin() + 1; }
+
+int main()
+{
+  RI( n , m );
+  bit.init( MAXV );
+  REP( i , 1 , n ) RI( a[ i ] );
+  R = vector< int >( a+1 , a+1+n );
+  sort( ALL( R ) );
+  R.resize( unique( ALL( R ) ) - R.begin() );
+  mx = SZ( R );
+  REP( i , 1 , n ) a[ i ] = id( a[ i ] );
+  ll ans = 0ll;
+  REPD( i , n , 1 )
+  {
+    f[ i ] = bit.qry( a[ i ] - 1 );
+    ans += f[ i ];
+    bit.upd( a[ i ] , 1 );
+    ins( a[ i ] , i );
+  }
+  printf( "%" PRId64 "\n" , ans );
+  REP( i , 1 , m )
+  {
+    int p;RI( p );
+    ans -= qry( a[ p ] , p );
+    printf( "%" PRId64 "\n" , ans );
   }
 }
+
+[close]
