@@ -31,8 +31,9 @@ codebook by eddy1021, c2251393, tzupengwang
 | Japan 2015 onsite  | 2015/11/29    | A | B | C | D | E | F | G | . | **I** | **J** | K |   |
 | Taiwan 2015 onsite | 2015/12/06    | A | B | C | D | . | F | G | H | I | . | . | . |
 | NEERC 2014         | 2015/12/08    |   | B | C | D | E | F | . | H | I | **J** | K | L | . |
+| NEERC Moscow 2015  | 2015/12/12    | A | B | C | D | E | . | G | H | I | J | K | . |   |
 
 - A : 賽內AC  
-- **A** : 賽後AC  
+- **A** : 賽後AC
 - . : concon
 - ? : ??
