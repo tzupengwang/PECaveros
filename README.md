@@ -32,6 +32,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Taiwan 2015 onsite | 2015/12/06    | A | B | C | D | . | F | G | H | I | . | . | . |
 | NEERC 2014         | 2015/12/08    |   | B | C | D | E | F | . | H | I | **J** | K | L | . |
 | NEERC Moscow 2015  | 2015/12/12    | A | B | C | D | E | . | G | H | I | J | K | . |   |
+| Vietnam 2nd round  | 2015/12/15    | A | B | C | D | E | . | G | H | I | J |   |   |   |
 
 - A : 賽內AC  
 - **A** : 賽後AC
