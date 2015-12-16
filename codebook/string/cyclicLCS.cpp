@@ -18,8 +18,7 @@ inline int lcs_length(int r) {
 }
 inline void reroot(int r) { // r = new base row
   int i=r,j=1;
-  while(j<=bl&&pred[i][j]!=LU)
-    j++;
+  while(j<=bl&&pred[i][j]!=LU) j++;
   if(j>bl) return;
   pred[i][j]=L;
   while(i<2*al&&j<=bl) {
@@ -37,9 +36,8 @@ inline void reroot(int r) { // r = new base row
 }
 int cyclic_lcs() {
   // a, b, al, bl should be properly filled
-  // note: a WILL be altered in process -- concatenated
-  after itself
-    char tmp[MAXL];
+  // note: a WILL be altered in process -- concatenated after itself
+  char tmp[MAXL];
   if(al>bl) {
     swap(al,bl);
     strcpy(tmp,a);
@@ -73,6 +71,6 @@ int cyclic_lcs() {
     reroot(i+1);
   }
   // recover a
-  a[al]=’\0’;
+  a[al]='\0';
   return clcs;
 }

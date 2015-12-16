@@ -4,8 +4,7 @@ class Node { public:
   int out;
   Node() { fail=NULL; out=-1; }
   ~Node() {
-    for(map<char,Node*>::iterator it=_next.begin();it!=
-        _next.end();it++)
+    for(map<char,Node*>::iterator it=_next.begin();it!=_next.end();it++)
       delete it->second;
   }
   Node* build(char ch) {

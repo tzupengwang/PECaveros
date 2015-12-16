@@ -1,11 +1,8 @@
 const int MAX = 1020304;
 int ct[MAX], he[MAX], rk[MAX], sa[MAX], tsa[MAX], tp[MAX][2];
-
 void suffix_array(char *ip){
-
 	int len = strlen(ip);
 	int alp = 256;
-
 	memset(ct, 0, sizeof(ct));
 	for(int i=0;i<len;i++) ct[ip[i]+1]++;
 	for(int i=1;i<alp;i++) ct[i]+=ct[i-1];

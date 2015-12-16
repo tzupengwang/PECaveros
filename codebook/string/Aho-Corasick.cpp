@@ -9,10 +9,8 @@ struct ACautomata{
       fail = 0;
     }
   };
-
   Node *root, pool[1048576];
   int nMem;
-
   Node* new_Node(){
     pool[nMem] = Node();
     return &pool[nMem++];
