@@ -36,9 +36,8 @@ class LowerConcaveHull { // maintain a hull like: \__/
     hull.erase(it);
     return hull.insert(s).first;
   }
-  void insert(Segment s) { // insert a line and update
-    hull
-      set<Segment>::iterator it=hull.find(s);
+  void insert(Segment s) { // insert a line and update hull
+    set<Segment>::iterator it=hull.find(s);
     // check for same slope
     if(it!=hull.end()) {
       if(it->c+eps>=s.c) return;
@@ -46,16 +45,14 @@ class LowerConcaveHull { // maintain a hull like: \__/
     }
     // check if below whole hull
     it=hull.lower_bound(s);
-    if(it!=hull.end()&&s.evaly(it->x1)<=it->evaly(it->
-          x1)+eps) return;
+    if(it!=hull.end()&&s.evaly(it->x1)<=it->evaly(it->x1)+eps) return;
     // update right hull
     while(it!=hull.end()) {
       long double x=xintersection(s,*it);
       if(x>=it->x2-eps) hull.erase(it++);
       else {
         s.x2=x;
-        it=replace(hull,it,Segment(it->m,it->c,x,it->
-              x2));
+        it=replace(hull,it,Segment(it->m,it->c,x,it->x2));
         break;
       }
     }
@@ -65,20 +62,16 @@ class LowerConcaveHull { // maintain a hull like: \__/
       if(x<=it->x1+eps) hull.erase(it++);
       else {
         s.x1=x;
-        it=replace(hull,it,Segment(it->m,it->c,it->x1
-              ,x));
+        it=replace(hull,it,Segment(it->m,it->c,it->x1,x));
         break;
       }
     }
     // insert s
     hull.insert(s);
   }
-  void insert(long double m,long double c) { insert(
-      Segment(m,c)); }
-  long double query(long double x) { // return y @ given
-    x
-      set<Segment>::iterator it=hull.lower_bound(Segment
-          (0.0,0.0,x,x,1));
+  void insert(long double m,long double c) { insert(Segment(m,c)); }
+  long double query(long double x) { // return y @ given x
+      set<Segment>::iterator it=hull.lower_bound(Segment(0.0,0.0,x,x,1));
     return it->evaly(x);
   }
 };

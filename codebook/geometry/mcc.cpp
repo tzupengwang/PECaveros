@@ -3,8 +3,7 @@ struct Mcc{
   static const int MAXN = 1000100;
   int n;
   Point p[MAXN],cen;
-  double r2;
-  
+  double r2;  
   void init(int _n, Point _p[]){
     n = _n;
     memcpy(p,_p,sizeof(Point)*n);
@@ -20,7 +19,6 @@ struct Mcc{
     double y = p0.y + (a.x * c2 - b.x * c1) / d;
     return Point(x,y);
   }
-
   pair<Point,double> solve(){
     random_shuffle(p,p+n);
     r2=0;
