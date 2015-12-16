@@ -1,4 +1,3 @@
-
 const int MAXN = 100010;
 struct DominatorTree{
 #define REP(i,s,e) for(int i=(s);i<=(e);i++)
@@ -9,7 +8,6 @@ struct DominatorTree{
   int dfn[ MAXN ] , nfd[ MAXN ] , ts;
   int par[ MAXN ];
   int sdom[ MAXN ] , idom[ MAXN ];
-
   int mom[ MAXN ] , mn[ MAXN ];
 
   inline bool cmp( int u , int v )
@@ -24,10 +22,7 @@ struct DominatorTree{
   }
 
   void init( int _n , int _m , int _s ){
-    ts = 0;
-    n = _n;
-    m = _m;
-    s = _s;
+    ts = 0; n = _n; m = _m; s = _s;
     REP( i , 1 , n ) g[ i ].clear() , pred[ i ].clear();
   }
   void addEdge( int u , int v ){
