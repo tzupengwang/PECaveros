@@ -6,8 +6,7 @@ bool sets[MAXNUM]; // whether x is in set S
 bool sett[MAXNUM]; // whether y is in set T
 int xlabel[MAXNUM],ylabel[MAXNUM];
 int xy[MAXNUM],yx[MAXNUM]; // matched with whom
-int slack[MAXNUM]; // given y: min{xlabel[x]+ylabel[y]-cost
-[x][y]} | x not in S
+int slack[MAXNUM]; // given y: min{xlabel[x]+ylabel[y]-cost[x][y]} | x not in S
 int prev[MAXNUM]; // for augmenting matching
 inline void relabel() {
   int i,delta=INF;

@@ -1,18 +1,13 @@
 /* Highest-Label Preflow Push Algorithm */
 // tested with sgu-212 (more testing suggested)
 int n,m,src,sink;
-int deg[MAXN],adj[MAXN][MAXN],res[MAXN][MAXN]; // residual
-capacity
-// graph (i.e. all things above) should be constructed
-beforehand
+int deg[MAXN],adj[MAXN][MAXN],res[MAXN][MAXN]; // residual capacity
+// graph (i.e. all things above) should be constructed beforehand
 int ef[MAXN],ht[MAXN]; // excess flow, height
 int apt[MAXN]; // the next adj index to try push
-int htodo;
-// highest label to check with
-int hcnt[MAXN*2];
-// number of nodes with height h
-queue<int> ovque[MAXN*2]; // used to implement highest-label
-selection
+int htodo; // highest label to check with
+int hcnt[MAXN*2]; // number of nodes with height h
+queue<int> ovque[MAXN*2]; // used to implement highest-label selection
 bool inque[MAXN];
 inline void push(int v,int u) {
   int a=min(ef[v],res[v][u]);

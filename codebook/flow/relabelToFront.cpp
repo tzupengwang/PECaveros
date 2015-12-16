@@ -4,8 +4,7 @@ int n,m,layer,src,sink,lvl[MAXN];
 Edge ed[MAXM];
 int deg[MAXN],adj[MAXN][MAXN];
 int res[MAXN][MAXN]; // residual capacity
-// graph (i.e. all things above) should be constructed
-beforehand
+// graph (i.e. all things above) should be constructed beforehand
 list<int> lst; // discharge list
 int ef[MAXN],ht[MAXN];
 // excess flow, height

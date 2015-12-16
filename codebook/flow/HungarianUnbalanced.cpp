@@ -6,8 +6,7 @@ bool sets[MAXN]; // whether x is in set S
 bool sett[MAXN]; // whether y is in set T
 int xlabel[MAXN],ylabel[MAXN];
 int xy[MAXN],yx[MAXN]; // matched with whom
-int slack[MAXN]; // given y: min{xlabel[x]+ylabel[y]-cost[x
-][y]} | x not in S
+int slack[MAXN]; // given y: min{xlabel[x]+ylabel[y]-cost[x][y]} | x not in S
 int prev[MAXN]; // for augmenting matching
 inline void relabel() {
   int i,delta=inf;
@@ -82,7 +81,6 @@ inline int hungarian() {
       for(int j=0;j<i;j++)
         swap(cost[i][j],cost[j][i]);
   }
-  // need special recovery if we want more info than
-  matching value
+  // need special recovery if we want more info than matching value
     return c;
 }

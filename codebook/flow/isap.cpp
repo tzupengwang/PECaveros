@@ -55,4 +55,3 @@ struct Maxflow {
 } flow;
 
 Maxflow::Edge e(1, 1, 1);
-
