@@ -25,8 +25,7 @@ inline void pre() {
   /* combinational */
   for(int i=0;i<=MAXK;i++) {
     cm[i][0]=cm[i][i]=1;
-    for(int j=1;j<i;j++) cm[i][j]=add(cm[i-1][j-1],cm[i
-        -1][j]);
+    for(int j=1;j<i;j++) cm[i][j]=add(cm[i-1][j-1],cm[i-1][j]);
   }
   /* inverse */
   for(int i=1;i<=MAXK;i++) inv[i]=getinv(i);
@@ -36,18 +35,15 @@ inline void pre() {
     if(i&1) { b[i]=0; continue; }
     b[i]=1;
     for(int j=0;j<i;j++)
-      b[i]=sub(b[i],(long long)cm[i][j]*b[j]%mod*inv[i-j
-          +1]%mod);
+      b[i]=sub(b[i],(long long)cm[i][j]*b[j]%mod*inv[i-j+1]%mod);
   }
   /* faulhaber */
-  // sigma_x=1~n {x^p} = 1/(p+1) * sigma_j=0~p { C(p+1,j) *
-  Bj * n^(p-j+1)}
-for(int i=1;i<MAXK;i++) {
-  co[i][0]=0;
-  for(int j=0;j<=i;j++)
-    co[i][i-j+1]=(long long)inv[i+1]%mod*cm[i+1][j]%mod
-      *b[j]%mod;
-}
+  // sigma_x=1~n {x^p} = 1/(p+1) * sigma_j=0~p { C(p+1,j) * Bj * n^(p-j+1)}
+  for(int i=1;i<MAXK;i++) {
+    co[i][0]=0;
+    for(int j=0;j<=i;j++)
+      co[i][i-j+1]=(long long)inv[i+1]%mod*cm[i+1][j]%mod*b[j]%mod;
+  }
 }
 inline int power(int x,int p) {
   int s=1,m=x;

@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 typedef long long ll;
 typedef unsigned int uint;
 #define maxn 310010
@@ -80,7 +78,4 @@ bool work(){
 	for( register int i = n - 2 ; i >= 0 ; i -- ) printf( "%06lld" , ans[ i ] );
 	puts( "" ) ;
 	return true ;
-}
-int main(){
-	while ( work() ) ;
 }
