@@ -1,13 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define inf 1023456789
-int getint(){
-	int x=0,tmp=1; char c=getchar();
-	while( (c<'0'||c>'9')&&c!='-' ) c=getchar();
-	if( c == '-' ) c=getchar() , tmp=-1;
-	while(c>='0'&&c<='9') x*=10,x+=(c-'0'),c=getchar();
-	return x*tmp;
-}
 struct Treap{
 	int lsum , rsum , sum , maxsum;
 	int sz , num , val , pri , tag;
@@ -92,11 +82,6 @@ void split( Treap *t , int k , Treap*&a , Treap*&b ){
 		pull( b );
 	}
 }
-void show( Treap *t ){
-	if( t->l ) show( t->l );
-	printf( " %d" , t->val );
-	if( t->r ) show( t->r );
-}
 void Delete( Treap *t ){
 	if( t->l ) Delete( t->l );
 	if( t->r ) Delete( t->r );
@@ -159,8 +144,3 @@ void solve(){
 
 	}
 }
-int main(){
-	srand( time( 0 ) );
-	solve();
-}
-
