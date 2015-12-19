@@ -1,6 +1,7 @@
 struct Bigint{
   static const int LEN = 60;
   static const int BIGMOD = 10000;
+
   int s;
   int vl, v[LEN];
   //  vector<int> v;
@@ -29,12 +30,27 @@ struct Bigint{
     }
     if (num) push_back(num);
   }
-  int len() const { return vl; /* return SZ(v);*/ }
+
+  int len() const {
+    return vl;
+    //    return SZ(v);
+  }
   bool empty() const { return len() == 0; }
-  void push_back(int x) { v[vl++] = x; /* v.PB(x); */}
-  void pop_back() { vl--; /* v.pop_back(); */ }
-  int back() const { return v[vl-1]; /* return v.back(); */ }
-  void n() { while (!empty() && !back()) pop_back(); }
+  void push_back(int x) {
+    v[vl++] = x;
+    //    v.PB(x);
+  }
+  void pop_back() {
+    vl--;
+    //    v.pop_back();
+  }
+  int back() const {
+    return v[vl-1];
+    //    return v.back();
+  }
+  void n() {
+    while (!empty() && !back()) pop_back();
+  }
   void resize(int nl) {
     vl = nl;
     fill(v, v+vl, 0);
@@ -59,6 +75,7 @@ struct Bigint{
     }
     return out;
   }
+
   int cp3(const Bigint &b)const {
     if (s != b.s) return s > b.s;
     if (s == -1) return -(-*this).cp3(-b);
