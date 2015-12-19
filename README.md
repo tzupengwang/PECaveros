@@ -33,6 +33,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | NEERC 2014         | 2015/12/08    |   | B | C | D | E | F | . | H | I | **J** | K | L | . |
 | NEERC Moscow 2015  | 2015/12/12    | A | B | C | D | E | . | G | H | I | J | K | . |   |
 | Vietnam 2nd round  | 2015/12/15    | A | B | C | D | E | . | G | H | I | J |   |   |   |
+| ASC 35             | 2015/12/19    | . | B | C | . | E | F | G | . | **I** | J |
 
 - A : 賽內AC  
 - **A** : 賽後AC
