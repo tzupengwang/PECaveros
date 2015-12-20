@@ -36,10 +36,8 @@ struct Bigint{
   int back() const { return v[vl-1]; /* return v.back(); */ }
   void n() { while (!empty() && !back()) pop_back(); }
   void resize(int nl) {
-    vl = nl;
-    fill(v, v+vl, 0);
-    //    v.resize(nl);
-    //    fill(ALL(v), 0);
+    vl = nl; fill(v, v+vl, 0);
+    //    v.resize(nl); // fill(ALL(v), 0);
   }
   void print() const {
     if (empty()) { putchar('0'); return; }
