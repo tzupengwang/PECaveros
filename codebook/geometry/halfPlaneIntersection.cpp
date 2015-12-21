@@ -1,8 +1,6 @@
-#include<bits/stdc++.h>
 #define N 100010
 #define EPS 1e-8
 #define SIDE 10000000
-using namespace std;
 struct PO{ double x , y ; } p[ N ], o ;
 struct LI{
   PO a, b;

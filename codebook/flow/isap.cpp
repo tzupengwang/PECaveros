@@ -1,6 +1,4 @@
-#include <bits/stdc++.h>
 #define SZ(c) ((int)(c).size())
-using namespace std;
 struct Maxflow {
   static const int MAXV = 20010;
   static const int INF  = 1000000;

@@ -1,16 +1,11 @@
-#include <bits/stdc++.h>
-using namespace std;
 #define SZ(c) (int)(c).size()
 #define ALL(c) (c).begin(), (c).end()
 #define REP(i, s, e) for(int i = (s); i <= (e); i++)
 #define REPD(i, s, e) for(int i = (s); i >= (e); i--)
 typedef tuple< int , int > tii;
-
 const int MAXN = 100010;
 const int LOG  = 19;
-
-struct HLD
-{
+struct HLD{
   int n;
   vector<int> g[MAXN];
   int sz[MAXN], dep[MAXN];

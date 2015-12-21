@@ -2,8 +2,6 @@
   A template for Min Cost Max Flow
   tested with TIOJ 1724
 */
-#include <bits/stdc++.h>
-using namespace std;
 struct MinCostMaxFlow{
   static const int MAXV = 20010;
   static const int INF  = 1000000000;

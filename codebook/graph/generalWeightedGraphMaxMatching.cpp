@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 #define N 110
 #define inf 0x3f3f3f3f
 int G[ N ][ N ] , ID[ N ];
@@ -61,11 +59,7 @@ int main(){
             scanf( "%d%d%d" , &u , &v , &w );
 			G[ u ][ v ] = G[ v ][ u ] = w;
 		}
-		printf( "Case %d: " , cs );
-		if( k & 1 ){
-			puts( "Impossible" );
-			continue;
-		}
+		if( k & 1 ){ puts( "Impossible" ); continue; }
 		for( int tk = 1; tk <= n ; tk ++ )
 			for( int i = 1 ; i <= n ; i ++ )
 				for( int j = 1 ; j <= n ; j ++ )

@@ -49,8 +49,7 @@ inline unsigned int maxflow(int src,int sink) {
   int i,j;
   unsigned int f=0;
   for(i=0;i<n;i++) {
-    for(j=0;j<deg[i];j++) res[i][adj[i][j]]=cap[i][adj[i][
-      j]];
+    for(j=0;j<deg[i];j++) res[i][adj[i][j]]=cap[i][adj[i][j]];
     cutset[i]=SINK;
   }
   while(bfs(src,sink)) {

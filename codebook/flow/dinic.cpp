@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 #define N 5010
 #define M 60010
 #define ll long long

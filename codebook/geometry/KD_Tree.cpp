@@ -1,5 +1,4 @@
 const int MXN = 100005;
-
 struct KDTree {
   struct Node {
     int x,y,x1,y1,x2,y2;
@@ -8,7 +7,6 @@ struct KDTree {
   }tree[MXN];
   int n;
   Node *root;
-
   long long dis2(int x1, int y1, int x2, int y2) {
     long long dx = x1-x2;
     long long dy = y1-y2;
