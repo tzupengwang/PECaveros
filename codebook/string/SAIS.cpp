@@ -1,62 +1,59 @@
-// Suffix array by Induced-Sorting, O(n)
-const int MAXL=200000+1000; // Max Length
-// input: S[0..n-1], n; output: SA[0..n-1]
-// S[n-1] MUST be an unique smallest item!!!!
-// Max alphabet should be < MAXL.
-int S[MAXL*2],SA[MAXL*2];
-bool _iss[MAXL*2];
-int _p[MAXL*2],_pb[MAXL*2],cnt[MAXL],qe[MAXL];
-inline void isort(int n,int *s,int *sa,bool *iss,int *p,int pc){
-  int a=0,i;
-  for(i=0;i<n;i++)a=max(a,s[i]); a++;
-  memset(cnt,0,sizeof(int)*a);
-  for(i=0;i<n;i++)cnt[s[i]]++;
-  qe[0]=cnt[0]; for(i=1;i<a;i++)qe[i]=qe[i-1]+cnt[i];
-  memset(sa,-1,sizeof(int)*n);
-  for(i=pc-1;i>=0;i--)sa[--qe[s[p[i]]]]=p[i];
-  qe[0]=0; for(i=1;i<a;i++)qe[i]=qe[i-1]+cnt[i-1];
-  for(i=0;i<n;i++)if(sa[i]>0&&!iss[sa[i]-1])sa[qe[s[sa[i]-1]]++]=sa[i]-1;
-  qe[0]=cnt[0]; for(i=1;i<a;i++)qe[i]=qe[i-1]+cnt[i];
-  for(i=n-1;i>=0;i--)if(sa[i]>0&&iss[sa[i]-1])sa[--qe[s[sa[i]-1]]]=sa[i]-1;
-}
-inline bool eq(int *s,bool *iss,int *pp,int *pb,int pc,int x,int p){
-  if(pb[p]==pc-1 || pb[x]==pc-1 || pp[pb[p]+1]-p!=pp[pb[x]+1]-x)return 0;
-  for(int j=0;j<=pp[pb[p]+1]-p;j++)if(s[j+p]!=s[j+x]||iss[j+p]!=iss[j+x]) return 0;
-  return 1;
-}
-void suffixArray(int n,int a1=0){
-  int i;
-  int *s=S+a1,*sa=SA+a1,*pp=_p+a1,*pb=_pb+a1;
-  bool *iss=_iss+a1;
-  iss[n-1]=1;
-  for(i=n-2;i>=0;i--)iss[i]=s[i]<s[i+1]||(s[i]==s[i+1]&&iss[i+1]);
-  int pc=0;
-  for(i=1;i<n;i++)if(iss[i]&&!iss[i-1]){ pp[pc]=i; pb[i]=pc; pc++; }
-  isort(n,s,sa,iss,pp,pc);
-  int p=-1,c=-1;
-  for(i=0;i<n;i++){
-    int x=sa[i];
-    if(x&&iss[x]&&!iss[x-1]){
-      if(p==-1||!eq(s,iss,pp,pb,pc,x,p))c++;
-      s[n+pb[x]]=c;
-      p=x;
+struct SA{
+#define REP(i,n) for ( int i=0; i<int(n); i++ )
+#define REP1(i,a,b) for ( int i=(a); i<=int(b); i++ )
+  static const int MXN = 300010;
+  bool _t[MXN*2];
+  int _s[MXN*2], _sa[MXN*2], _c[MXN*2], x[MXN], _p[MXN], _q[MXN*2], hei[MXN], r[MXN];
+  int operator [] (int i){ return _sa[i]; }
+  void build(int *s, int n, int m){
+    memcpy(_s, s, sizeof(int) * n);
+    sais(_s, _sa, _p, _q, _t, _c, n, m);
+    mkhei(n);
+  }
+  void mkhei(int n){
+    REP(i,n) r[_sa[i]] = i;
+    hei[0] = 0;
+    REP(i,n) if(r[i]) {
+      int ans = i>0 ? max(hei[r[i-1]] - 1, 0) : 0;
+      while(_s[i+ans] == _s[_sa[r[i]-1]+ans]) ans++;
+      hei[r[i]] = ans;
     }
   }
-  if(c==pc-1)for(i=0;i<pc;i++)sa[n+s[n+i]]=i;
-  else suffixArray(pc,a1+n);
-  for(i=0;i<pc;i++)pb[i]=pp[sa[n+i]];
-  isort(n,s,sa,iss,pb,pc);
-}
-int rk[MAXL],DA[MAXL];
-void depthArray(int n){
-  int i,j;
-  for(i=0;i<n;i++) rk[SA[i]]=i;
-  for(i=j=0;i<n;i++){
-    if(!rk[i]){ j=0; }
-    else{
-      if(j) j--;
-      for(;S[i+j]==S[SA[rk[i]-1]+j];j++);
+  void sais(int *s, int *sa, int *p, int *q, bool *t, int *c, int n, int z){
+    bool uniq = t[n-1] = true, neq;
+    int nn = 0, nmxz = -1, *nsa = sa + n, *ns = s + n, lst = -1;
+#define MS0(x,n) memset((x),0,n*sizeof(*(x)))
+#define MAGIC(XD) MS0(sa, n); \
+    memcpy(x, c, sizeof(int) * z); \
+    XD; \
+    memcpy(x + 1, c, sizeof(int) * (z - 1)); \
+    REP(i,n) if(sa[i] && !t[sa[i]-1]) sa[x[s[sa[i]-1]]++] = sa[i]-1; \
+    memcpy(x, c, sizeof(int) * z); \
+    for(int i = n - 1; i >= 0; i--) if(sa[i] && t[sa[i]-1]) sa[--x[s[sa[i]-1]]] = sa[i]-1;
+    MS0(c, z);
+    REP(i,n) uniq &= ++c[s[i]] < 2;
+    REP(i,z-1) c[i+1] += c[i];
+    if (uniq) { REP(i,n) sa[--c[s[i]]] = i; return; }
+    for(int i = n - 2; i >= 0; i--) t[i] = (s[i]==s[i+1] ? t[i+1] : s[i]<s[i+1]);
+    MAGIC(REP1(i,1,n-1) if(t[i] && !t[i-1]) sa[--x[s[i]]]=p[q[i]=nn++]=i);
+    REP(i, n) if (sa[i] && t[sa[i]] && !t[sa[i]-1]) {
+      neq=lst<0||memcmp(s+sa[i],s+lst,(p[q[sa[i]]+1]-sa[i])*sizeof(int));
+      ns[q[lst=sa[i]]]=nmxz+=neq;
     }
-    DA[rk[i]]=j;
+    sais(ns, nsa, p + nn, q + n, t + n, c + z, nn, nmxz + 1);
+    MAGIC(for(int i = nn - 1; i >= 0; i--) sa[--x[s[p[nsa[i]]]]] = p[nsa[i]]);
+  }
+}sa;
+void suffix_array(int* ip, int len) {
+  // should padding a zero in the back
+  // s is int array, n is array length
+  // s[0..n-1] != 0, and s[n] = 0
+  // resulting SA will be length n+1
+  ip[len++] = 0;
+  sa.build(ip, len, 128);
+  // original 1-base
+  for (int i=0; i<l; i++) {
+    hei[i] = sa.hei[i + 1];
+    sa[i] = sa._sa[i + 1];
   }
 }
