@@ -1,5 +1,5 @@
 /* faulhaber’s formula -
- * calculate power sum formula of all p=1~k in O(k^2) */
+ * cal power sum formula of all p=1~k in O(k^2) */
 #define MAXK 2500
 const int mod = 1000000007;
 int b[MAXK];
