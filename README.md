@@ -3,6 +3,48 @@ PECaveros
 
 codebook by eddy1021, c2251393, tzupengwang
 
+# TOTEST
+
+## Flow
+- Gusfield
+- HLPPA
+- Hungarian
+- HungarianUnbalanced
+- Isap
+- MaxCostCirculationSlow
+- RelabelToFront
+- SW-mincut
+
+## Data Structure
+- DisjointSet (tested with CF 100551A by eddy)
+- KDTree
+- Link Cut Tree
+
+## Geometry
+- Half plane intersection
+- Intersection of two circles
+- LowerConcaveHull
+- MinEnclosingCircle
+- Minkowski Sum
+- MinMaxEnclosingRectangle
+- PolyUnion
+
+## Graph
+- General Weighted Graph Max Matching
+- Max Clique
+- Minimum General Weighted Matching
+
+## Math
+- Chinese Remainder
+- Faulhaber
+- Miller Rabin
+- Pollard Rho
+- Poly Gen
+
+## String
+- Baker Bird
+- cyclic LCS
+- SAIS (tested with CF 611D by eddy)
 
 # Result
 
