@@ -32,7 +32,7 @@ codebook by eddy1021, c2251393, tzupengwang
 ## Graph
 - General Weighted Graph Max Matching
 - Max Clique
-- Minimum General Weighted Matching
+- Minimum General Weighted Matching (tested with IOIcamp prob. 44 by eddy)
 
 ## Math
 - Chinese Remainder

@@ -6,7 +6,9 @@ struct Graph {
   vector<int> stk;
   void init(int _n) {
     n = _n;
-    FZ(edge);
+    for( int i = 0 ; i < n ; i ++ )
+      for( int j = 0 ; j < n ; j ++ )
+        edge[ i ][ j ] = 0;
   }
   void add_edge(int u, int v, int w) {
     edge[u][v] = edge[v][u] = w;
@@ -40,7 +42,8 @@ struct Graph {
     }
     while (true){
       int found = 0;
-      FZ(dis); FZ(onstk);
+      for( int i = 0 ; i < n ; i ++ )
+        onstk[ i ] = dis[ i ] = 0;
       for (int i=0; i<n; i++){
         stk.clear();
         if (!onstk[i] && SPFA(i)){
