@@ -10,7 +10,6 @@ codebook by eddy1021, c2251393, tzupengwang
 - HLPPA
 - Hungarian
 - HungarianUnbalanced
-- Isap (tested with CC CALLSCHE with ~20000 nodes by eddy)
 - MaxCostCirculationSlow
 - RelabelToFront
 - SW-mincut
