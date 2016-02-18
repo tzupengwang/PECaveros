@@ -1,4 +1,4 @@
-// eddy1022
+// eddy1021
 #include <bits/stdc++.h>
 using namespace std;
 typedef double D;
@@ -106,8 +106,6 @@ void init(){
       o[ ncnt ] = i;
       m[ i ][ v[ i ][ j ].SE ] = ncnt;
     }
-  for( int i = 1 ; i <= ncnt ; i++ )
-    v2[ i ].clear();
   for( int i = 1 ; i <= n ; i ++ )
     if( (int)v[ i ].size() == 1 )
       v2[ idx[ i ][ 0 ] ].PB( MP( m[ v[ i ][ 0 ].SE ][ i ] , 1 ) );
@@ -162,7 +160,7 @@ void solve2(){
         Q.push( v[ tn ][ i ].SE );
       }
   }
-  printf( "Case #%d: %lld\n" , ++ _cs , dst[ n ] );
+  printf( "Case #%d: %lld\n" , ++ _cs , dst[ n ] == INF16 ? -1 : dst[ n ] );
 }
 typedef pair<ll,int> PLI;
 priority_queue< PLI,vector<PLI>,greater<PLI> > heap;
@@ -194,7 +192,7 @@ void solve(){
   ll ans = dst[ n ];
   for( size_t i = 0 ; i < v[ n ].size() ; i ++ )
     ans = min( ans , dst[ idx[ n ][ i ] ] );
-  printf( "Case #%d: %lld\n" , ++ _cs , ans );
+  printf( "Case #%d: %lld\n" , ++ _cs , ans == INF16 ? -1 : ans );
 }
 int main(){
   build();

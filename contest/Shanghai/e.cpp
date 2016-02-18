@@ -61,142 +61,108 @@ inline bool equal( D _x ,  D _y ){
 }
 int __ = 1 , _cs;
 /*********default*********/
-#define N 52
-ll c[ N ][ N ] , p[ N + N ] , ten[ N ];
-vector<ll> vv;
-int m;
+#define N 55
+ll ten[ N ] , C[ N ][ N ];
 void build(){
   ten[ 0 ] = 1ll;
   for( int i = 1 ; i < N ; i ++ )
-    ten[ i ] = mul( ten[ i - 1 ] , 10 );
+    ten[ i ] = mul( ten[ i - 1 ] , 10ll );
   for( int i = 0 ; i < N ; i ++ )
-    c[ i ][ i ] = c[ i ][ 0 ] = 1ll;
+    C[ i ][ 0 ] = C[ i ][ i ] = 1;
   for( int i = 2 ; i < N ; i ++ )
     for( int j = 1 ; j < i ; j ++ )
-      c[ i ][ j ] = add( c[ i - 1 ][ j - 1 ] ,
-                         c[ i - 1 ][ j ] );
-  for( int i = 0 ; i < 10 ; i ++ )
-    for( int j = 0 ; j < 10 ; j ++ )
-      vv.PB( i * j );
-  sort( ALL( vv ) );
-  vv.resize( unique( ALL( vv ) ) - vv.begin() );
-  for( size_t i = 0 ; i < vv.size() ; i ++ )
-    p[ vv[ i ] ] = i;
-  m = (int)vv.size();
+      C[ i ][ j ] = add( C[ i - 1 ][ j ] ,
+                         C[ i - 1 ][ j - 1 ] );
 }
-int K , l , s;
-char n[ N ];
-ll dp[ 2 ][ N ][ N ][ N ][ N ];
-ll ps[ 2 ][ 3 ][ N ][ N ][ N ][ N ];
+int K , s , l;
+char c[ N ];
+ll dp[ 2 ][ N ][ N ][ N ];
+ll ps[ 2 ][ 3 ][ N ][ N ][ N ];
 void init(){
   K = getint();
-  scanf( "%s" , n );
-  l = strlen( n );
-  for( int u = 0 ; u < l ; u ++ )
-    for( int i = 0 ; i < l ; i ++ )
-      for( int j = 0 ; j < l ; j ++ )
-        for( int k = 0 ; k < m ; k ++ )
-          ps[ 0 ][ 0 ][ u ][ i ][ j ][ k ] =
-          ps[ 0 ][ 1 ][ u ][ i ][ j ][ k ] =
-          ps[ 0 ][ 2 ][ u ][ i ][ j ][ k ] =
-          dp[ 0 ][ u ][ i ][ j ][ k ] = 0;
+  scanf( "%s" , c );
+  l = strlen( c );
   for( int i = 0 ; i < l ; i ++ )
-    if( n[ i ] == '*' )
+    if( c[ i ] == '*' )
       s = i;
-  for( int i = 0 ; i < l ; i ++ ) if( i != s )
-    for( int j = i + 1 ; j < l ; j ++ ) if( j != s )
-      dp[ 0 ][ s ][ i ][ j ][ p[ ( n[ i ] - '0' ) *
-                                 ( n[ j ] - '0' ) ] ] ++;
-  for( int u = 0 ; u < l ; u ++ )
-    for( int i = 0 ; i < l ; i ++ )
-      for( int j = 0 ; j < l ; j ++ )
-        for( int k = 0 ; k < m ; k ++ ){
-          if( u ){
-            ps[ 0 ][ u ][ i ][ j ][ k ] = add( ps[ 0 ][ u - 1 ][ i ][ j ][ k ],
-                                               dp[ 0 ][ u ][ i ][ j ][ k ] );
-          }else
-            ps[ 0 ][ u ][ i ][ j ][ k ] = dp[ 0 ][ u ][ i ][ j ][ k ];
-          if( i ){
-            ps[ 1 ][ u ][ i ][ j ][ k ] = add( ps[ 1 ][ u ][ i - 1 ][ j ][ k ],
-                                               dp[ 0 ][ u ][ i ][ j ][ k ] );
-          }else
-            ps[ 1 ][ u ][ i ][ j ][ k ] = dp[ 0 ][ u ][ i ][ j ][ k ];
-          if( j ){
-            ps[ 2 ][ u ][ i ][ j ][ k ] = add( ps[ 2 ][ u ][ i ][ j - 1 ][ k ],
-                                               dp[ 0 ][ u ][ i ][ j ][ k ] );
-          }else
-            ps[ 2 ][ u ][ i ][ j ][ k ] = dp[ 0 ][ u ][ i ][ j ][ k ];
-        }
+  for( int i = 0 ; i < l ; i ++ )
+    for( int j = 0 ; j < l ; j ++ )
+      for( int k = 0 ; k < l ; k ++ )
+        ps[ 0 ][ 0 ][ i ][ j ][ k ] = 
+        ps[ 0 ][ 1 ][ i ][ j ][ k ] = 
+        ps[ 0 ][ 2 ][ i ][ j ][ k ] = 
+        dp[ 0 ][ i ][ j ][ k ] = 0;
+  for( int i = 0 ; i < l ; i ++ ) if( s != i )
+    for( int j = i + 1 ; j < l ; j ++ ) if( s != j )
+      dp[ 0 ][ i ][ j ][ s ] = add( dp[ 0 ][ i ][ j ][ s ] ,
+                                    ( c[ i ] - '0' ) * ( c[ j ] - '0' ) );
+  for( int i = 0 ; i < l ; i ++ )
+    for( int j = 0 ; j < l ; j ++ )
+      for( int k = 0 ; k < l ; k ++ ){
+        if( i == 0 ) ps[ 0 ][ 0 ][ i ][ j ][ k ] = dp[ 0 ][ i ][ j ][ k ];
+        else ps[ 0 ][ 0 ][ i ][ j ][ k ] = add( ps[ 0 ][ 0 ][ i - 1 ][ j ][ k ],
+                                                dp[ 0 ][ i ][ j ][ k ] );
+        if( j == 0 ) ps[ 0 ][ 1 ][ i ][ j ][ k ] = dp[ 0 ][ i ][ j ][ k ];
+        else ps[ 0 ][ 1 ][ i ][ j ][ k ] = add( ps[ 0 ][ 1 ][ i ][ j - 1 ][ k ],
+                                                dp[ 0 ][ i ][ j ][ k ] );
+        if( k == 0 ) ps[ 0 ][ 2 ][ i ][ j ][ k ] = dp[ 0 ][ i ][ j ][ k ];
+        else ps[ 0 ][ 2 ][ i ][ j ][ k ] = add( ps[ 0 ][ 2 ][ i ][ j ][ k - 1 ],
+                                                dp[ 0 ][ i ][ j ][ k ] );
+      }
 }
 void solve(){
-  for( int nn = 1 ; nn <= K ; nn ++ ){
-    int now = nn & 1;
+  for( int ii = 1 ; ii <= K ; ii ++ ){
+    int now = ii & 1;
     int pre = 1 - now;
-    for( int u = 0 ; u < l ; u ++ )
-      for( int i = 0 ; i < l ; i ++ )
-        for( int j = 0 ; j < l ; j ++ )
-          for( int k = 0 ; k < m ; k ++ )
-            ps[ now ][ 0 ][ u ][ i ][ j ][ k ] =
-            ps[ now ][ 1 ][ u ][ i ][ j ][ k ] =
-            ps[ now ][ 2 ][ u ][ i ][ j ][ k ] =
-            dp[ now ][ u ][ i ][ j ][ k ] = 0;
-    for( int u = 0 ; u < l ; u ++ )
-      for( int i = 0 ; i < l ; i ++ )
-        for( int j = 0 ; j < l ; j ++ )
-          for( int k = 0 ; k < m ; k ++ )
-            if( dp[ pre ][ u ][ i ][ j ][ k ] ){
-              dp[ now ][ u ][ i ][ j ][ k ] = add( dp[ now ][ u ][ i ][ j ][ k ] , 
-                                              mul( dp[ pre ][ u ][ i ][ j ][ k ] , c[ l - 3 ][ 2 ] ) );
-              for( int y = 0 ; y < l ; y ++ )
-                if( y != u && y != i && y != j ){
-                  dp[ now ][ y ][ i ][ j ][ k ] = add( dp[ now ][ y ][ i ][ j ][ k ],
-                                                       dp[ pre ][ u ][ i ][ j ][ k ] );
-                  dp[ now ][ u ][ y ][ j ][ k ] = add( dp[ now ][ u ][ y ][ j ][ k ],
-                                                       dp[ pre ][ u ][ i ][ j ][ k ] );
-                  dp[ now ][ u ][ i ][ y ][ k ] = add( dp[ now ][ u ][ i ][ y ][ k ],
-                                                       dp[ pre ][ u ][ i ][ j ][ k ] );
-                }
-              dp[ now ][ i ][ u ][ j ][ k ] = add( dp[ now ][ i ][ u ][ j ][ k ],
-                                                   dp[ pre ][ u ][ i ][ j ][ k ] );
-              dp[ now ][ j ][ i ][ u ][ k ] = add( dp[ now ][ j ][ i ][ u ][ k ],
-                                                   dp[ pre ][ u ][ i ][ j ][ k ] );
-              dp[ now ][ u ][ j ][ i ][ k ] = add( dp[ now ][ u ][ j ][ i ][ k ],
-                                                   dp[ pre ][ u ][ i ][ j ][ k ] );
-            }
-    for( int u = 0 ; u < l ; u ++ )
-      for( int i = 0 ; i < l ; i ++ )
-        for( int j = 0 ; j < l ; j ++ )
-          for( int k = 0 ; k < m ; k ++ ){
-            if( u ){
-              ps[ now ][ 0 ][ u ][ i ][ j ][ k ] = add( ps[ now ][ 0 ][ u - 1 ][ i ][ j ][ k ],
-                                                        dp[ now ][ u ][ i ][ j ][ k ] );
-            }else
-              ps[ now ][ 0 ][ u ][ i ][ j ][ k ] = dp[ now ][ 0 ][ u ][ i ][ j ][ k ];
-            if( i ){
-              ps[ now ][ 1 ][ u ][ i ][ j ][ k ] = add( ps[ now ][ 1 ][ u ][ i - 1 ][ j ][ k ],
-                                                 dp[ now ][ u ][ i ][ j ][ k ] );
-            }else
-              ps[ now ][ 1 ][ u ][ i ][ j ][ k ] = dp[ now ][ u ][ i ][ j ][ k ];
-            if( j ){
-              ps[ now ][ 2 ][ u ][ i ][ j ][ k ] = add( ps[ now ][ 2 ][ u ][ i ][ j - 1 ][ k ],
-                                                 dp[ now ][ u ][ i ][ j ][ k ] );
-            }else
-              ps[ now ][ 2 ][ u ][ i ][ j ][ k ] = dp[ now ][ u ][ i ][ j ][ k ];
-          }
-  }
-  ll ans = 0;
-  int now = K & 1;
-  for( int u = 0 ; u < l ; u ++ )
     for( int i = 0 ; i < l ; i ++ )
       for( int j = 0 ; j < l ; j ++ )
-        for( int k = 0 ; k < m ; k ++ )
-          if( ( i > u && j < u ) ||
-              ( i < u && j > u ) ){
-            if( dp[ now ][ u ][ i ][ j ][ k ] ){
-              ans = add( ans , mul( dp[ now ][ u ][ i ][ j ][ k ] ,
-                                    mul( vv[ k ] , ten[ l - i - 1 + u - j - 1 ] ) ) );
-            }
-          }
+        for( int k = 0 ; k < l ; k ++ )
+          ps[ now ][ 0 ][ i ][ j ][ k ] =
+          ps[ now ][ 1 ][ i ][ j ][ k ] =
+          ps[ now ][ 2 ][ i ][ j ][ k ] =
+          dp[ now ][ i ][ j ][ k ] = 0;
+    for( int i = 0 ; i < l ; i ++ )
+      for( int j = 0 ; j < l ; j ++ )
+        for( int k = 0 ; k < l ; k ++ ){
+          if( i == j || j == k || i == k ) continue;
+          dp[ now ][ i ][ j ][ k ] = mul( dp[ pre ][ i ][ j ][ k ] , C[ l - 3 ][ 2 ] );
+          ll dlt = sub( ps[ pre ][ 0 ][ l - 1 ][ j ][ k ] , dp[ pre ][ i ][ j ][ k ] );
+          dp[ now ][ i ][ j ][ k ] = add( dp[ now ][ i ][ j ][ k ] , dlt );
+             dlt = sub( ps[ pre ][ 1 ][ i ][ l - 1 ][ k ] , dp[ pre ][ i ][ j ][ k ] );
+          dp[ now ][ i ][ j ][ k ] = add( dp[ now ][ i ][ j ][ k ] , dlt );
+             dlt = sub( ps[ pre ][ 2 ][ i ][ j ][ l - 1 ] , dp[ pre ][ i ][ j ][ k ] );
+          dp[ now ][ i ][ j ][ k ] = add( dp[ now ][ i ][ j ][ k ] , dlt );
+          dp[ now ][ i ][ j ][ k ] = add( dp[ now ][ i ][ j ][ k ],
+                                          dp[ pre ][ j ][ i ][ k ] );
+          dp[ now ][ i ][ j ][ k ] = add( dp[ now ][ i ][ j ][ k ],
+                                          dp[ pre ][ k ][ j ][ i ] );
+          dp[ now ][ i ][ j ][ k ] = add( dp[ now ][ i ][ j ][ k ],
+                                          dp[ pre ][ i ][ k ][ j ] );
+        }
+    for( int i = 0 ; i < l ; i ++ )
+      for( int j = 0 ; j < l ; j ++ )
+        for( int k = 0 ; k < l ; k ++ ){
+          if( i == 0 ) ps[ now ][ 0 ][ i ][ j ][ k ] = dp[ now ][ i ][ j ][ k ];
+          else ps[ now ][ 0 ][ i ][ j ][ k ] = add( ps[ now ][ 0 ][ i - 1 ][ j ][ k ],
+                                                  dp[ now ][ i ][ j ][ k ] );
+          if( j == 0 ) ps[ now ][ 1 ][ i ][ j ][ k ] = dp[ now ][ i ][ j ][ k ];
+          else ps[ now ][ 1 ][ i ][ j ][ k ] = add( ps[ now ][ 1 ][ i ][ j - 1 ][ k ],
+                                                  dp[ now ][ i ][ j ][ k ] );
+          if( k == 0 ) ps[ now ][ 2 ][ i ][ j ][ k ] = dp[ now ][ i ][ j ][ k ];
+          else ps[ now ][ 2 ][ i ][ j ][ k ] = add( ps[ now ][ 2 ][ i ][ j ][ k - 1 ],
+                                                  dp[ now ][ i ][ j ][ k ] );
+        }
+  }
+  int lst = K & 1;
+  ll ans = 0ll;
+  for( int i = 0 ; i < l ; i ++ )
+    for( int j = 0 ; j < l ; j ++ )
+      for( int k = 0 ; k < l ; k ++ )
+        if( dp[ lst ][ i ][ j ][ k ] ){
+          if( ( i < k && k < j ) ||
+              ( i > k && k > j ) )
+            ans = add( ans , mul( dp[ lst ][ i ][ j ][ k ] , ten[ l - i - 1 + k - j - 1 ] ) );
+        }
   printf( "Case #%d: %lld\n" , ++ _cs , ans );
 }
 int main(){

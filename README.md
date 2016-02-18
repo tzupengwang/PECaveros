@@ -75,7 +75,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | NEERC Moscow 2015  | 2015/12/12    | A | B | C | D | E | . | G | H | I | J | K | . |   |
 | Vietnam 2nd round  | 2015/12/15    | A | B | C | D | E | . | G | H | I | J |   |   |   |
 | ASC 35             | 2015/12/19    | . | B | C | . | E | F | G | . | **I** | J |
-| Shanghai 2015      | 2016/02/18    | A | B | . | . | . | F | . | . | . | . | K | L |
+| Shanghai 2015      | 2016/02/18    | A | B | . | . | **E** | F | . | . | . | **J** | K | L |
 
 - A : 賽內AC  
 - **A** : 賽後AC
