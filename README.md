@@ -77,7 +77,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | ASC 35             | 2015/12/19    | . | B | C | . | E | F | G | . | **I** | J |
 | Shanghai 2015      | 2016/02/18    | A | B | . | . | **E** | F | . | . | . | **J** | K | L |
 | Saratov Opencup XVI| 2016/02/21    | **A** | . | . | . | . | . | G | H | I | **J** | K | 
-| 2016 Opencup XVI   | 2016/03/06    | A | . | C | D | E | F | . | H | I | J | . | L | M |
+| 2016 Opencup XVI   | 2016/03/06    | A | . | C | D | E | F | . | H | I | J | **K** | L | M |
 
 - A : 賽內AC  
 - **A** : 賽後AC
