@@ -21,7 +21,7 @@ codebook by eddy1021, c2251393, tzupengwang
 
 ## Geometry
 - Half plane intersection
-- Intersection of two circles
+- Intersection of two circles (tested with opencupXVI by eddy)
 - LowerConcaveHull
 - MinEnclosingCircle
 - Minkowski Sum
