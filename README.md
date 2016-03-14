@@ -78,7 +78,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Shanghai 2015             | 2016/02/18    | A | B | . | . | **E** | F | . | . | . | **J** | K | L |
 | Opencup XVI Saratov       | 2016/02/21    | **A** | . | . | . | . | . | G | H | I | **J** | K | 
 | Opencup XVI Bashkortostan | 2016/03/06    | A | . | C | D | E | F | . | H | I | J | **K** | L | M |
-| Opencup XVI Tatarstan     | 2016/03/13    | . | . | C | D | E | F | G | H | I | J | K | L | M |
+| Opencup XVI Tatarstan     | 2016/03/13    | **A** | **B** | C | D | E | F | G | H | I | J | K | L | M |
 
 - A : 賽內AC  
 - **A** : 賽後AC

@@ -67,27 +67,27 @@ inline Pt operator+( const Pt& p1 , const Pt& p2 ){
 inline Pt operator-( const Pt& p1 , const Pt& p2 ){
   return MP( p1.X - p2.X , p1.Y - p2.Y );
 }
-inline D operator*( const Pt& p1 , const Pt& p2 ){
+inline LD operator*( const Pt& p1 , const Pt& p2 ){
   return p1.X * p2.Y - p1.Y * p2.X;
 }
-inline Pt operator*( const D& tk , const Pt& tp ){
+inline Pt operator*( const LD& tk , const Pt& tp ){
   return MP( tk * tp.X , tk * tp.Y );
 }
-inline Pt operator/( const D& tk , const Pt& tp ){
+inline Pt operator/( const LD& tk , const Pt& tp ){
   return MP( tp.X / tk , tp.Y / tk );
 }
-inline D operator%( const Pt& p1 , const Pt& p2 ){
+inline LD operator%( const Pt& p1 , const Pt& p2 ){
   return p1.X * p2.X + p1.Y * p2.Y;
 }
-inline D norm( const Pt& tp ){
+inline LD norm( const Pt& tp ){
   return sqrt( tp % tp );
 }
-vector<Pt> interCircle( Pt o1 , D r1 , Pt o2 , D r2 ){
-  D d2 = ( o1 - o2 ) % ( o1 - o2 );
-  D d = sqrt( d2 );
+vector<Pt> interCircle( Pt o1 , LD r1 , Pt o2 , LD r2 ){
+  LD d2 = ( o1 - o2 ) % ( o1 - o2 );
+  LD d = sqrt( d2 );
 	if( d > r1+r2 ) return {};
   Pt u = 0.5*(o1+o2) + ((r2*r2-r1*r1)/(2*d2))*(o1-o2);
-  D A = sqrt((r1+r2+d) * (r1-r2+d) * (r1+r2-d) * (-r1+r2+d));
+  LD A = sqrt((r1+r2+d) * (r1-r2+d) * (r1+r2-d) * (-r1+r2+d));
   Pt v = A / (2*d2) * Pt(o1.Y-o2.Y, -o1.X+o2.X);
   return {u+v, u-v};
 }
@@ -96,9 +96,9 @@ void scan( Pt& tp ){
   tp.Y = getint();
 }
 void print( const Pt& tp ){
-  printf( "%.6f %.6f\n" , (D)tp.X , (D)tp.Y );
+  printf( "%.12f %.12f\n" , (D)tp.X , (D)tp.Y );
 }
-const D pi = acos( -1.0 );
+const LD pi = acosl( -1.0 );
 Pt m[ 4 ];
 void build(){
 
@@ -110,7 +110,7 @@ void init(){
   deg1 = getint();
   deg2 = getint();
 }
-vector< pair<Pt,D> > find_circle( Pt p1 , Pt p2 , int deg ){
+vector< pair<Pt,LD> > find_circle( Pt p1 , Pt p2 , int deg ){
   if( deg == 90 )
     return { MP( 0.5 * ( p1 + p2 ) , norm( p1 - p2 ) * 0.5 ) };
   if( deg > 90 ) deg = 180 - deg;
@@ -118,41 +118,51 @@ vector< pair<Pt,D> > find_circle( Pt p1 , Pt p2 , int deg ){
   Pt dlt = p2 - p1;
   swap( dlt.X , dlt.Y );
   dlt.Y = -dlt.Y;
-  D tkk = norm( tmp - p1 ) / tan( pi * (D)deg / 180.0 );
+  LD tkk = norm( tmp - p1 ) / tanl( pi * (LD)deg / 180.0 );
   dlt = ( tkk / norm( dlt ) ) * dlt;
   Pt o1 = tmp + dlt;
   Pt o2 = tmp - dlt;
-  D r = norm( o1 - p1 );
+  LD r = norm( o1 - p1 );
   return { MP( o1 , r ) , MP( o2 , r ) };
 }
 bool flag;
-void checkPt( pair<Pt,D> cir1 , pair<Pt,D> cir2 , Pt pos ){
+bool inbad( const Pt& o , const Pt& p1 , const Pt& p2 , const Pt& pos ){
+  Pt tp1 = p1 - o;
+  Pt tp2 = p2 - o;
+  Pt tpos = pos - o;
+  LD tdeg1 = atan2l( tp1.Y , tp1.X );
+  LD tdeg2 = atan2l( tp2.Y , tp2.X );
+  LD tdegp = atan2l( tpos.Y , tpos.X );
+  while( fabs( tdeg1 - tdeg2 ) > pi + eps ){
+    if( tdeg1 < tdeg2 ) tdeg1 += 2.0 * pi;
+    else tdeg2 += 2.0 * pi;
+  }
+  if( tdeg1 > tdeg2 ) swap( tdeg1 , tdeg2 );
+  while( tdegp > tdeg1 - eps ) tdegp -= 2.0 * pi;
+  while( tdegp < tdeg1 - eps ) tdegp += 2.0 * pi;
+  return tdeg1 + eps < tdegp && tdegp < tdeg2 - eps;
+}
+void checkPt( pair<Pt,LD> cir1 , pair<Pt,LD> cir2 , Pt pos ){
   if( pos.X != pos.X ) return;
   if( pos.Y != pos.Y ) return;
   for( int i = 1 ; i <= 3 ; i ++ )
     if( equal( m[ i ].X , pos.X ) &&
         equal( m[ i ].Y , pos.Y ) )
       return;
-  if( ( pos - cir1.FI ) % ( m[ 1 ] - cir1.FI ) > eps &&
-      ( pos - cir1.FI ) % ( m[ 2 ] - cir1.FI ) > eps && 
-      ( ( pos - cir1.FI ) * ( m[ 1 ] - cir1.FI ) ) *
-      ( ( pos - cir1.FI ) * ( m[ 2 ] - cir1.FI ) ) < -eps ){
+  if( inbad( cir1.FI , m[ 1 ] , m[ 2 ] , pos ) ){
     if( deg1 < 90 ) return;
   }else{
     if( deg1 > 90 ) return;
   }
-  if( ( pos - cir2.FI ) % ( m[ 2 ] - cir2.FI ) > eps &&
-      ( pos - cir2.FI ) % ( m[ 3 ] - cir2.FI ) > eps && 
-      ( ( pos - cir2.FI ) * ( m[ 2 ] - cir2.FI ) ) *
-      ( ( pos - cir2.FI ) * ( m[ 3 ] - cir2.FI ) ) < -eps ){
+  if( inbad( cir2.FI , m[ 2 ] , m[ 3 ] , pos ) ){
     if( deg2 < 90 ) return;
   }else{
     if( deg2 > 90 ) return;
   }
-  printf( "%.12f %.12f\n" , (D)pos.X , (D)pos.Y );
+  print( pos );
   flag = true;
 }
-void check( pair<Pt,D> cir1 , pair<Pt,D> cir2 ){
+void check( pair<Pt,LD> cir1 , pair<Pt,LD> cir2 ){
   vector<Pt> ppp = interCircle( cir1.FI , cir1.SE , cir2.FI , cir2.SE );
   for( size_t i = 0 ; i < ppp.size() && !flag ; i ++ )
     checkPt( cir1 , cir2 , ppp[ i ] );
@@ -161,15 +171,15 @@ void check( pair<Pt,D> cir1 , pair<Pt,D> cir2 ){
       equal( cir1.FI.Y , cir2.FI.Y ) &&
       equal( cir1.SE , cir2.SE ) ){
     for( int i = 0 ; i < 100 && !flag ; i ++ ){
-      Pt tp = cir1.FI + cir1.SE * MP( cos( 2.0 * pi * (D)i / 100.0 ) ,
-                                      sin( 2.0 * pi * (D)i / 100.0 ) );
+      Pt tp = cir1.FI + cir1.SE * MP( cosl( 2.0 * pi * (LD)i / 100.0 ) ,
+                                      sinl( 2.0 * pi * (LD)i / 100.0 ) );
       checkPt( cir1 , cir2 , tp );
     }
   }
 }
 void solve(){
-  vector< pair<Pt,D> > cir1 = find_circle( m[ 1 ] , m[ 2 ] , deg1 );
-  vector< pair<Pt,D> > cir2 = find_circle( m[ 2 ] , m[ 3 ] , deg2 );
+  vector< pair<Pt,LD> > cir1 = find_circle( m[ 1 ] , m[ 2 ] , deg1 );
+  vector< pair<Pt,LD> > cir2 = find_circle( m[ 2 ] , m[ 3 ] , deg2 );
   flag = false;
   for( size_t i = 0 ; i < cir1.size() && !flag ; i ++ )
     for( size_t j = 0 ; j < cir2.size() && !flag ; j ++ )
