@@ -80,7 +80,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Opencup XVI Bashkortostan | 2016/03/06    |  11  | A | . | C | D | E | F | . | H | I | J | **K** | L | M |
 | Opencup XVI Tatarstan     | 2016/03/13    |  16  | **A** | **B** | C | D | E | F | G | H | I | J | K | L | M |
 | Opencup XVI Baltics       | 2016/03/21    |  24  | . | . | . | D | E | F | G | H | I | J | 
-| ASC 27                    | 2016/03/27    |  21  | A |   | C | D |   | F | G | H | I | J |
+| ASC 27                    | 2016/03/27    |   6  | A |   | C | D |   | F | G | H | I | J |
 
 - A : 賽內AC  
 - **A** : 賽後AC
