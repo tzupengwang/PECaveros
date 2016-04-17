@@ -82,6 +82,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Opencup XVI Baltics       | 2016/03/21    |  24  | . | . | . | D | E | F | G | H | I | J | 
 | ASC 27                    | 2016/03/27    |   6  | A | **B** | C | D | . | F | G | H | I | J |
 | Petr Winter Camp 2016 SPb | 2016/04/10    |   4  | . | B | C | D | E | F | . | H | I | J | K | . |
+| Petr Winter Camp 2016 NNSU| 2016/04/17    |  29  | A | B | C | . | . | F | G | H | . | 
 
 - A : 賽內AC  
 - **A** : 賽後AC
