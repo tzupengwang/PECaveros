@@ -1,9 +1,9 @@
+const int N = 300010;
 struct SA{
 #define REP(i,n) for ( int i=0; i<int(n); i++ )
 #define REP1(i,a,b) for ( int i=(a); i<=int(b); i++ )
-  static const int MXN = 300010;
-  bool _t[MXN*2];
-  int _s[MXN*2], _sa[MXN*2], _c[MXN*2], x[MXN], _p[MXN], _q[MXN*2], hei[MXN], r[MXN];
+  bool _t[N*2];
+  int _s[N*2], _sa[N*2], _c[N*2], x[N], _p[N], _q[N*2], hei[N], r[N];
   int operator [] (int i){ return _sa[i]; }
   void build(int *s, int n, int m){
     memcpy(_s, s, sizeof(int) * n);
@@ -44,16 +44,16 @@ struct SA{
     MAGIC(for(int i = nn - 1; i >= 0; i--) sa[--x[s[p[nsa[i]]]]] = p[nsa[i]]);
   }
 }sa;
+int H[ N ], SA[ N ];
 void suffix_array(int* ip, int len) {
   // should padding a zero in the back
-  // s is int array, n is array length
-  // s[0..n-1] != 0, and s[n] = 0
-  // resulting SA will be length n+1
+  // ip is int array, len is array length
+  // ip[0..n-1] != 0, and ip[len] = 0
   ip[len++] = 0;
   sa.build(ip, len, 128);
-  // original 1-base
-  for (int i=0; i<l; i++) {
-    hei[i] = sa.hei[i + 1];
-    sa[i] = sa._sa[i + 1];
+  for (int i=0; i<len; i++) {
+    H[i] = sa.hei[i + 1];
+    SA[i] = sa._sa[i + 1];
   }
+  // resulting height, sa array \in [0,len)
 }
