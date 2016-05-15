@@ -70,53 +70,34 @@ inline bool equal( D _x ,  D _y ){
 }
 int __ = 1 , _cs;
 /*********default*********/
-#define MX 1000000000000000000ll
-#define N 101
-vector<PLL> ans;
-bool p[ N ];
-inline void go( ll tp ){
-  size_t asz = ans.size();
-  for( size_t i = 0 ; i < asz ; i ++ ){
-    ll ta = ans[ i ].FI , tn = ans[ i ].SE;
-    if( MX / tp < ta ) break;
-    for( ll j = 1 , tmp = tp ; ; j ++ ){
-      ans.PB( MP( ta * tmp , tn * ( j + 1 ) ) );
-      if( MX / tp < tmp ) break;
-      tmp *= tp;
-      if( MX / tmp < ta ) break;
-    }
-  }
-  sort( ALL( ans ) );
-  ll lg[ 3 ] , lgt = 0 , got = 0;
-  for( size_t i = 0 ; i < ans.size() ; i ++ ){
-    if( lgt < 2 || ans[ i ].SE >= lg[ 1 ] ){
-      ans[ got ++ ] = ans[ i ];
-      lg[ lgt ++ ] = ans[ i ].SE;
-      for( int j = lgt - 2 ; j >= 0 ; j -- )
-        if( lg[ j + 1 ] > lg[ j ] )
-          swap( lg[ j + 1 ] , lg[ j ] );
-      lgt = min( lgt , 2ll );
-    }
-  }
-  ans.resize( got );
-}
+#define N 2020
+int n , p[ N ] , q[ N ] , ca[ N ];
 void build(){
-  ans.PB( MP( 1 , 1 ) );
-  for( int i = 2 ; i < N ; i ++ ) if( !p[ i ] ){
-    size_t psz = ans.size();
-    go( i );
-    if( psz == ans.size() ) break;
-    for( int j = i + i ; j < N ; j += i )
-      p[ j ] = true;
-  }
+  ca[ 1 ] = 1;
+  for( int i = 2 ; i < N ; i ++ )
+    for( int j = 1 ; j < i ; j ++ )
+      ca[ i ] = add( ca[ i ] , mul( ca[ j ] , ca[ i - j ] ) );
 }
-int n;
 void init(){
   n = getint();
+  for( int i = 1 ; i <= n ; i ++ )
+    p[ i ] = getint();
+  for( int i = 1 ; i <= n ; i ++ )
+    q[ i ] = getint();
 }
+int dp[ N ][ N ];
 void solve(){
-  if( n > (int)ans.size() ) puts( "-1" );
-  else printf( "%lld\n" , ans[ n - 1 ].FI );
+  for( int i = 0 ; i <= n ; i ++ )
+    dp[ i ][ 0 ] = dp[ 0 ][ i ] = 1;
+  for( int i = 1 ; i <= n ; i ++ )
+    for( int j = 1 ; j <= n ; j ++ ){
+      dp[ i ][ j ] = add( dp[ i - 1 ][ j ] , dp[ i ][ j - 1 ] );
+      for( int k = 0 ; k < min( i , j ) ; k ++ ){
+        if( p[ i - k ] != q[ j - k ] ) break;
+        dp[ i ][ j ] = sub( dp[ i ][ j ] , mul( ca[ k + 1 ] , dp[ i - k - 1 ][ j - k - 1 ] ) );
+      }
+    }
+  printf( "%d\n" , dp[ n ][ n ] );
 }
 int main(){
   build();
