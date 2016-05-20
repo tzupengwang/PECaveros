@@ -110,10 +110,10 @@ inline PLL itv( int i , ll tk , int s ){
 inline void Add( int i , int s ){
   if( cnt[ i ] < a[ i ] ){
     PLL tp = itv( i , cnt[ i ] + 1 , s );
-    if( s == k && tp.FI > tp.SE ){
-      puts( "0" );
-      exit( 0 );
-    }
+    // if( s == k && tp.FI > tp.SE ){
+      // puts( "0" );
+      // exit( 0 );
+    // }
     cand[ tp.FI ].PB( MP( tp.SE , i ) );
     cnt[ i ] ++;
   }
