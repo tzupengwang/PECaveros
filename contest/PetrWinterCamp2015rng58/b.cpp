@@ -1,108 +1,83 @@
-// eddy1021
-#include <bits/stdc++.h>
+//by tzupengwang™
+#include<bits/stdc++.h>
 using namespace std;
-typedef double D;
-typedef long double LD;
+
+#define FO(it,c) for (__typeof((c).begin()) it=(c).begin();it!=(c).end();it++)
 typedef long long ll;
-typedef long long LL;
-typedef pair<int,int> PII;
-typedef pair<LL,LL> PLL;
-typedef pair<LD,LD> Pt;
-typedef tuple<int,int,int> tiii;
-typedef tuple<LL,LL,LL> tlll;
-#define mod9 1000000009ll
-#define mod7 1000000007ll
-#define INF  1023456789ll
-#define INF16 10000000000000000ll
-#define FI first
-#define SE second
-#define X FI
-#define Y SE
-#define PB push_back
-#define MP make_pair
-#define MT make_tuple
-#define eps 1e-9
-#define SZ(x) (int)(x).size()
-#define ALL(x) (x).begin(), (x).end()
-#ifndef ONLINE_JUDGE
-#define debug(...) printf(__VA_ARGS__)
-#else 
-#define debug(...)
-#endif
-inline ll getint(){
-  ll _x=0,_tmp=1; char _tc=getchar();    
-  while( (_tc<'0'||_tc>'9')&&_tc!='-' ) _tc=getchar();
-  if( _tc == '-' ) _tc=getchar() , _tmp = -1;
-  while(_tc>='0'&&_tc<='9') _x*=10,_x+=(_tc-'0'),_tc=getchar();
-  return _x*_tmp;
-}
-inline ll add( ll _x , ll _y , ll _mod = mod7 ){
-  ll _ = _x + _y;
-  if( _ >= _mod ) _ -= _mod;
-  return _;
-}
-inline ll sub( ll _x , ll _y , ll _mod = mod7 ){
-  ll _ = _x - _y;
-  if( _ < 0 ) _ += _mod;
-  return _;
-}
-inline ll mul( ll _x , ll _y , ll _mod = mod7 ){
-  ll _ = _x * _y;
-  if( _ >= _mod ) _ %= _mod;
-  return _;
-}
-ll mypow( ll _a , ll _x , ll _mod ){
-  if( _x == 0 ) return 1ll;
-  ll _tmp = mypow( _a , _x / 2 , _mod );
-  _tmp = mul( _tmp , _tmp , _mod );
-  if( _x & 1 ) _tmp = mul( _tmp , _a , _mod );
-  return _tmp;
-}
-ll mymul( ll _a , ll _x , ll _mod ){
-  if( _x == 0 ) return 0ll;
-  ll _tmp = mymul( _a , _x / 2 , _mod );
-  _tmp = add( _tmp , _tmp , _mod );
-  if( _x & 1 ) _tmp = add( _tmp , _a , _mod );
-  return _tmp;
-}
-inline bool equal( D _x ,  D _y ){
-  return _x > _y - eps && _x < _y + eps;
-}
-int __ = 1 , _cs;
-/*********default*********/
-#define N 100
-void build(){
+typedef pair<int,int> ii;
 
-}
-int n , len[ N ];
-char c[ N ][ N ];
-void init(){
-  n = getint();
-  for( int i = 1 ; i <= n ; i ++ ){
-    scanf( "%s" , c[ i ] );
-    len[ i ] = strlen( c[ i ] );
+const ll mod = 1000000007LL ;
+int n ;
+char ss[ 55 ][ 25 ] ;
+int s[ 55 ][ 25 ] ;
+int maxi ;
+
+void init() {
+  scanf( "%d" , &n ) ;
+  for ( int i = 0 ; i < n ; i ++ ) {
+    scanf( "%s" , ss[ i ] ) ;
+    maxi = max( maxi , (int)strlen( ss[ i ] ) ) ;
+  }
+  for ( int i = 0 ; i < n ; i ++ ) {
+    int k = strlen( ss[ i ] ) ;
+    for ( int j = 0 ; j < k ; j ++ ) {
+      if ( ss[ i ][ j ] != '?' ) s[ i ][ j ] = ss[ i ][ j ] - 'a' + 1 ;
+      else s[ i ][ j ] = 27 ;
+    }
+    for ( int j = k ; j < maxi ; j ++ ) s[ i ][ j ] = 0 ;
   }
 }
-int dp[ N ][ N ][ 30 ] , ans;
-// 0 = '\0' 
-void solve(){
-  if( n == 1 ){
-    printf( "%lld\n" , mypow( 26 , lst[ 1 ][ 0 ] , mod7 ) );
-    exit( 0 );
-  }
-  for( int j = 1 ; j <= len[ 1 ] ; j ++ ){
-    if( j == len[ 1 ] )
-      dp[ 1 ][ j ][ 0 ] = 1;
-    else 
-      dp[ 1 ][ j ][ c[ i ][ j ] - 'a' + 1 ] = mypow( 26 , lst[ 1 ][ j ] , mod7 );
+
+void add( ll &a , ll b ) {
+  a = ( a + b ) % mod ;
+}
+
+ll dp[ 55 ][ 55 ][ 30 ][ 30 ] ;
+
+ll DP( int l , int r , int j , int bnd ) {
+  if ( dp[ l ][ r ][ j ][ bnd ] != -1 ) return dp[ l ][ r ][ j ][ bnd ] ;
+
+  if ( l == r ) {
+    if ( s[ l ][ j ] == 0 ) return dp[ l ][ r ][ j ][ bnd ] = 1 ;
+    else if ( s[ l ][ j ] == 27 ) return dp[ l ][ r ][ j ][ bnd ] = DP( l , r , j + 1 , 1 ) * ( 27 - bnd ) % mod ;
+    else if ( s[ l ][ j ] >= bnd ) return dp[ l ][ r ][ j ][ bnd ] = DP( l , r , j + 1 , 1 ) ;
+    else return dp[ l ][ r ][ j ][ bnd ] = 0 ;
   }
 
-}
-int main(){
-  build();
-  //__ = getint();
-  while( __ -- ){
-    init();
-    solve();
+  for ( int i = l + 1 ; i <= r ; i ++ ) if ( s[ i ][ j ] == 0 ) {
+    return dp[ l ][ r ][ j ][ bnd ] = 0LL ;
   }
+  if ( s[ l ][ j ] == 0 ) return dp[ l ][ r ][ j ][ bnd ] = DP( l + 1 , r , j , bnd ) ;
+  for ( int i = l ; i <= r ; i ++ ) if ( s[ i ][ j ] != 27 && s[ i ][ j ] < bnd ) {
+    return dp[ l ][ r ][ j ][ bnd ] = 0LL ;
+  }
+
+  dp[ l ][ r ][ j ][ bnd ] = 0 ;
+  int ip = l ;
+  while ( ip <= r ) {
+    if ( ip < r && bnd < 26 ) {
+      if ( s[ ip ][ j ] == 27 || s[ ip ][ j ] == bnd ) {
+        add( dp[ l ][ r ][ j ][ bnd ] , DP( l , ip , j + 1 , 1 ) * DP( ip + 1 , r , j , bnd + 1 ) % mod ) ;
+      } else break ;
+    } else if ( ip == r ) {
+      if ( s[ ip ][ j ] == 27 || s[ ip ][ j ] == bnd ) {
+        add( dp[ l ][ r ][ j ][ bnd ] , DP( l , ip , j + 1 , 1 ) ) ;
+      } else break ;
+    }
+    ip ++ ;
+  }
+  if ( bnd < 26 ) add( dp[ l ][ r ][ j ][ bnd ] , DP( l , r , j , bnd + 1 ) ) ;
+  return dp[ l ][ r ][ j ][ bnd ] ;
 }
+
+void process() {
+  memset( dp , -1 , sizeof dp ) ;
+  cout << DP( 0 , n - 1 , 0 , 1 ) << endl ;
+}
+
+int main() {
+  init() ;
+  process() ;
+  return 0 ;
+}
+
