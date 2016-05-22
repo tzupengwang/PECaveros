@@ -85,7 +85,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Petr Winter Camp 2016 NNSU| 2016/04/17    |  29  | A | B | C | . | . | F | G | H | . | 
 | Petr Winter Camp 2016 Moscow | 2016/05/01 |   9  | A | . | C | . | E | F | G | H | I | J | K |
 | Petr Winter Camp 2016 rng58 | 2016/05/15  |  24  | **A** | B | C | **D** | E | F | . | H | I | J | **K** | L | . |
-| WF 2016                   | 2016/05/19    |      | **A** | **B** | C | D | E | **F** | G | . | . | . | K | L | . |
+| WF 2016                   | 2016/05/19    |      | **A** | **B** | C | D | E | **F** | G | . | **I** | . | K | L | . |
 | Petr Winter Camp 2015 rng58 | 2016/05/22  |  29  | A | . | C | D | . | . | . | H | . | J |
 
 - A : 賽內AC  
