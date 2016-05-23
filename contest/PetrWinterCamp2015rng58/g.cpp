@@ -71,25 +71,41 @@ inline bool equal( D _x ,  D _y ){
 int __ = 1 , _cs;
 /*********default*********/
 #define N 1021
-ll n;
-PLL p[ N ];
+inline PLL operator-( const PLL& p1 , const PLL& p2 ){
+  return { p1.X - p2.X , p1.Y - p2.Y };
+}
+inline LL operator^( const PLL& p1 , const PLL& p2 ){
+  return p1.X * p2.Y - p1.Y * p2.X;
+}
+inline void scan( PLL& tp ){
+  tp.X = getint();
+  tp.Y = getint();
+}
 void build(){
 
 }
+int n;
+PLL p[ N ];
 void init(){
   n = getint();
-  for( int i = 0 ; i < n ; i ++ ){
-    p[ i ].X = getint();
-    p[ i ].Y = getint();
-  }
+  for( int i = 0 ; i < n ; i ++ )
+    scan( p[ i ] );
 }
-inline bool good( int i ){
-  return onl( i ) && onr(  )
+inline bool check( int ti , int l , int r ){
+  if( l > r ) return true;
+  int bst = l;
+  for( int i = l ; i <= r ; i ++ )
+    if( ( ( p[ bst ] - p[ ti ] ) ^ ( p[ i ] - p[ ti ] ) ) < 0 )
+      bst = i;
+  for( int i = l ; i <= r ; i ++ )
+    if( ( ( p[ bst ] - p[ ti ] ) ^ ( p[ i ] - p[ ti ] ) ) < 0 )
+      return false;
+  return true;
 }
 void solve(){
   bool okay = true;
-  for( int i = 0 ; i + 1 < n ; i ++ )
-    okay = okay && good( i );
+  for( int i = 0 ; i < n && okay ; i ++ )
+    okay = check( i , 0 , i - 1 ) && check( i , i + 1 , n - 1 );
   puts( okay ? "Possible" : "Impossible" );
 }
 int main(){
