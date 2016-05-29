@@ -87,6 +87,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Petr Winter Camp 2016 rng58 | 2016/05/15  |  24  | **A** | B | C | **D** | E | F | . | H | I | J | **K** | L | . |
 | WF 2016                   | 2016/05/19    |      | **A** | **B** | C | D | E | **F** | G | . | **I** | . | K | L | **M** |
 | Petr Winter Camp 2015 rng58 | 2016/05/22  |  29  | A | **B** | C | D | . | . | **G** | H | . | J |
+| NEERC subregional 2012    | 2016/05/29    |   4  | A | B | C | D | . | F | G | H | I | J | K |
 
 - A : 賽內AC  
 - **A** : 賽後AC
