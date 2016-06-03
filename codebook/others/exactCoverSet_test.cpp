@@ -1,8 +1,7 @@
-// given n*m 0-1 matrix
-// find a set of rows s.t. 
-// for each column, there's exactly one 1
-#include <stdio.h>
-#include <string.h>
+// hust 1017
+// tested by eddy1021
+#include <bits/stdc++.h>
+using namespace std;
 #define N 1024 //row
 #define M 1024 //column
 #define NM ((N+2)*(M+2))
@@ -13,14 +12,12 @@ void remove(int c){
   L[R[c]]=L[c]; R[L[c]]=R[c];
   for( int i=D[c]; i!=c; i=D[i] )
     for( int j=R[i]; j!=i; j=R[j] ){
-      U[D[j]]=U[j]; D[U[j]]=D[j]; S[C[j]]--; 
-    }
+      U[D[j]]=U[j]; D[U[j]]=D[j]; S[C[j]]--; }
 }
 void resume(int c){
   for( int i=D[c]; i!=c; i=D[i] )
     for( int j=L[i]; j!=i; j=L[j] ){
-      U[D[j]]=D[U[j]]=j; S[C[j]]++; 
-    }
+      U[D[j]]=D[U[j]]=j; S[C[j]]++; }
   L[R[c]]=R[L[c]]=c;
 }
 int dfs(){
@@ -42,8 +39,7 @@ int dfs(){
 }
 int exact_cover(int n,int m){
   for( int i=0; i<=m; i++ ){
-    R[i]=i+1; L[i]=i-1; U[i]=D[i]=i; S[i]=0; C[i]=i;
-  }
+    R[i]=i+1; L[i]=i-1; U[i]=D[i]=i; S[i]=0; C[i]=i; }
   R[m]=0; L[0]=m;
   int t=m+1;
   for( int i=0; i<n; i++ ){
@@ -59,4 +55,30 @@ int exact_cover(int n,int m){
   }
   for( int i=0; i<n; i++ ) used[i]=0;
   return dfs();
+}
+int main(){
+  int n , m;
+  while( scanf( "%d %d" , &n , &m ) == 2 ){
+    for( int i = 0 ; i < n ; i ++ )
+      for( int j = 0 ; j < m ; j ++ )
+        A[ i ][ j ] = 0;
+    for( int i = 0 ; i < n ; i ++ ){
+      int xi , ti;
+      scanf( "%d" , &xi ); while( xi -- ){
+        scanf( "%d" , &ti );
+        A[ i ][ ti - 1 ] = 1;
+      }
+    }
+    int ans = exact_cover( n , m );
+    if( ans ){
+      vector<int> v;
+      for( int i = 0 ; i < n ; i ++ )
+        if( used[ i ] )
+          v.push_back( i + 1 );
+      printf( "%d" , (int)v.size() );
+      for( size_t i = 0 ; i < v.size() ; i ++ )
+        printf( " %d" , v[ i ] );
+      puts( "" );
+    }else puts( "NO" );
+  }
 }
