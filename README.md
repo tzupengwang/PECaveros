@@ -20,7 +20,7 @@ codebook by eddy1021, c2251393, tzupengwang
 - Link Cut Tree
 
 ## Geometry
-- Half plane intersection
+- Half plane intersection(tested with ASC45 pK by eddy)
 - Intersection of two circles (tested with opencupXVI by eddy)
 - LowerConcaveHull
 - MinEnclosingCircle
