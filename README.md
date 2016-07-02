@@ -89,6 +89,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Petr Winter Camp 2015 rng58 | 2016/05/22  |  29  | A | **B** | C | D | . | . | **G** | H | . | J |
 | NEERC subregional 2012    | 2016/05/29    |   4  | A | B | C | D | . | F | G | H | I | J | K |
 | ASC 45                    | 2016/06/05    |   3  | A | B | C | D | E | F | G | **H** | I | . | K |
+| NWERC 2011                | 2016/07/02    |   2  | A | B | C | D | E | F | G | H | I | J | 
 
 - A : 賽內AC  
 - **A** : 賽後AC
