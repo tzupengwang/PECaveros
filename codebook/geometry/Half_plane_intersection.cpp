@@ -1,36 +1,12 @@
-#include<bits/stdc++.h>
-using namespace std;
 #define PB push_back
-#define X first
-#define Y second
 const int MXL = 5000;
 const double eps = 1e-8;
-typedef pair<double, double> Pt;
-typedef pair<Pt, Pt> Line;
-Pt operator+( const Pt p1, const Pt p2 ){
-	return { p1.X + p2.X, p1.Y + p2.Y };
-}
-Pt operator-( const Pt p1, const Pt p2 ){
-	return { p1.X - p2.X, p1.Y - p2.Y };
-}
-Pt operator*( const Pt p, const double c ){
-	return { p.X * c, p.Y * c };
-}
-double operator^( const Pt p1 , const Pt p2 ){
-	return p1.X * p2.Y - p2.X * p1.Y;
-}
 vector<Line> lnlst;
 double atn[ MXL ];
 bool lncmp( int l1 , int l2 ){
 	return atn[ l1 ] < atn[ l2 ];	
 }
-Pt interPnt( Pt p1, Pt p2, Pt q1, Pt q2 ){
-	double f1 = ( p2 - p1 ) ^ ( q1 - p1 );
-	double f2 = ( p2 - p1 ) ^ ( p1 - q2 );
-	double f = ( f1 + f2 );
-	if( fabs( f ) < eps ) return Pt(nan(""), nan(""));
-	return q1 * ( f2 / f ) + q2 * ( f1 / f );
-}
+// need intersection of two lines here!!
 deque<Line> dq;
 void halfPlaneInter(){
 	int n = lnlst.size();
