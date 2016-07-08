@@ -90,7 +90,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | NEERC subregional 2012    | 2016/05/29    |   4  | A | B | C | D | . | F | G | H | I | J | K |
 | ASC 45                    | 2016/06/05    |   3  | A | B | C | D | E | F | G | **H** | I | . | K |
 | NWERC 2011                | 2016/07/02    |   2  | A | B | C | D | E | F | G | H | I | J | 
-| NEERC Regional 2014       | 2016/07/08    |  17  | A | B | . | . | E | F | . | . | I | J | K |
+| NEERC Regional 2014       | 2016/07/08    |   9  | A | B | . | . | E | F | . | H | I | J | K |
 
 - A : 賽內AC  
 - **A** : 賽後AC
