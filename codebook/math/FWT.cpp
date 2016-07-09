@@ -16,6 +16,19 @@
 typedef long long ll;
 const int MAXN = (1<<20)+10;
 const ll MOD = 1e9+7;
+
+inline ll pw( ll x , ll k , ll mod ) {
+  ll res = 1;
+  for( ll bs = x ; k ; k >>= 1 , bs = ( bs * bs ) % mod ) {
+    if( k&1 ) res = ( res * bs ) % mod;
+  }
+  return res;
+}
+
+inline ll inv( ll x , ll mod ) {
+  return pw( x , mod-2 , mod );
+}
+
 inline void fwt( ll x[ MAXN ] , int N , bool inv=0 ) {
   for( int d = 1 ; d < N ; d <<= 1 ) {
     int d2 = d<<1;
@@ -31,6 +44,6 @@ inline void fwt( ll x[ MAXN ] , int N , bool inv=0 ) {
   }
   if( inv )
     for( int i = 0 ; i < N ; i++ )
-      x[ i ] /= (ll)N;
+      x[ i ] /= inv( N , MOD );
 }
 
