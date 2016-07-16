@@ -1,102 +1,62 @@
-#define PB push_back
-const int MXL = 5000;
-const double eps = 1e-8;
-vector<Line> lnlst;
-double atn[ MXL ];
-bool lncmp( int l1 , int l2 ){
-	return atn[ l1 ] < atn[ l2 ];	
+Pt interPnt( Line l1, Line l2, bool &res ){
+  Pt p1, p2, q1, q2;
+  tie(p1, p2) = l1;
+  tie(q1, q2) = l2;
+  double f1 = (p2 - p1) ^ (q1 - p1);
+  double f2 = (p2 - p1) ^ (p1 - q2);
+  double f = (f1 + f2);
+  if( fabs(f) < eps) {
+    res = false;
+    return {0, 0};
+  }
+  res = true;
+  return q1 * (f2 / f) + q2 * (f1 / f);
 }
-// need intersection of two lines here!!
-deque<Line> dq;
-void halfPlaneInter(){
-	int n = lnlst.size();
-	vector<int> stlst;
-	for( int i = 0 ; i < n ; i ++ ){
-		stlst.PB( i );
-		Pt d = lnlst[ i ].second - lnlst[ i ].first;
-		atn[ i ] = atan2( d.Y, d.X );
-	}
-	sort( stlst.begin(), stlst.end(), lncmp );
-	vector<Line> lst;
-	for( int i = 0 ; i < n ; i ++ ){
-		if( i ){
-			int j = i - 1;
-			Line li = lnlst[ stlst[ i ] ];
-			Line lj = lnlst[ stlst[ j ] ];
-			Pt di = li.second - li.first;
-			Pt dj = lj.second - lj.first;
-			if( fabs( di ^ dj ) < eps ){
-				if( di ^ ( lj.second - li.second ) < 0 )
-					lst.pop_back();
-				else continue;
-			}
-		}
-		lst.PB( lnlst[ stlst[ i ] ] );
-	}
-	dq.PB( lst[0] );
-	dq.PB( lst[1] );
-	for( int i = 2 ; i < n ; i ++ ){
-		int dsz = dq.size();
-		Line l = lst[ i ];
-		while( dsz >= 2 ){
-			Line l1 = dq[ dsz-1 ];
-			Line l2 = dq[ dsz-2 ];
-			Pt it12 = interPnt( l1.first , l1.second ,
-                          l2.first , l2.second );
-			if( (l.second-l.first) ^ (it12-l.first) < 0 ){
-				dq.pop_back();
-				dsz --;
-			}else break;
-		}
-		while( dsz >= 2 ){
-			Line l1 = dq[ 0 ];
-			Line l2 = dq[ 1 ];
-			Pt it12 = interPnt( l1.first , l1.second ,
-                          l2.first , l2.second );
-			if( (l.second-l.first) ^ (it12-l.first) < 0 ){
-				dq.pop_front();
-				dsz --;
-			}else break;
-		}
-		Line l1 = dq[ dsz - 1 ];
-		if( !std::isnan( interPnt( l.first , l.second ,
-                          l1.first , l1.second ).X ) )
-			dq.PB(l);
-	}
-	int dsz = dq.size();
-	while( dsz >= 2 ){
-		Line l1 = dq[ dsz - 1 ];
-		Line l2 = dq[ dsz - 2 ];
-		Line l = dq[ 0 ];
-		Pt it12 = interPnt( l1.first, l1.second,
-                        l2.first, l2.second );
-		if( std::isnan( it12.X ) ){
-			dq.pop_back();
-			dq.pop_back();
-			dsz -= 2;
-		}else if( (l.second-l.first)^(it12-l.first)<0 ){
-			dq.pop_back();
-			dsz --;
-		}else break;
-	}
+bool isin( Line l0, Line l1, Line l2 ){
+  // Check inter(l1, l2) in l0
+  bool res;
+  Pt p = interPnt(l1, l2, res);
+  return ( (l0.SE - l0.FI) ^ (p - l0.FI) ) > eps;
 }
-void solve(){	
-	int N;
-	cin >> N;
-	for( int i = 0 ; i < N ; i ++ ){
-		double x1, x2, y1, y2;
-		cin >> x1 >> y1 >> x2 >> y2;
-		lnlst.PB( { Pt( x1 , y1 ), Pt( x2 , y2 ) } );
-    // --^--(x1,y1)--^--(x2,y2)--^-- upper
-	}
-	halfPlaneInter();
-	int dsz = dq.size();
-  // if dsz < 3: no intersection !!
-	cout << dsz << endl;
-	for(int i = 0 ; i < dsz ; i ++ ){
-		int j = ( i + 1 ) % dsz;
-		Pt it = interPnt( dq[ i ].first, dq[ i ].second,
-                      dq[ j ].first, dq[ j ].second );
-		cout << it.X << ' ' << it.Y << endl;
-	}
+/* If no solution, check: 1. ret.size() < 3
+ * Or more precisely, 2. interPnt(ret[0], ret[1])
+ * in all the lines. (use (l.S - l.F).cross(p - l.F) > 0
+ */
+/* --^-- Line.FI --^-- Line.SE --^-- */
+vector<Line> halfPlaneInter( vector<Line> lines ){
+  int sz = lines.size();
+  vector<double> ata(sz), ord(sz);
+  for( int i=0; i<sz; i++) {
+    ord[i] = i;
+    Pt d = lines[i].SE - lines[i].FI;
+    ata[i] = atan2(d.Y, d.X);
+  }
+  sort( ord.begin(), ord.end(), [&](int i, int j) {
+    if( fabs(ata[i] - ata[j]) < eps ){
+      return ( (lines[i].SE - lines[i].FI) ^ (lines[j].SE - lines[i].FI) )< 0;
+    }
+    return ata[i] < ata[j];
+  });
+  vector<Line> fin;
+  for (int i=0; i<sz; i++)
+    if (!i or fabs(ata[ord[i]] - ata[ord[i-1]]) > eps)
+      fin.PB(lines[ord[i]]);
+  deque<Line> dq;
+  for (int i=0; i<(int)(fin.size()); i++) {
+    while((int)(dq.size()) >= 2 and 
+        not isin(fin[i], dq[(int)(dq.size())-2], dq[(int)(dq.size())-1])) 
+      dq.pop_back();
+    while((int)(dq.size()) >= 2 and 
+        not isin(fin[i], dq[0], dq[1]))
+      dq.pop_front();
+    dq.push_back(fin[i]);
+  }
+  while( (int)(dq.size()) >= 3 and
+      not isin(dq[0], dq[(int)(dq.size())-2], dq[(int)(dq.size())-1])) 
+    dq.pop_back();
+  while( (int)(dq.size()) >= 3 and
+      not isin(dq[(int)(dq.size())-1], dq[0], dq[1])) 
+    dq.pop_front();
+  vector<Line> res(dq.begin(),dq.end());
+  return res;
 }
