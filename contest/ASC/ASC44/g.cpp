@@ -99,12 +99,12 @@ void modify( int no , int l , int r , int qpos , int lc , int rc ){
   lft[ no ] = lft[ L( no ) ] + lft[ R( no ) ];
   rgt[ no ] = rgt[ L( no ) ] + rgt[ R( no ) ];
   bst[ no ] = lft[ L( no ) ] + rgt[ R( no ) ];
-  pos[ no ] = mid;
+  pos[ no ] = mid + 1;
   if( bst[ L( no ) ] + rgt[ R( no ) ] > bst[ no ] ){
     bst[ no ] = bst[ L( no ) ] + rgt[ R( no ) ];
     pos[ no ] = pos[ L( no ) ];
   }
-  if( lft[ L( no ) ] + bst[ R( no ) ] > bst[ no ] ){
+  if( lft[ L( no ) ] + bst[ R( no ) ] >= bst[ no ] ){
     bst[ no ] = lft[ L( no ) ] + bst[ R( no ) ];
     pos[ no ] = pos[ R( no ) ];
   }
