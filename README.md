@@ -93,6 +93,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | NEERC Regional 2014       | 2016/07/08    |   9  | A | B | . | . | E | F | . | H | I | J | K |
 | ASC 44                    | 2016/07/23    |  29  | . | B | . | D | E | F | **G** | H | I | . | 
 | ASC 26                    | 2016/08/06    |   8  | A | B | C | D | E | **F** | G | H | I | J | 
+| NWERC 2014                | 2016/08/13    |   1  | **A** | B | C | D | E | F | G | H | I | J | K |
 
 - A : 賽內AC  
 - **A** : 賽後AC
