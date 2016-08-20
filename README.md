@@ -94,6 +94,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | ASC 44                    | 2016/07/23    |  29  | . | B | . | D | E | F | **G** | H | I | . | 
 | ASC 26                    | 2016/08/06    |   8  | A | B | C | D | E | **F** | G | H | I | J | 
 | NWERC 2014                | 2016/08/13    |   1  | **A** | B | C | D | E | F | G | H | I | J | K |
+| JAG 2013                  | 2016/08/20    |   1  | A | B | C | D | E | F | G | H | . | . | 
 
 - A : 賽內AC  
 - **A** : 賽後AC
