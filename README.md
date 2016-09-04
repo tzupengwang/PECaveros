@@ -97,6 +97,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | JAG 2013                  | 2016/08/20    |   1  | A | B | C | D | E | F | G | H | **I** | **J** | 
 | NEERC St.Petersburg 2015  | 2016/08/27    |   2  | A | B | . | D | . | F | G | H | I | J | K |
 | ASC 25                    | 2016/09/03    |   5  | A | B | C | D | E | F | **G** | H | I | J | 
+| NEERC Moscow 2011         | 2016/09/04    |   2  | A | B | C | D | E | F | G | H | I | J | K | L |
 
 - A : 賽內AC  
 - **A** : 賽後AC
