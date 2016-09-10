@@ -219,8 +219,6 @@ void solve(){
     if( okay( bmid ) ) bl = bmid;
     else br = bmid;
   }
-  // printf( "%.9f\n" , cal( { -22.511460, -28.297960 } ) );
-  // printf( "%.6f %.6f\n" , bl , br );
   printf( "%.9f %.9f\n" , ans.X , ans.Y );
 }
 int main(){
