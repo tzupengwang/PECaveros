@@ -8,7 +8,7 @@ struct MinCostMaxFlow{
   struct Edge{
     int v, cap, w, rev;
     Edge(){}
-    Edge(int t2, int t3, int t4, int t5) 
+    Edge(int t2, int t3, int t4, int t5)
     : v(t2), cap(t3), w(t4), rev(t5) {}
   };
   int V, s, t;
@@ -19,7 +19,6 @@ struct MinCostMaxFlow{
     for(int i = 1; i <= V; i++) g[i].clear();
   }
   void addEdge(int a, int b, int cap, int w){
-    //printf("addEdge %d %d %d %d\n", a, b, cap, w);
     g[a].push_back(Edge(b, cap, w, (int) g[b].size()));
     g[b].push_back(Edge(a, 0, -w, ((int) g[a].size()) - 1));
   }
@@ -29,7 +28,7 @@ struct MinCostMaxFlow{
   int mncmxf(){
     int mxf = 0, mnc = 0;
     while(1){
-      fill(d+1, d+1+V, -INF);
+      fill(d+1, d+1+V, INF);
       fill(inqu+1, inqu+1+V, 0);
       fill(mom+1, mom+1+V, -1);
       mom[s] = s;
@@ -43,8 +42,7 @@ struct MinCostMaxFlow{
         for(int i = 0; i < (int) g[u].size(); i++){
           Edge &e = g[u][i];
           int v = e.v;
-          if(e.cap > 0 && d[v] < d[u]+e.w){
-            // for min cost : d[v] > d[u]+e.w
+          if(e.cap > 0 && d[v] > d[u]+e.w){
             d[v] = d[u]+e.w;
             mom[v] = u;
             id[v] = i;
@@ -61,10 +59,8 @@ struct MinCostMaxFlow{
         e.cap             -= df;
         g[e.v][e.rev].cap += df;
       }
-      //printf("mxf %d mnc %d\n", mxf, mnc);
       mxf += df;
       mnc += df*d[t];
-      //printf("mxf %d mnc %d\n", mxf, mnc);
     }
     return mnc;
   }
