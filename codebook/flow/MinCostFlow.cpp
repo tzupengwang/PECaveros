@@ -24,7 +24,8 @@ struct MinCostMaxFlow{
   }
   int d[MAXV], id[MAXV], mom[MAXV];
   bool inqu[MAXV];
-  int qu[2000000], ql, qr;//the size of qu should be much large than MAXV
+  int qu[2000000], ql, qr;
+  //the size of qu should be much large than MAXV
   int mncmxf(){
     int mxf = 0, mnc = 0;
     while(1){

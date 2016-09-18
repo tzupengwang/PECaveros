@@ -1,16 +1,16 @@
 #define SOURCE 0
 #define SINK 1
 const unsigned int inf=4000000000u;
-int n,m,deg[MAXNUM],adj[MAXNUM][MAXNUM];
-unsigned int res[MAXNUM][MAXNUM],cap[MAXNUM][MAXNUM];
-int nei[MAXNUM],gdeg[MAXNUM],gadj[MAXNUM][MAXNUM];
-unsigned int gres[MAXNUM][MAXNUM];
-unsigned int cut[MAXNUM][MAXNUM];
-unsigned int cutarr[MAXNUM*MAXNUM];
-int cutn,ql,qr,que[MAXNUM],pred[MAXNUM];
-unsigned int aug[MAXNUM];
-bool cutset[MAXNUM];
-int visited[MAXNUM],visid=0;
+int n,m,deg[MAXN],adj[MAXN][MAXN];
+unsigned int res[MAXN][MAXN],cap[MAXN][MAXN];
+int nei[MAXN],gdeg[MAXN],gadj[MAXN][MAXN];
+unsigned int gres[MAXN][MAXN];
+unsigned int cut[MAXN][MAXN];
+unsigned int cutarr[MAXN*MAXN];
+int cutn,ql,qr,que[MAXN],pred[MAXN];
+unsigned int aug[MAXN];
+bool cutset[MAXN];
+int visited[MAXN],visid=0;
 inline void augment(int src,int sink) {
   int v=sink; unsigned a=aug[sink];
   while(v!=src) {

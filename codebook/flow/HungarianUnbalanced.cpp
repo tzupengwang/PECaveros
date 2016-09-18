@@ -82,5 +82,5 @@ inline int hungarian() {
         swap(cost[i][j],cost[j][i]);
   }
   // need special recovery if we want more info than matching value
-    return c;
+  return c;
 }

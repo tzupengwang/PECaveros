@@ -1,13 +1,13 @@
 #define NIL -1
 #define INF 100000000
 int n,matched;
-int cost[MAXNUM][MAXNUM];
-bool sets[MAXNUM]; // whether x is in set S
-bool sett[MAXNUM]; // whether y is in set T
-int xlabel[MAXNUM],ylabel[MAXNUM];
-int xy[MAXNUM],yx[MAXNUM]; // matched with whom
-int slack[MAXNUM]; // given y: min{xlabel[x]+ylabel[y]-cost[x][y]} | x not in S
-int prev[MAXNUM]; // for augmenting matching
+int cost[MAXN][MAXN];
+bool sets[MAXN]; // whether x is in set S
+bool sett[MAXN]; // whether y is in set T
+int xlabel[MAXN],ylabel[MAXN];
+int xy[MAXN],yx[MAXN]; // matched with whom
+int slack[MAXN]; // given y: min{xlabel[x]+ylabel[y]-cost[x][y]} | x not in S
+int prev[MAXN]; // for augmenting matching
 inline void relabel() {
   int i,delta=INF;
   for(i=0;i<n;i++) if(!sett[i]) delta=min(slack[i],delta);
