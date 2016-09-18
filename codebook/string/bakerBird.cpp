@@ -17,15 +17,15 @@ class Node { public:
   }
 };
 int srn,scn,prn,pcn,mrn,mcn;
-char s[MAXLEN][MAXLEN],p[MAXLEN][MAXLEN];
-int rm[MAXLEN][MAXLEN]; // rank matrix
+char s[MAXN][MAXN],p[MAXN][MAXN];
+int rm[MAXN][MAXN]; // rank matrix
 int maxrank;
-int seq[MAXLEN]; // index of patterns for radix sort
-int rank[MAXLEN]; // rank of pattern on row r
-int cnt[SIGMA+1],tmp[MAXLEN];
-int pre[MAXLEN]; // pre-matrix for kmp
+int seq[MAXN]; // index of patterns for radix sort
+int rank[MAXN]; // rank of pattern on row r
+int cnt[SIGMA+1],tmp[MAXN];
+int pre[MAXN]; // pre-matrix for kmp
 int ql,qr;
-Node* que[MAXLEN*MAXLEN];
+Node* que[MAXN*MAXN];
 inline void radix_pass(int j,int *from,int *to) {
   int i;
   for(i=0;i<SIGMA;i++) cnt[i]=0;

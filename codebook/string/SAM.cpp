@@ -51,6 +51,4 @@ struct SAM{
     for(int i = 0; str[i]; i++)
       push(str[i]-'a'+1);
   }
-};
-
-SAM sam;
+} sam;

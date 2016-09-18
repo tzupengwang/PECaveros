@@ -1,5 +1,5 @@
-char s[MAXLEN];
-int len,z[MAXLEN];
+char s[MAXN];
+int len,z[MAXN];
 void Z_value() {
 	int i,j,left,right;
 	left=right=0; z[0]=len;
