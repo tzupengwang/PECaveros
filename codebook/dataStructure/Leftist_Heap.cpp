@@ -13,7 +13,6 @@ int merge( int x, int y ){
   swap(tree[ x ].lc, tree[ x ].rc);
   return x;
 }
-
 /* Usage
 merge: root = merge(x, y)
 delmin: root = merge(root.lc, root.rc)
