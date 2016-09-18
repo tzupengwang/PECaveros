@@ -19,8 +19,8 @@ struct MinCostMaxFlow{
     for(int i = 1; i <= V; i++) g[i].clear();
   }
   void addEdge(int a, int b, int cap, int w){
-    g[a].push_back(Edge(b, cap, w, (int) g[b].size()));
-    g[b].push_back(Edge(a, 0, -w, ((int) g[a].size()) - 1));
+    g[a].push_back(Edge(b, cap, w, (int)g[b].size()));
+    g[b].push_back(Edge(a, 0, -w, (int)g[a].size()-1));
   }
   int d[MAXV], id[MAXV], mom[MAXV];
   bool inqu[MAXV];

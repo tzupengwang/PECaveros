@@ -80,13 +80,13 @@ int main(){
 	int n,m,i;
 	Pt p;
 	scanf("%d",&n);
-	for(i=0;i<n;i++) scanf("%lld %lld",&pt[i].X,&pt[i].Y);
+	for(i=0;i<n;i++) scanf("%lld%lld",&pt[i].X,&pt[i].Y);
 	scanf("%d",&m);
-	for(i=0;i<m;i++) scanf("%lld %lld",&qt[i].X,&qt[i].Y);
+	for(i=0;i<m;i++) scanf("%lld%lld",&qt[i].X,&qt[i].Y);
 	n=minkowskiSum(n,m);
 	for(i=0;i<n;i++) pt[i]=rt[i];
 	scanf("%d",&m);
-	for(i=0;i<m;i++) scanf("%lld %lld",&qt[i].X,&qt[i].Y);
+	for(i=0;i<m;i++) scanf("%lld%lld",&qt[i].X,&qt[i].Y);
 	n=minkowskiSum(n,m);
 	for(i=0;i<n;i++) pt[i]=rt[i];
 	initInConvex(n);

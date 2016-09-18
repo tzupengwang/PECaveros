@@ -81,12 +81,18 @@ struct Bigint{
       if (v[i]!=b.v[i]) return v[i]-b.v[i];
     return 0;
   }
-  bool operator < (const Bigint &b)const{ return cp3(b)<0; }
-  bool operator <= (const Bigint &b)const{ return cp3(b)<=0; }
-  bool operator == (const Bigint &b)const{ return cp3(b)==0; }
-  bool operator != (const Bigint &b)const{ return cp3(b)!=0; }
-  bool operator > (const Bigint &b)const{ return cp3(b)>0; }
-  bool operator >= (const Bigint &b)const{ return cp3(b)>=0; }
+  bool operator<(const Bigint &b)const
+    { return cp3(b)<0; }
+  bool operator<=(const Bigint &b)const
+    { return cp3(b)<=0; }
+  bool operator==(const Bigint &b)const
+    { return cp3(b)==0; }
+  bool operator!=(const Bigint &b)const
+    { return cp3(b)!=0; }
+  bool operator>(const Bigint &b)const
+    { return cp3(b)>0; }
+  bool operator>=(const Bigint &b)const
+    { return cp3(b)>=0; }
   Bigint operator - () const {
     Bigint r = (*this);
     r.s = -r.s;

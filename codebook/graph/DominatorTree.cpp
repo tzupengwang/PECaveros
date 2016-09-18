@@ -16,14 +16,14 @@ struct DominatorTree{
   int eval( int u ){
     if( mom[ u ] == u ) return u;
     int res = eval( mom[ u ] );
-    if( cmp( sdom[ mn[ mom[ u ] ] ] , sdom[ mn[ u ] ] ) )
+    if(cmp( sdom[ mn[ mom[ u ] ] ] , sdom[ mn[ u ] ] ))
       mn[ u ] = mn[ mom[ u ] ];
     return mom[ u ] = res;
   }
 
   void init( int _n , int _m , int _s ){
     ts = 0; n = _n; m = _m; s = _s;
-    REP( i , 1 , n ) g[ i ].clear() , pred[ i ].clear();
+    REP( i, 1, n ) g[ i ].clear(), pred[ i ].clear();
   }
   void addEdge( int u , int v ){
     g[ u ].push_back( v );
@@ -50,13 +50,15 @@ struct DominatorTree{
       if( u == 0 ) continue ;
       for( int v : pred[ u ] ) if( dfn[ v ] ){
         eval( v );
-        if( cmp( sdom[ mn[ v ] ] , sdom[ u ] ) ) sdom[ u ] = sdom[ mn[ v ] ];
+        if( cmp( sdom[ mn[ v ] ] , sdom[ u ] ) )
+          sdom[ u ] = sdom[ mn[ v ] ];
       }
       cov[ sdom[ u ] ].push_back( u );
       mom[ u ] = par[ u ];
       for( int w : cov[ par[ u ] ] ){
         eval( w );
-        if( cmp( sdom[ mn[ w ] ] , par[ u ] ) ) idom[ w ] = mn[ w ];
+        if( cmp( sdom[ mn[ w ] ] , par[ u ] ) )
+          idom[ w ] = mn[ w ];
         else idom[ w ] = par[ u ];
       }
       cov[ par[ u ] ].clear();
@@ -64,7 +66,8 @@ struct DominatorTree{
     REP( i , 2 , n ){
       int u = nfd[ i ];
       if( u == 0 ) continue ;
-      if( idom[ u ] != sdom[ u ] ) idom[ u ] = idom[ idom[ u ] ];
+      if( idom[ u ] != sdom[ u ] )
+        idom[ u ] = idom[ idom[ u ] ];
     }
   }
 } domT;

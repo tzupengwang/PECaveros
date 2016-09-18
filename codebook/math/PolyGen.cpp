@@ -1,13 +1,13 @@
-class PolynomialGenerator {
+class PolyGen {
   /* for a nth-order polynomial f(x), *
    * given f(0), f(1), ..., f(n) *
    * express f(x) as sigma_i{c_i*C(x,i)} */
  public:
   int n;
   vector<LL> coef;
-  // initialize and calculate f(x), vector _fx should be
-  // filled with f(0) to f(n)
-  PolynomialGenerator(int _n,vector<LL> _fx):n(_n),coef(_fx){
+  // initialize and calculate f(x), vector _fx should
+  // be filled with f(0) to f(n)
+  PolyGen(int _n,vector<LL> _fx):n(_n),coef(_fx){
     for(int i=0;i<n;i++)
       for(int j=n;j>i;j--)
         coef[j]-=coef[j-1];

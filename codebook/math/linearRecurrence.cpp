@@ -4,10 +4,10 @@ void pre_dp(){
   dp[ 0 ] = 1;
   LL bdr = min( m + m , n );
   for( LL i = 1 ; i <= bdr ; i ++ )
-    for( LL j = i - 1 ; j >= max( 0LL , i - m ) ; j -- )
+    for( LL j = i - 1 ; j >= max(0LL , i - m) ; j -- )
       dp[ i ] = add( dp[ i ] , dp[ j ] );
 }
-vector<LL> Mul( const vector<LL>& v1, const vector<LL>& v2 ){
+vector<LL> Mul( vector<LL>& v1, vector<LL>& v2 ){
   int _sz1 = (int)v1.size();
   int _sz2 = (int)v2.size();
   assert( _sz1 == m );
@@ -17,7 +17,8 @@ vector<LL> Mul( const vector<LL>& v1, const vector<LL>& v2 ){
 // expand
   for( int i = 0 ; i < _sz1 ; i ++ )
     for( int j = 0 ; j < _sz2 ; j ++ )
-      _v[ i + j + 1 ] = add( _v[ i + j + 1 ] , mul( v1[ i ] , v2[ j ] ) );
+      _v[ i + j + 1 ] = add( _v[ i + j + 1 ] ,
+                             mul(v1[ i ] , v2[ j ]) );
 // shrink
   for( int i = 0 ; i < m ; i ++ )
     for( int j = 1 ; j <= m ; j ++ )
@@ -47,6 +48,6 @@ void solve(){
   }
   LL ans = 0;
   for( int i = 0 ; i < m ; i ++ )
-    ans = add( ans , mul( I[ i ] , dp[ n - i - 1 - rdlt ] ) );
+    ans = add(ans, mul(I[i], dp[n - i - 1 - rdlt]));
   printf( "%lld\n" , ans );
 }

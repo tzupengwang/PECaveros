@@ -5,7 +5,7 @@ class PY{ public:
   Pt& operator[](const int x){ return pt[x]; }
   void input(){
     int i; n=4;
-    for(i=0;i<n;i++) scanf("%lf %lf",&pt[i].x,&pt[i].y);
+    for(i=0;i<n;i++) scanf("%lf%lf",&pt[i].x,&pt[i].y);
   }
   double getArea(){
     int i; double s=pt[n-1]^pt[0];

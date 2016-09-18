@@ -6,7 +6,8 @@
 //
 // fft( n , a );
 // fft( n , b );
-// for( int i = 0 ; i < n ; i++ ) c[ i ] = a[ i ] * b[ i ];
+// for( int i = 0 ; i < n ; i++ )
+//   c[ i ] = a[ i ] * b[ i ];
 // fft( n , c , 1 );
 //
 // then you have the result in c :: [cplx]
@@ -26,7 +27,8 @@ void fft(int n, cplx a[], bool inv=false){
   for (int m = n; m >= 2; m >>= 1) {
     int mh = m >> 1;
     for (int i = 0; i < mh; i++) {
-      cplx w = omega[inv ? MAXN-(i*theta%MAXN) : i*theta%MAXN];
+      cplx w = omega[inv ? MAXN-(i*theta%MAXN)
+                         : i*theta%MAXN];
       for (int j = i; j < n; j += m) {
         int k = j + mh;
         cplx x = a[j] - a[k];

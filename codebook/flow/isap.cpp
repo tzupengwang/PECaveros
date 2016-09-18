@@ -4,7 +4,8 @@ struct Maxflow {
   static const int INF  = 1000000;
   struct Edge {
     int v, c, r;
-    Edge(int _v, int _c, int _r) : v(_v), c(_c), r(_r) {}
+    Edge(int _v, int _c, int _r):
+      v(_v), c(_c), r(_r) {}
   };
   int s, t;
   vector<Edge> G[MAXV*2];

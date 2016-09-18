@@ -1,5 +1,5 @@
 /*
- * Edmond's algoirthm for Minimum Directed Spanning Tree
+ * Edmond's algoirthm for Directed MST
  * runs in O(VE)
  */
 const int MAXV = 10010;
@@ -30,7 +30,7 @@ inline int DMST(){
     fill(mnInW, mnInW+V+1, INF);
     fill(prv, prv+V+1, -1);
     REP(i, 1, E){
-      int u = edges[i].u, v = edges[i].v, c = edges[i].c;
+      int u=edges[i].u, v=edges[i].v, c=edges[i].c;
       if(u != v && v != root && c < mnInW[v])
         mnInW[v] = c, prv[v] = u;
     }

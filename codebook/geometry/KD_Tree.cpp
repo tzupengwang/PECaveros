@@ -49,11 +49,13 @@ struct KDTree {
   }
   int touch(Node* r, int x, int y, LL d2){
     LL dis = sqrt(d2)+1;
-    if (x<r->x1-dis || x>r->x2+dis || y<r->y1-dis || y>r->y2+dis)
+    if (x<r->x1-dis || x>r->x2+dis ||
+        y<r->y1-dis || y>r->y2+dis)
       return 0;
     return 1;
   }
-  void nearest(Node* r, int x, int y, int &mID, LL &md2) {
+  void nearest(Node* r, int x, int y,
+               int &mID, LL &md2){
     if (!r || !touch(r, x, y, md2)) return;
     LL d2 = dis2(r->x, r->y, x, y);
     if (d2 < md2 || (d2 == md2 && mID < r->id)) {

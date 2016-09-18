@@ -57,7 +57,8 @@ void splay(Splay *x){
   for (auto it : splayVec) it->push();
   while (!x->isr()) {
     if (x->f->isr()) rotate(x);
-    else if (x->dir()==x->f->dir()) rotate(x->f),rotate(x);
+    else if (x->dir()==x->f->dir())
+      rotate(x->f),rotate(x);
     else rotate(x),rotate(x);
   }
 }

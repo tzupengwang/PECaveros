@@ -32,7 +32,8 @@ struct HLD{
     ts++;
     tid[u] = tl[u] = tr[u] = ts;
     tdi[tid[u]] = u;
-    sort(ALL(g[u]), [&](int a, int b){return sz[a] > sz[b];});
+    sort(ALL(g[u]),
+         [&](int a, int b){return sz[a] > sz[b];});
     bool flag = 1;
     for(int& v:g[u]) if(v != mom[u][0]){
       if(flag) head[v] = head[u], flag = 0;
@@ -73,7 +74,7 @@ struct HLD{
   vector< tii > getPath( int u , int v ){
     vector< tii > res;
     while( tid[ u ] < tid[ head[ v ] ] ){
-      res.push_back( tii( tid[ head[ v ] ] , tid[ v ] ) );
+      res.push_back( tii(tid[ head[ v ] ] , tid[ v ]) );
       v = mom[ head[ v ] ][ 0 ];
     }
     res.push_back( tii( tid[ u ] , tid[ v ] ) );

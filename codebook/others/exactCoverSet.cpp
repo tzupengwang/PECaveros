@@ -8,7 +8,8 @@
 #define NM ((N+2)*(M+2))
 char A[N][M]; //n*m 0-1 matrix
 int used[N]; //answer: the row used
-int id[N][M],L[NM],R[NM],D[NM],U[NM],C[NM],S[NM],ROW[NM];
+int id[N][M];
+int L[NM],R[NM],D[NM],U[NM],C[NM],S[NM],ROW[NM];
 void remove(int c){
   L[R[c]]=L[c]; R[L[c]]=R[c];
   for( int i=D[c]; i!=c; i=D[i] )
@@ -42,7 +43,8 @@ int dfs(){
 }
 int exact_cover(int n,int m){
   for( int i=0; i<=m; i++ ){
-    R[i]=i+1; L[i]=i-1; U[i]=D[i]=i; S[i]=0; C[i]=i;
+    R[i]=i+1; L[i]=i-1; U[i]=D[i]=i;
+    S[i]=0; C[i]=i;
   }
   R[m]=0; L[0]=m;
   int t=m+1;

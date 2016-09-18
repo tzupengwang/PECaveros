@@ -36,7 +36,8 @@ inline void reroot(int r) { // r = new base row
 }
 int cyclic_lcs() {
   // a, b, al, bl should be properly filled
-  // note: a WILL be altered in process -- concatenated after itself
+  // note: a WILL be altered in process
+  //        -- concatenated after itself
   char tmp[MAXL];
   if(al>bl) {
     swap(al,bl);

@@ -16,7 +16,7 @@ const int MAXN = (1<<20)+10;
 const LL MOD = 1e9+7;
 inline LL pw( LL x , LL k ) {
   LL res = 1;
-  for( LL bs = x ; k ; k >>= 1 , bs = ( bs * bs ) % MOD ) {
+  for( LL bs = x ; k ; k >>= 1, bs = (bs * bs)%MOD ){
     if( k&1 ) res = ( res * bs ) % MOD;
   }
   return res;
@@ -28,7 +28,7 @@ inline void fwt( LL x[ MAXN ] , int N , bool inv=0 ) {
   for( int d = 1 ; d < N ; d <<= 1 ) {
     int d2 = d<<1;
     for( int s = 0 ; s < N ; s += d2 ) {
-      for( int i = s , j = s+d ; i < s+d ; i++ , j++ ) {
+      for( int i = s , j = s+d ; i < s+d ; i++, j++ ){
         LL ta = x[ i ] , tb = x[ j ];
         x[ i ] = ta+tb;
         x[ j ] = ta-tb;

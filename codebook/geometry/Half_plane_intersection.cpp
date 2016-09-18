@@ -20,7 +20,7 @@ bool isin( Line l0, Line l1, Line l2 ){
 }
 /* If no solution, check: 1. ret.size() < 3
  * Or more precisely, 2. interPnt(ret[0], ret[1])
- * in all the lines. (use (l.S - l.F).cross(p - l.F) > 0
+ * in all the lines. (use (l.S - l.F) ^ (p - l.F) > 0
  */
 /* --^-- Line.FI --^-- Line.SE --^-- */
 vector<Line> halfPlaneInter( vector<Line> lines ){
@@ -33,7 +33,8 @@ vector<Line> halfPlaneInter( vector<Line> lines ){
   }
   sort( ord.begin(), ord.end(), [&](int i, int j) {
     if( fabs(ata[i] - ata[j]) < eps ){
-      return ( (lines[i].SE - lines[i].FI) ^ (lines[j].SE - lines[i].FI) )< 0;
+      return ( (lines[i].SE - lines[i].FI) ^
+               (lines[j].SE - lines[i].FI) ) < 0;
     }
     return ata[i] < ata[j];
   });
@@ -44,7 +45,8 @@ vector<Line> halfPlaneInter( vector<Line> lines ){
   deque<Line> dq;
   for (int i=0; i<(int)(fin.size()); i++) {
     while((int)(dq.size()) >= 2 and 
-        not isin(fin[i], dq[(int)(dq.size())-2], dq[(int)(dq.size())-1])) 
+        not isin(fin[i], dq[(int)(dq.size())-2],
+                         dq[(int)(dq.size())-1])) 
       dq.pop_back();
     while((int)(dq.size()) >= 2 and 
         not isin(fin[i], dq[0], dq[1]))
@@ -52,7 +54,8 @@ vector<Line> halfPlaneInter( vector<Line> lines ){
     dq.push_back(fin[i]);
   }
   while( (int)(dq.size()) >= 3 and
-      not isin(dq[0], dq[(int)(dq.size())-2], dq[(int)(dq.size())-1])) 
+      not isin(dq[0], dq[(int)(dq.size())-2],
+                      dq[(int)(dq.size())-1]))
     dq.pop_back();
   while( (int)(dq.size()) >= 3 and
       not isin(dq[(int)(dq.size())-1], dq[0], dq[1])) 

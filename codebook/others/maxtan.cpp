@@ -11,7 +11,7 @@ struct Coord{
 }sum[MAXN], pnt[MAXN], ans, calc;
 
 inline bool cross(Coord a, Coord b, Coord c){
-	return (c.y - a.y) * (c.x - b.x) > (c.x - a.x) * (c.y - b.y);
+	return (c.y-a.y)*(c.x-b.x) > (c.x-a.x)*(c.y-b.y);
 }
 
 int main(){
@@ -26,11 +26,13 @@ int main(){
 	ans.x = now = 1;
 	ans.y = -1;
 	for (int i = 0; i <= n - l; i++){
-		while (np > 1 && cross(pnt[np - 2], pnt[np - 1], sum[i]))
+		while (np > 1 &&
+           cross(pnt[np - 2], pnt[np - 1], sum[i]))
 			np--;
 		if (np < now && np != 0) now = np;
 		pnt[np++] = sum[i];
-		while (now < np && !cross(pnt[now - 1], pnt[now], sum[i + l]))
+		while (now < np &&
+           !cross(pnt[now - 1], pnt[now], sum[i + l]))
 			now++;
 		calc = sum[i + l] - pnt[now - 1];
 		if (ans.y * calc.x < ans.x * calc.y){
@@ -39,7 +41,8 @@ int main(){
 			ed = i + l;
 		}
 	}
-	double res = (sum[ed].y-sum[st].y)/(sum[ed].x-sum[st].x);
+	double res = (sum[ed].y - sum[st].y) /
+               (sum[ed].x - sum[st].x);
 	printf("%f\n", res);
 	return 0;
 }

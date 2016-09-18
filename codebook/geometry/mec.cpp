@@ -1,5 +1,5 @@
 struct Mec{
-  // return pair of center and r^2
+  // return pair of center and r
   static const int N = 101010;
   int n;
   Pt p[ N ], cen;
