@@ -1,6 +1,6 @@
 /******* NEED REVISION *******/
 /* uva819 - gifts large and small */
-#define MAXNUM 100005
+#define MAXN 100005
 const double eps=1e-8;
 const double inf=1e15;
 class Coor {
@@ -41,7 +41,7 @@ const bool cmpf(const Coor &a,const Coor &b) {
 class Polygon {
  public:
   int pn;
-  Coor p[MAXNUM];
+  Coor p[MAXN];
   void convex_hull() {
     int i,tn=pn;
     for(i=1;i<pn;++i) if(p[i]<p[0]) swap(p[0],p[i]);
@@ -58,8 +58,8 @@ class Polygon {
 Polygon pol;
 double minarea,maxarea;
 int slpn;
-Coor slope[MAXNUM*2];
-Coor lrec[MAXNUM*2],rrec[MAXNUM*2],trec[MAXNUM*2],brec[MAXNUM*2];
+Coor slope[MAXN*2];
+Coor lrec[MAXN*2],rrec[MAXN*2],trec[MAXN*2],brec[MAXN*2];
 inline double xproject(Coor p,Coor slp) { return dot(p,slp)/slp.len(); }
 inline double yproject(Coor p,Coor slp) { return cross(p,slp)/slp.len(); }
 inline double calcarea(Coor lp,Coor rp,Coor bp,Coor tp,Coor slp) {

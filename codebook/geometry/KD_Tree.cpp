@@ -7,9 +7,9 @@ struct KDTree {
   }tree[MXN];
   int n;
   Node *root;
-  long long dis2(int x1, int y1, int x2, int y2) {
-    long long dx = x1-x2;
-    long long dy = y1-y2;
+  LL dis2(int x1, int y1, int x2, int y2) {
+    LL dx = x1-x2;
+    LL dy = y1-y2;
     return dx*dx+dy*dy;
   }
   static bool cmpx(Node& a, Node& b){ return a.x<b.x; }
@@ -38,7 +38,6 @@ struct KDTree {
       tree[M].y1 = min(tree[M].y1, tree[M].L->y1);
       tree[M].y2 = max(tree[M].y2, tree[M].L->y2);
     }
-
     tree[M].R = build_tree(M+1, R, dep+1);
     if (tree[M].R) {
       tree[M].x1 = min(tree[M].x1, tree[M].R->x1);
@@ -46,18 +45,17 @@ struct KDTree {
       tree[M].y1 = min(tree[M].y1, tree[M].R->y1);
       tree[M].y2 = max(tree[M].y2, tree[M].R->y2);
     }
-
     return tree+M;
   }
-  int touch(Node* r, int x, int y, long long d2){
-    long long dis = sqrt(d2)+1;
+  int touch(Node* r, int x, int y, LL d2){
+    LL dis = sqrt(d2)+1;
     if (x<r->x1-dis || x>r->x2+dis || y<r->y1-dis || y>r->y2+dis)
       return 0;
     return 1;
   }
-  void nearest(Node* r, int x, int y, int &mID, long long &md2) {
+  void nearest(Node* r, int x, int y, int &mID, LL &md2) {
     if (!r || !touch(r, x, y, md2)) return;
-    long long d2 = dis2(r->x, r->y, x, y);
+    LL d2 = dis2(r->x, r->y, x, y);
     if (d2 < md2 || (d2 == md2 && mID < r->id)) {
       mID = r->id;
       md2 = d2;
@@ -74,7 +72,7 @@ struct KDTree {
   }
   int query(int x, int y) {
     int id = 1029384756;
-    long long d2 = 102938475612345678LL;
+    LL d2 = 102938475612345678LL;
     nearest(root, x, y, id, d2);
     return id;
   }

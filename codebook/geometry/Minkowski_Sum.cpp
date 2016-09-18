@@ -6,7 +6,7 @@ int pos( const Pt& tp ){
 }
 #define N 300030
 Pt pt[ N ], qt[ N ], rt[ N ];
-long long Lx,Rx;
+LL Lx,Rx;
 int dn,un;
 inline bool cmp( Pt a, Pt b ){
 	int pa=pos( a ),pb=pos( b );
@@ -43,7 +43,7 @@ int minkowskiSum(int n,int m){
 }
 void initInConvex(int n){
 	int i,p,q;
-	long long Ly,Ry;
+	LL Ly,Ry;
 	Lx=INF; Rx=-INF;
 	for(i=0;i<n;i++){
 		if(pt[i].X<Lx) Lx=pt[i].X;
