@@ -98,9 +98,9 @@ codebook by eddy1021, c2251393, tzupengwang
 | NEERC St.Petersburg 2015  | 2016/08/27    |   2  | A | B | **C** | D | **E** | F | G | H | I | J | K |
 | ASC 25                    | 2016/09/03    |   5  | A | B | C | D | E | F | **G** | H | I | J | 
 | NEERC Moscow 2011         | 2016/09/04    |   2  | A | B | C | D | E | F | G | H | I | J | K | L |
-| Petr Summer Camp 2007 Japan | 2016/09/10  |   2  | A | B | C | **D** | . | F | G | H | I | J | 
+| Petr Summer Camp 2007 Japan | 2016/09/10  |   2  | A | B | C | **D** | X | F | G | H | I | J | 
 | Singapore 2015            | 2016/09/11    |   2  | A | . | C | D | E | F | G | H | I | J | **K** |
-| ASC 24                    | 2016/09/12    |  13  | A | . | C | D | E | F | **G** | H | I | J | 
+| ASC 24                    | 2016/09/12    |  13  | A | **B** | C | D | E | F | **G** | H | I | J | 
 
 - A : 賽內AC  
 - **A** : 賽後AC
