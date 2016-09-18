@@ -1,16 +1,17 @@
-const int maxn = 111;
-const int maxm = 111;
+const int MAXN = 111;
+const int MAXM = 111;
 const double eps = 1E-10;
-double a[maxn][maxm], b[maxn], c[maxm], d[maxn][maxm];
-double x[maxm];
-int ix[maxn + maxm]; // !!! array all indexed from 0
+double a[MAXN][MAXM], b[MAXN], c[MAXM], d[MAXN][MAXM];
+double x[MAXM];
+int ix[MAXN + MAXM]; // !!! array all indexed from 0
 // max{cx} subject to {Ax<=b,x>=0}
 // n: constraints, m: vars !!!
 // x[] is the optimal solution vector
 //
 // usage : 
 // value = simplex(a, b, c, N, M);
-double simplex(double a[maxn][maxm], double b[maxn], double c[maxm], int n, int m) {
+double simplex(double a[MAXN][MAXM], double b[MAXN],
+               double c[MAXM], int n, int m){
   ++m;
   int r = n, s = m - 1;
   memset(d, 0, sizeof(d));
@@ -55,4 +56,3 @@ double simplex(double a[maxn][maxm], double b[maxn], double c[maxm], int n, int 
   }
   return ans; 
 }
-

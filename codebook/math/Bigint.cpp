@@ -1,7 +1,6 @@
 struct Bigint{
   static const int LEN = 60;
   static const int BIGMOD = 10000;
-
   int s;
   int vl, v[LEN];
   //  vector<int> v;
@@ -31,7 +30,6 @@ struct Bigint{
     if (num) push_back(num);
     n();
   }
-
   int len() const {
     return vl;
     //    return SZ(v);
@@ -58,7 +56,6 @@ struct Bigint{
     //    v.resize(nl);
     //    fill(ALL(v), 0);
   }
-
   void print() const {
     if (empty()) { putchar('0'); return; }
     if (s == -1) putchar('-');
@@ -76,7 +73,6 @@ struct Bigint{
     }
     return out;
   }
-
   int cp3(const Bigint &b)const {
     if (s != b.s) return s - b.s;
     if (s == -1) return -(-*this).cp3(-b);
@@ -85,14 +81,12 @@ struct Bigint{
       if (v[i]!=b.v[i]) return v[i]-b.v[i];
     return 0;
   }
-
   bool operator < (const Bigint &b)const{ return cp3(b)<0; }
   bool operator <= (const Bigint &b)const{ return cp3(b)<=0; }
   bool operator == (const Bigint &b)const{ return cp3(b)==0; }
   bool operator != (const Bigint &b)const{ return cp3(b)!=0; }
   bool operator > (const Bigint &b)const{ return cp3(b)>0; }
   bool operator >= (const Bigint &b)const{ return cp3(b)>=0; }
-
   Bigint operator - () const {
     Bigint r = (*this);
     r.s = -r.s;
@@ -173,4 +167,3 @@ struct Bigint{
     return (*this)-(*this)/b*b;
   }
 };
-

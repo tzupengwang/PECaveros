@@ -1,4 +1,4 @@
-ll P=2013265921,root=31;
+LL P=2013265921,root=31;
 int MAXNUM=4194304;
 // Remember coefficient are mod P
 /*
@@ -28,18 +28,18 @@ n		2^n 				p 						a 		root
 26 	67108864 		469762049 		7 		3
 27 	134217728 	2013265921 		15 		31
 */
-ll bigmod(ll a,ll b){
+LL bigmod(LL a,LL b){
 	if(b==0)return 1;
-	return (bigmod((a*a)%P,b/2)*(b%2?a:1ll))%P;
+	return (bigmod((a*a)%P,b/2)*(b%2?a:1LL))%P;
 }
-ll inv(ll a,ll b){
+LL inv(LL a,LL b){
 	if(a==1)return 1;
-	return (((long long)(a-inv(b%a,a))*b+1)/a)%b;
+	return (((LL)(a-inv(b%a,a))*b+1)/a)%b;
 }
-std::vector<ll> ps(MAXNUM);
-std::vector<ll> rev(MAXNUM);
+std::vector<LL> ps(MAXNUM);
+std::vector<LL> rev(MAXNUM);
 struct poly{
-	std::vector<ll> co;
+	std::vector<LL> co;
 	int n;//polynomial degree = n
 	poly(int d){n=d;co.resize(n+1,0);}
 	void trans2(int NN){
@@ -80,11 +80,11 @@ struct poly{
 		ps[0]=1;
 		for(i=1;i<N;++i)ps[i]=(ps[i-1]*r)%P;
 		a.trans1(N);b.trans1(N);
-		for(i=0;i<N;++i)a.co[i]=((long long)a.co[i]*b.co[i])%P;
+		for(i=0;i<N;++i)a.co[i]=((LL)a.co[i]*b.co[i])%P;
 		r=inv(r,P);
 		for(i=1;i<N/2;++i)std::swap(ps[i],ps[N-i]);
 		a.trans2(N);
-		for(i=0;i<N;++i)a.co[i]=((long long)a.co[i]*Ni)%P;
+		for(i=0;i<N;++i)a.co[i]=((LL)a.co[i]*Ni)%P;
 		a.n=n+_b.n; return a;
 	}
 };

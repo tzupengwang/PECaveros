@@ -4,17 +4,17 @@ class PolynomialGenerator {
    * express f(x) as sigma_i{c_i*C(x,i)} */
  public:
   int n;
-  vector<ll> coef;
+  vector<LL> coef;
   // initialize and calculate f(x), vector _fx should be
   // filled with f(0) to f(n)
-  PolynomialGenerator(int _n,vector<ll> _fx):n(_n),coef(_fx){
+  PolynomialGenerator(int _n,vector<LL> _fx):n(_n),coef(_fx){
     for(int i=0;i<n;i++)
       for(int j=n;j>i;j--)
         coef[j]-=coef[j-1];
   }
   // evaluate f(x), runs in O(n)
-  ll eval(int x) {
-    ll m=1,ret=0;
+  LL eval(int x) {
+    LL m=1,ret=0;
     for(int i=0;i<=n;i++) {
       ret+=coef[i]*m;
       m=m*(x-i)/(i+1);

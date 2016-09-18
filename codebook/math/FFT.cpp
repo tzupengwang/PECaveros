@@ -10,21 +10,17 @@
 // fft( n , c , 1 );
 //
 // then you have the result in c :: [cplx]
-
 typedef long double ld;
 typedef complex<ld> cplx;
 const ld PI = acosl(-1);
 const cplx I(0, 1);
-
 cplx omega[MAXN+1];
-void pre_fft()
-{
+void pre_fft(){
   for(int i=0; i<=MAXN; i++)
     omega[i] = exp(i * 2 * PI / MAXN * I);
 }
 // n must be 2^k
-void fft(int n, cplx a[], bool inv=false)
-{
+void fft(int n, cplx a[], bool inv=false){
   int basic = MAXN / n;
   int theta = basic;
   for (int m = n; m >= 2; m >>= 1) {

@@ -1,8 +1,8 @@
 int pfn;
 // number of distinct prime factors
-int pf[MAXNUM]; // prime factor powers
-int rem[MAXNUM]; // corresponding remainder
-int pm[MAXNUM];
+int pf[MAXN]; // prime factor powers
+int rem[MAXN]; // corresponding remainder
+int pm[MAXN];
 inline void generate_primes() {
   int i,j;
   pnum=1;
@@ -43,8 +43,8 @@ inline int chinese_remainder() {
   int i,m,s=0;
   for(i=0;i<pfn;i++) {
     m=mod/pf[i];
-    pm[i]=(long long)m*inverse(m,pf[i])%mod;
-    s=(s+(long long)pm[i]*rem[i])%mod;
+    pm[i]=(LL)m*inverse(m,pf[i])%mod;
+    s=(s+(LL)pm[i]*rem[i])%mod;
   }
   return s;
 }
