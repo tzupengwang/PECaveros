@@ -42,7 +42,6 @@ struct Maxflow {
     }
     return 0;
   }
-
   int maxflow() {
     //puts("MF");
     int res = 0;
@@ -51,5 +50,4 @@ struct Maxflow {
     return res;
   }
 } flow;
-
 Maxflow::Edge e(1, 1, 1);
