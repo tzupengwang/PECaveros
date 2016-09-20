@@ -22,7 +22,7 @@ struct SteinerTree{
       for( int i = 0 ; i < n ; i ++ )
         for( int j = 0 ; j < n ; j ++ )
           dst[ i ][ j ] = min( dst[ i ][ j ],
-                               dst[ i ][ k ] + dst[ k ][ j ] );
+                dst[ i ][ k ] + dst[ k ][ j ] );
   }
   int solve( const vector<int>& ter ){
     int t = (int)ter.size();
@@ -42,12 +42,13 @@ struct SteinerTree{
         for( int submsk = ( msk - 1 ) & msk ; submsk ;
                  submsk = ( submsk - 1 ) & msk )
             dp[ msk ][ i ] = min( dp[ msk ][ i ],
-                                  dp[ submsk ][ i ] + dp[ msk ^ submsk ][ i ] );
+                            dp[ submsk ][ i ] +
+                            dp[ msk ^ submsk ][ i ] );
       for( int i = 0 ; i < n ; i ++ ){
         tdst[ i ] = INF;
         for( int j = 0 ; j < n ; j ++ )
           tdst[ i ] = min( tdst[ i ],
-                           dp[ msk ][ j ] + dst[ j ][ i ] );
+                     dp[ msk ][ j ] + dst[ j ][ i ] );
       }
       for( int i = 0 ; i < n ; i ++ )
         dp[ msk ][ i ] = tdst[ i ];
