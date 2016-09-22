@@ -42,8 +42,7 @@ inline void relabel(int v) {
 inline void initPreflow() {
   int i,u;
   for(i=0;i<n;i++) {
-    ht[i]=ef[i]=0;
-    apt[i]=0; inque[i]=0;
+    ht[i]=ef[i]=0; apt[i]=0; inque[i]=0;
   }
   ht[src]=n;
   for(i=0;i<deg[src];i++) {
@@ -61,8 +60,7 @@ inline void initPreflow() {
   for(i=0;i<n;i++) {
     if(i==src||i==sink) continue;
     if(ef[i]) {
-      inque[i]=1;
-      ovque[ht[i]].push(i);
+      inque[i]=1; ovque[ht[i]].push(i);
     }
     hcnt[ht[i]]++;
   }
@@ -74,8 +72,7 @@ inline void discharge(int v) {
   while(ef[v]) {
     if(apt[v]==deg[v]) {
       relabel(v);
-      apt[v]=0;
-      continue;
+      apt[v]=0; continue;
     }
     u=adj[v][apt[v]];
     if(res[v][u]&&ht[v]==ht[u]+1) push(v,u);
@@ -88,8 +85,7 @@ inline void hlppa() {
   initPreflow();
   while(htodo>=0) {
     if(!ovque[htodo].size()) {
-      htodo--;
-      continue;
+      htodo--; continue;
     }
     v=ovque[htodo].front();
     ovque[htodo].pop();
