@@ -102,8 +102,8 @@ codebook by eddy1021, c2251393, tzupengwang
 | Singapore 2015            | 2016/09/11    |   2  | A | . | C | D | E | F | G | H | I | J | **K** |
 | ASC 24                    | 2016/09/12    |  13  | A | **B** | C | D | E | F | **G** | H | I | J | 
 | NEERC Subregional 2014    | 2016/09/19    |   9  | A | B | . | D | E | F | G | H | . | J | K | L |
-| ASC 43                    | 2016/09/26    |  20  | . | B | . | D | . | . | G | H | I | J | K | L |
-| NEERC Subregional 2010    | 2016/10/08    |   3  | A | B | C | D | E | F | . | H | I | J | K |
+| ASC 43                    | 2016/09/26    |  20  | . | B | **C** | D | **E** | . | G | H | I | J | K | L |
+| NEERC Subregional 2010    | 2016/10/08    |   3  | A | B | C | D | E | F | **G** | H | I | J | K |
 
 - A : 賽內AC  
 - **A** : 賽後AC
