@@ -1,19 +1,14 @@
 string mcp(string s){
   int n = s.length();
   s += s;
-  int i=0, j=1, k=0;
-  while (j<n && k<n){
-    if (s[i+k] == s[j+k]) k++;
-    else {
-      if (s[i+k] < s[j+k]) {
-        j += k + 1;
-      } else {
-        i = j;
-        j = max(j+1, j+k);
-      }
-      k = 0;
-    }
+  int i=0, j=1;
+  while (i<n && j<n){
+    int k = 0;
+    while (k < n && s[i+k] == s[j+k]) k++;
+    if (s[i+k] <= s[j+k]) j += k+1;
+    else i += k+1;
+    if (i == j) j++;
   }
-  return s.substr(i, n);
+  int ans = i < n ? i : j;
+  return s.substr(ans, n);
 }
-
