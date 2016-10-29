@@ -107,6 +107,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | ASC 42                    | 2016/10/17    |   1  | . | B | C | D | . | F | G | H | I | J |
 | Daejeon 2015              | 2016/10/22    |   1  | A | B | C | D | E | F | G | H | I | J | K | L |
 | ASC 41                    | 2016/10/24    |  11  | A | . | . | D | E | . | G | H | I | J |
+| Jakarta 2015              | 2016/10/29    |   1  | A | B | C | D | . | F | G | H | I | . | K | L |
 
 - A : 賽內AC  
 - **A** : 賽後AC
