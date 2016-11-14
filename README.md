@@ -110,6 +110,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Jakarta 2015              | 2016/10/29    |   1  | A | B | C | D | **E** | F | G | H | I | . | K | L |
 | ASC 39                    | 2016/10/31    |   3  | A | . | C | D | E | . | G | H | I | J |
 | Phuket 2015               | 2016/11/05    |   2  | A | B | **C** | D | E | F | G | H | I | . | . | L |
+| ASC 38                    | 2016/11/14    |   4  | A | B | C | D | E | . | G | H | . | J |
 
 - A : 賽內AC  
 - **A** : 賽後AC
