@@ -109,7 +109,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | ASC 41                    | 2016/10/24    |  11  | A | . | . | D | E | . | G | H | I | J |
 | Jakarta 2015              | 2016/10/29    |   1  | A | B | C | D | **E** | F | G | H | I | **J** | K | L |
 | ASC 39                    | 2016/10/31    |   3  | A | . | C | D | E | . | G | H | I | J |
-| Phuket 2015               | 2016/11/05    |   2  | A | B | **C** | D | E | F | G | H | I | **J** | . | L |
+| Phuket 2015               | 2016/11/05    |   2  | A | B | **C** | D | E | F | G | H | I | **J** | **K** | L |
 | ASC 38                    | 2016/11/14    |   4  | A | B | C | D | E | . | G | H | **I** | J |
 
 - A : 賽內AC  
