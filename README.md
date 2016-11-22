@@ -112,7 +112,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Phuket 2015               | 2016/11/05    |   2  | A | B | **C** | D | E | F | G | H | I | **J** | **K** | L |
 | ASC 38                    | 2016/11/14    |   4  | A | B | C | D | E | . | G | H | **I** | J |
 | SEERC 2015                | 2016/11/19    |   4  | A | B | C | D | E | F | G | H | I | . |
-| ASC 34                    | 2016/11/14    |  10  | . | B | C | . | E | F | . | H | I | J |
+| ASC 34                    | 2016/11/14    |  10  | . | B | C | . | E | F | **G** | H | I | J |
 
 - A : 賽內AC  
 - **A** : 賽後AC
