@@ -100,18 +100,11 @@ stringstyle=\itshape\color{Green4},
 \subsection{Increase Stack Size}
 \lstinputlisting{basic/IncStack.cpp}
 
-\subsection{random generator}
-\lstinputlisting{basic/random.cpp}
+\subsection{Misc}
+\lstinputlisting{basic/misc.cpp}
 
-\subsection{time clock}
-\lstinputlisting{basic/time.cpp}
 
 \section{flow}
-% \subsection{Dinic}
-% \lstinputlisting{flow/dinic.cpp}
-
-\subsection{DMST}
-\lstinputlisting{flow/DMST.cpp}
 
 \subsection{ISAP}
 \lstinputlisting{flow/isap.cpp}
@@ -119,26 +112,29 @@ stringstyle=\itshape\color{Green4},
 \subsection{MinCostFlow}
 \lstinputlisting{flow/MinCostFlow.cpp}
 
-\subsection{SW min-cut}
-\lstinputlisting{flow/SW-mincut.cpp}
-
-\subsection{HLPPA}
-\lstinputlisting{flow/HLPPA.cpp}
-
 \subsection{Hungarian}
 \lstinputlisting{flow/Hungarian.cpp}
 
 \subsection{Hungarian Unbalanced}
 \lstinputlisting{flow/HungarianUnbalanced.cpp}
 
-\subsection{Gusfield}
-\lstinputlisting{flow/gusfield.cpp}
+\subsection{DMST}
+\lstinputlisting{flow/DMST.cpp}
+
+\subsection{SW min-cut}
+\lstinputlisting{flow/SW-mincut.cpp}
+
+\subsection{Max Cost Circulation}
+\lstinputlisting{flow/MaxCostCirculation.cpp}
+
+%\subsection{Gusfield}
+%\lstinputlisting{flow/gusfield.cpp}
 
 \subsection{Max flow with lower/upper bound}
 \lstinputlisting{flow/BoundedMaxflow.cpp }
 
-\subsection{Relabel to Front}
-\lstinputlisting{flow/relabelToFront.cpp}
+%\subsection{Relabel to Front}
+%\lstinputlisting{flow/relabelToFront.cpp}
 
 \subsection{Flow Method}
 \lstinputlisting{flow/FlowMethod.txt}
@@ -183,6 +179,24 @@ stringstyle=\itshape\color{Green4},
 \subsection{ax+by=gcd}
 \lstinputlisting{math/ax+by=gcd.cpp}
 
+\subsection{Discrete sqrt}
+\lstinputlisting{math/DiscreteSqrt.cpp}
+
+\subsection{SchreierSims}
+\lstinputlisting{math/SchreierSims.cpp}
+
+%\subsection{Romberg}
+%\lstinputlisting{math/Romberg.cpp}
+
+\subsection{Discrete K-th sqrt}
+\lstinputlisting{math/DiscreteKthsqrt.cpp}
+
+\subsection{Prefix Inverse}
+\lstinputlisting{math/prefixInv.cpp}
+
+\subsection{Roots of Polynomial}
+\lstinputlisting{math/rootsOfPolynomial.cpp}
+
 \subsection{Mod}
 \lstinputlisting{math/MOD.cpp}
 
@@ -191,6 +205,7 @@ stringstyle=\itshape\color{Green4},
 
 \subsection{Result}
 \lstinputlisting{math/theorem.cpp}
+
 
 \section{Geometry}
 
@@ -207,23 +222,36 @@ stringstyle=\itshape\color{Green4},
 
 % \lstinputlisting{geometry/Intersection_of_two_lines.cpp}
 
-\subsection{Intersection of 2 circles}
-\lstinputlisting{geometry/Intersection_of_two_circles.cpp}
-
 \subsection{Intersection of 2 segments}
 \lstinputlisting{geometry/Intersection_of_two_segments.cpp}
+
+\subsection{Intersection of polygon and circle}
+\lstinputlisting{geometry/Intersection_of_polygon_and_circle.cpp}
+
+\subsection{Intersection of 2 circles}
+\subsection{Circle cover}
+\lstinputlisting{geometry/CircleCover.cpp}
+
+\subsection{Convex Hull trick}
+\lstinputlisting{geometry/ConvexHulltrick.cpp}
 
 \subsection{KD Tree}
 \lstinputlisting{geometry/KD_Tree.cpp}
 
-\subsection{Poly Union}
-\lstinputlisting{geometry/polyUnion.cpp}
+%\subsection{Poly Union}
+%\lstinputlisting{geometry/polyUnion.cpp}
 
 \subsection{Lower Concave Hull}
 \lstinputlisting{geometry/lowerConcaveHull.cpp}
 
+\subsection{Delaunay Triangulation}
+\lstinputlisting{geometry/DelaunayTriangulation.cpp}
+
 \subsection{Min Enclosing Circle}
 \lstinputlisting{geometry/mec.cpp}
+
+\subsection{Min Enclosing Ball}
+\lstinputlisting{geometry/minEnclosingBall.cpp}
 
 \subsection{Minkowski sum}
 \lstinputlisting{geometry/Minkowski_Sum.cpp}
@@ -231,8 +259,14 @@ stringstyle=\itshape\color{Green4},
 % \subsection{Min Enclosing Circle}
 % \lstinputlisting{geometry/minEnclosingCircle.cpp}
 
-\subsection{Min/Max Enclosing Rectangle}
-\lstinputlisting{geometry/minMaxEnclosingRectangle.cpp}
+%\subsection{Min/Max Enclosing Rectangle}
+%\lstinputlisting{geometry/minMaxEnclosingRectangle.cpp}
+
+%\subsection{Min dist on Cuboid}
+%\lstinputlisting{geometry/minDistonCuboid.cpp}
+
+\subsection{Heart of Triangle}
+\lstinputlisting{geometry/triangle.cpp}
 
 \section{Graph}
 \subsection{HeavyLightDecomp}
@@ -248,8 +282,14 @@ stringstyle=\itshape\color{Green4},
 % \lstinputlisting{graph/MaxClique.cpp}
 \lstinputlisting{graph/MaximumClique.cpp}
 
+\subsection{Number of Maximal Clique}
+\lstinputlisting{graph/NumberofMaximalClique.cpp}
+
 \subsection{Strongly Connected Component}
 \lstinputlisting{graph/kosaraju.cpp}
+
+\subsection{Dynamic MST}
+\lstinputlisting{graph/DynamicMST.cpp}
 
 \subsection{Minimum General Weighted Matching}
 \lstinputlisting{graph/Minimum_General_Weighted_Matching.cpp}
@@ -259,6 +299,9 @@ stringstyle=\itshape\color{Green4},
 
 \subsection{BCC based on vertex}
 \lstinputlisting{graph/bcc_vertex.cpp}
+
+\subsection{Graph Hash}
+\lstinputlisting{graph/graphHash.tex}
 
 
 \section{String}
@@ -286,11 +329,11 @@ stringstyle=\itshape\color{Green4},
 \subsection{Smallest Rotation}
 \lstinputlisting{string/smallest_rotation.cpp}
 
-\subsection{Baker Bird}
-\lstinputlisting{string/bakerBird.cpp}
+%\subsection{Baker Bird}
+%\lstinputlisting{string/bakerBird.cpp}
 
-\subsection{Cyclic LCS}
-\lstinputlisting{string/cyclicLCS.cpp}
+%\subsection{Cyclic LCS}
+%\lstinputlisting{string/cyclicLCS.cpp}
 
 \section{Data Structure}
 
@@ -303,8 +346,8 @@ stringstyle=\itshape\color{Green4},
 \subsection{Disjoint Set}
 \lstinputlisting{dataStructure/DisjointSet.cpp}
 
-\subsection{Pairing Heap}
-\lstinputlisting{dataStructure/pairing_heap.cpp}
+%\subsection{Pairing Heap}
+%\lstinputlisting{dataStructure/pairing_heap.cpp}
 
 \subsection{Leftist Heap}
 \lstinputlisting{dataStructure/Leftist_Heap.cpp}
@@ -314,8 +357,8 @@ stringstyle=\itshape\color{Green4},
 
 \section{Others}
 
-\subsection{Find max tangent(x,y is increasing)}
-\lstinputlisting{others/maxtan.cpp}
+%\subsection{Find max tangent(x,y is increasing)}
+%\lstinputlisting{others/maxtan.cpp}
 
 \subsection{Exact Cover Set}
 \lstinputlisting{others/exactCoverSet.cpp}

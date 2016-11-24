@@ -38,6 +38,15 @@ struct SAM{
     }
     lst = np;
   }
+  void print(){
+    REP(i, 1, tot){
+      printf("node %d :\n", i);
+      printf("mx %d, mom %d\n", mx[i], mom[i]);
+      REP(j, 1, 26) if(nxt[i][j])
+        printf("nxt %c %d\n", 'a'+j-1, nxt[i][j]);
+      puts("---------------------------");
+    }
+  }
   void push(char *str){
     for(int i = 0; str[i]; i++)
       push(str[i]-'a'+1);

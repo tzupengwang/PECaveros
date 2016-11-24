@@ -1,5 +1,4 @@
-/*
- * xor convolution:
+/* xor convolution:
  * x = (x0,x1) , y = (y0,y1)
  * z = ( x0y0 + x1y1 , x0y1 + x1y0 )
  * =>
@@ -9,8 +8,7 @@
  * or convolution:
  * x = ( x0 , x0+x1 )
  * and convolution:
- * x = ( x0+x1 , x1 )
- */
+ * x = ( x0+x1 , x1 ) */
 typedef long long LL;
 const int MAXN = (1<<20)+10;
 const LL MOD = 1e9+7;

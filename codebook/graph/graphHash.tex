@@ -1,0 +1,8 @@
+$$F_t(i) = 
+  (F_{t-1}(i) \times A + 
+  \sum_{i\rightarrow j} F_{t-1}(j) \times B + 
+  \sum_{j\rightarrow i} F_{t-1}(j) \times C +
+  D \times (i = a))\ mod\ P
+$$
+for each node i, iterate t times.
+t, A, B, C, D, P are hash parameter

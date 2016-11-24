@@ -4,30 +4,25 @@ struct Splay {
   static Splay nil, mem[MEM], *pmem;
   Splay *ch[2], *f;
   int val, rev, size;
-  Splay () : val(-1), rev(0), size(0){
-    f = ch[0] = ch[1] = &nil;
-  }
-  Splay (int _val) : val(_val), rev(0), size(1){
-    f = ch[0] = ch[1] = &nil;
-  }
-  bool isr(){
-    return f->ch[0] != this && f->ch[1] != this;
-  }
-  int dir(){
-    return f->ch[0] == this ? 0 : 1;
-  }
+  Splay () : val(-1), rev(0), size(0)
+  { f = ch[0] = ch[1] = &nil; }
+  Splay (int _val) : val(_val), rev(0), size(1)
+  { f = ch[0] = ch[1] = &nil; }
+  bool isr()
+  { return f->ch[0] != this && f->ch[1] != this; }
+  int dir()
+  { return f->ch[0] == this ? 0 : 1; }
   void setCh(Splay *c, int d){
     ch[d] = c;
     if (c != &nil) c->f = this;
     pull();
   }
   void push(){
-    if (rev){
-      swap(ch[0], ch[1]);
-      if (ch[0] != &nil) ch[0]->rev ^= 1;
-      if (ch[1] != &nil) ch[1]->rev ^= 1;
-      rev=0;
-    }
+    if( !rev ) return;
+    swap(ch[0], ch[1]);
+    if (ch[0] != &nil) ch[0]->rev ^= 1;
+    if (ch[1] != &nil) ch[1]->rev ^= 1;
+    rev=0;
   }
   void pull(){
     size = ch[0]->size + ch[1]->size + 1;
@@ -45,7 +40,6 @@ void rotate(Splay *x){
   x->setCh(p, !d);
 	p->pull(); x->pull();
 }
-
 vector<Splay*> splayVec;
 void splay(Splay *x){
   splayVec.clear();
@@ -122,4 +116,3 @@ int main(int argc, char** argv){
     }
   }
 }
-

@@ -28,7 +28,7 @@ struct Mec{
       r2 = 0;
       for (int j=0; j<i; j++){
         if (norm2(cen-p[j]) <= r2) continue;
-        cen = Pt((p[i].X+p[j].X)*0.5, (p[i].Y+p[j].Y)*0.5);
+        cen=Pt((p[i].X+p[j].X)/2,(p[i].Y+p[j].Y)/2);
         r2 = norm2(cen-p[j]);
         for (int k=0; k<j; k++){
           if (norm2(cen-p[k]) <= r2) continue;

@@ -1,6 +1,4 @@
-
 struct MaxCostCirc {
-
   static const int MAXN = 33;
   int n , m;
   struct Edge {
@@ -10,17 +8,12 @@ struct MaxCostCirc {
   int dis[ MAXN ] , prv[ MAXN ] , prve[ MAXN ];
   bool vis[ MAXN ];
   int ans;
-
-  void init( int _n , int _m ) {
-    n = _n , m = _m;
-  }
-
-  inline void adde( int u , int v , int w , int c ) {
+  void init( int _n , int _m ) : n(_n), m(_m) {}
+  void adde( int u , int v , int w , int c ) {
     g[ u ].push_back( { v , w , c , SZ( g[ v ] ) } );
     g[ v ].push_back( { u , -w , 0 , SZ( g[ u ] )-1 } );
   }
-
-  inline bool poscyc() {
+  bool poscyc() {
     fill( dis , dis+n+1 , 0 );
     fill( prv , prv+n+1 , 0 );
     fill( vis , vis+n+1 , 0 );
@@ -49,25 +42,21 @@ struct MaxCostCirc {
     }
     int now = cur;
     int cost = 0 , df = 100000;
-
-    do {
+    do{
       Edge &e = g[ prv[ now ] ][ prve[ now ] ];
       df = min( df , e.c );
       cost += e.w;
       now = prv[ now ];
-    } while( now != cur );
+    }while( now != cur );
     ans += df*cost;
-
     now = cur;
-    do {
+    do{
       Edge &e = g[ prv[ now ] ][ prve[ now ] ];
       Edge &re = g[ now ][ e.r ];
       e.c -= df;
       re.c += df;
       now = prv[ now ];
-    } while( now != cur );
-
+    }while( now != cur );
     return 1;
   }
-
 } circ;

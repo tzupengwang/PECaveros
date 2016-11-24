@@ -31,16 +31,12 @@ vector<LL> Mul( vector<LL>& v1, vector<LL>& v2 ){
 vector<LL> I, A;
 void solve(){
   pre_dp();
-  if( n <= m + m ){
-    printf( "%lld\n" , dp[ n ] );
-    exit( 0 );
-  }
-  I.resize( m );
-  A.resize( m );
+  if( n <= m + m )
+  { printf( "%lld\n" , dp[ n ] ); exit( 0 ); }
+  I.resize( m ); A.resize( m );
   for( int i = 0 ; i < m ; i ++ ) I[ i ] = A[ i ] = 1;
 // dp[ n ] = /Sum_{i=0}^{m-1} A_i * dp[ n - i - 1 ]
-  LL dlt = ( n - m ) / m;
-  LL rdlt = dlt * m;
+  LL dlt = ( n - m ) / m, rdlt = dlt * m;
   while( dlt ){
     if( dlt & 1LL ) I = Mul( I , A );
     A = Mul( A , A );

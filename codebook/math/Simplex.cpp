@@ -7,7 +7,6 @@ int ix[MAXN + MAXM]; // !!! array all indexed from 0
 // max{cx} subject to {Ax<=b,x>=0}
 // n: constraints, m: vars !!!
 // x[] is the optimal solution vector
-//
 // usage : 
 // value = simplex(a, b, c, N, M);
 double simplex(double a[MAXN][MAXM], double b[MAXN],

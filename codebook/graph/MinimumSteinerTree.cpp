@@ -4,7 +4,7 @@ struct SteinerTree{
 #define V 33
 #define T 8
 #define INF 1023456789
-  int n , dst[ V ][ V ] , dp[ 1 << T ][ V ] , tdst[ V ];
+  int n , dst[V][V] , dp[1 << T][V] , tdst[V];
   void init( int _n ){
     n = _n;
     for( int i = 0 ; i < n ; i ++ ){

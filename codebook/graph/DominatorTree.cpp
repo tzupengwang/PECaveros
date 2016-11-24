@@ -9,10 +9,8 @@ struct DominatorTree{
   int par[ MAXN ];
   int sdom[ MAXN ] , idom[ MAXN ];
   int mom[ MAXN ] , mn[ MAXN ];
-
   inline bool cmp( int u , int v )
   { return dfn[ u ] < dfn[ v ]; }
-
   int eval( int u ){
     if( mom[ u ] == u ) return u;
     int res = eval( mom[ u ] );
@@ -20,7 +18,6 @@ struct DominatorTree{
       mn[ u ] = mn[ mom[ u ] ];
     return mom[ u ] = res;
   }
-
   void init( int _n , int _m , int _s ){
     ts = 0; n = _n; m = _m; s = _s;
     REP( i, 1, n ) g[ i ].clear(), pred[ i ].clear();

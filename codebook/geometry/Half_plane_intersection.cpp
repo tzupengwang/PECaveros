@@ -5,10 +5,8 @@ Pt interPnt( Line l1, Line l2, bool &res ){
   double f1 = (p2 - p1) ^ (q1 - p1);
   double f2 = (p2 - p1) ^ (p1 - q2);
   double f = (f1 + f2);
-  if( fabs(f) < eps) {
-    res = false;
-    return {0, 0};
-  }
+  if( fabs(f) < eps)
+  { res = false; return {0, 0}; }
   res = true;
   return q1 * (f2 / f) + q2 * (f1 / f);
 }
@@ -32,10 +30,9 @@ vector<Line> halfPlaneInter( vector<Line> lines ){
     ata[i] = atan2(d.Y, d.X);
   }
   sort( ord.begin(), ord.end(), [&](int i, int j) {
-    if( fabs(ata[i] - ata[j]) < eps ){
+    if( fabs(ata[i] - ata[j]) < eps )
       return ( (lines[i].SE - lines[i].FI) ^
                (lines[j].SE - lines[i].FI) ) < 0;
-    }
     return ata[i] < ata[j];
   });
   vector<Line> fin;

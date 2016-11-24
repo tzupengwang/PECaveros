@@ -1,8 +1,7 @@
-class PolyGen {
+struct PolyGen{
   /* for a nth-order polynomial f(x), *
    * given f(0), f(1), ..., f(n) *
    * express f(x) as sigma_i{c_i*C(x,i)} */
- public:
   int n;
   vector<LL> coef;
   // initialize and calculate f(x), vector _fx should
@@ -13,9 +12,9 @@ class PolyGen {
         coef[j]-=coef[j-1];
   }
   // evaluate f(x), runs in O(n)
-  LL eval(int x) {
-    LL m=1,ret=0;
-    for(int i=0;i<=n;i++) {
+  LL eval(int x){
+    LL m=1, ret=0;
+    for(int i=0;i<=n;i++){
       ret+=coef[i]*m;
       m=m*(x-i)/(i+1);
     }

@@ -59,8 +59,4 @@ struct PalT{
     nd[ 1 ].cnt = nd[ 2 ].cnt = 0ll;
   }
 } pA;
-int main(){
-  pA.init( sa );
-}
-
-
+int main(){ pA.init( sa ); }

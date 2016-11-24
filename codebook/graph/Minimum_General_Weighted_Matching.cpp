@@ -10,9 +10,8 @@ struct Graph {
       for( int j = 0 ; j < n ; j ++ )
         edge[ i ][ j ] = 0;
   }
-  void add_edge(int u, int v, int w) {
-    edge[u][v] = edge[v][u] = w;
-  }
+  void add_edge(int u, int v, int w)
+  { edge[u][v] = edge[v][u] = w; }
   bool SPFA(int u){
     if (onstk[u]) return true;
     stk.PB(u);

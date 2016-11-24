@@ -1,10 +1,7 @@
-class MaxClique {
- public:
+struct MaxClique {
   static const int MV = 210;
-  int V , ans;
-  int el[MV][MV/30+1];
-  int dp[MV];
-  int s[MV][MV/30+1];
+  int V , ans , dp[MV];
+  int el[MV][MV/30+1], s[MV][MV/30+1];
   vector<int> sol;
   void init(int v) {
     V = v; ans = 0;
