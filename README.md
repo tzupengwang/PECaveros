@@ -115,6 +115,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | ASC 34                    | 2016/11/21    |  10  | . | B | C | . | E | F | **G** | H | I | J |
 | Taiwan 2016 onsite        | 2016/11/26    |   2  | A | B | C | D | E | F | G | H | I | J | K | . | M |
 | Nha Trang 2016 onsite     | 2016/12/02    |   5  | A | B | C | D | . | . | G | H | . | J | K | . | 
+| Dhaka 2015                | 2016/12/10    |   2  | A | B | C | D | E | F | G | H | I | J |
 
 - A : 賽內AC  
 - **A** : 賽後AC
