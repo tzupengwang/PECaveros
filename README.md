@@ -116,7 +116,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Taiwan 2016 onsite        | 2016/11/26    |   2  | A | B | C | D | E | F | G | H | I | J | K | . | M |
 | Nha Trang 2016 onsite     | 2016/12/02    |   5  | A | B | C | D | . | . | G | H | . | J | K | . | 
 | Dhaka 2015                | 2016/12/10    |   2  | A | B | C | D | E | F | G | H | I | J |
-| NEERC Subregional 2016    | 2016/12/12    |   5  | A | B | C | D | E | F | G | . | I | J | K |
+| NEERC Subregional 2016    | 2016/12/12    |   5  | A | B | C | D | E | F | G | **H** | I | J | K |
 
 - A : 賽內AC  
 - **A** : 賽後AC
