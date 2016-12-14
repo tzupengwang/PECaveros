@@ -69,7 +69,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Mudanjiang 2014           | 2015/11/21    |  30  | A | B | . | D | . | . | . | **H** | I | . | K |   |
 | JAG autumn 2015           | 2015/11/22    |   2  | A | B | C | D | E | F | . | H | . | . | K |   |
 | NEERC 2015                | 2015/11/24    |   9  | A | B | C | D | E | F | G | H | . | J | . |   |
-| Japan 2015 onsite         | 2015/11/29    |   4  | A | B | C | D | E | F | G | . | **I** | **J** | K |   |
+| Japan 2015 onsite         | 2015/11/29    |   4  | A | B | C | D | E | F | G | **H** | **I** | **J** | K |   |
 | Taiwan 2015 onsite        | 2015/12/06    |   4  | A | B | C | D | . | F | G | H | I | . | . | . |
 | NEERC 2014                | 2015/12/08    |  28  |   | B | C | D | E | F | . | H | I | **J** | K | L | . |
 | NEERC Moscow 2015         | 2015/12/12    |  97  | A | B | C | D | E | . | G | H | I | J | K | . |   |
