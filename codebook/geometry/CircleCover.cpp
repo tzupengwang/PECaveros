@@ -1,16 +1,8 @@
 // Find interpoints of two circles.
 // identical circle should be handled first
 bool CCinter(Circle a, Circle b, Pt &p1, Pt &p2){ 
-	D s1 = norm(a.O - b.O);
-	if(sign(s1-a.R-b.R)>0||sign(s1-abs(a.R-b.R))<0)
-    return false;
-	D s2 = (a.R * a.R - b.R * b.R) / s1;
-	D aa = (s1 + s2) * 0.5, bb = (s1 - s2) * 0.5;
-	Pt o = (b.O - a.O) * (aa / (aa + bb)) + a.O;
-	Pt dlt = perp( (b.O - a.O) / norm( b.O - a.O ) ) * 
-    sqrt( max( eps , a.R * a.R - aa * aa ) );
-	p1 = o + dlt, p2 = o - dlt;
-	return true;
+  // p1, p2 should be the interpoint of a, b
+  // if there aren't exactly 2 interpoints, ret false
 }
 // Area[i] : area covered by at least i circles
 struct Tevent {
