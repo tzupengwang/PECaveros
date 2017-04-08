@@ -122,6 +122,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XVI GP of Siberia         | 2017/03/11    |  25  | 1 | 2 | 3 | 4 | 5 | . | 7 | 8 | . | 10 | 11 | . |
 | XVII GP of Siberia        | 2017/03/18    |  20  | 1 | 2 | . | 4 | 5 | . | . | 8 | 9 | . | 11 | 
 | XVII GP of Europe         | 2017/03/25    |  10  | A | B | C | . | E | F | . | H | . | J | K | L | 
+| XVII GP of SPb            | 2017/04/08    |  20  | A | B | . | D | E | F | G | H | . | J | K | 
 
 - A : 賽內AC  
 - **A** : 賽後AC
