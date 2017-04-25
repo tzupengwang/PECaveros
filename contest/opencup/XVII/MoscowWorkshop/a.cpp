@@ -100,7 +100,7 @@ int centroidDecomp( int x ) {
   // find centroid
   int centroid , mm = 1000000 ;
   for ( int &nd : q )
-    if ( M[ nd ] < mm || ( M[ nd ] == mm && nd < x ) ) {
+    if ( M[ nd ] < mm || ( M[ nd ] == mm && nd == x ) ) {
       centroid = nd ;
       mm = M[ nd ] ;
     }
@@ -118,10 +118,10 @@ int centroidDecomp( int x ) {
 }
 
 void process() {
-  memset( vis , false , sizeof vis ) ;
-  vector< int > cc = centroidDecomp1( 1 ) ; 
+  memset( vis , 0 , sizeof vis ) ;
+  vector< int > cc = centroidDecomp1( 1 ) ;
   for ( int c : cc ) {
-    memset( vis , false , sizeof vis ) ;
+    memset( vis , 0 , sizeof vis ) ;
     good = true ;
     centroidDecomp( c ) ;
     if ( good ) {
