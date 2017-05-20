@@ -125,7 +125,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XVII GP of SPb            | 2017/04/08    |  20  | A | B | . | D | E | F | G | H | . | J | K | 
 | XVII GP of Moscow         | 2017/04/23    |  35  | **A** | . | . | D | E | . | G | . | I | J | K | 
 | XVII GP of Ural           | 2017/04/30    |  32  | A | B | C | . | . | . | G | H | . | J | K | L | . |
-| XVI GP of Europe          | 2017/05/20    |  13  | A | B | . | D | E | F | . | H | I | J | K | . |
+| XVI GP of Europe          | 2017/05/20    |  13  | A | B | . | D | E | F | **G** | H | I | J | K | . |
 
 - A : 賽內AC  
 - **A** : 賽後AC
