@@ -42,7 +42,7 @@ Pt perp( const Pt& tp ){
 #define y2 filjjlkjy2
 #define N 101010
 #define K 514
-const double eps = 1e-6;
+const double eps = 1e-7;
 int n , x[ N ] , y[ N ];
 double rr[ N ];
 double r[ K ][ K ];
@@ -55,14 +55,12 @@ void init(){
   }
 }
 int x1 , y1 , x2 , y2;
-double dst( const Pt& o , const Line& l ){
-  Pt tmp = o - l.X;
-  double vl = ( tmp ) * ( l.Y - l.X ) / norm( l.Y - l.X ) 
-                                      / norm( l.Y - l.X );
-  if( vl < eps ) vl = 0.0;
-  if( vl > 1. - eps ) vl = 1.0;
-  Pt pos = l.X + ( l.Y - l.X ) * vl;
-  return norm( o - pos );
+bool in( const Pt& o , double tr , const Pt& p1 , const Pt& p2 ){
+  if( norm2( o - p1 ) < tr * tr ) return true;
+  if( norm2( o - p2 ) < tr * tr ) return true;
+  if( ( o - p1 ) * ( p2 - p1 ) < eps ) return false;
+  if( ( o - p2 ) * ( p1 - p2 ) < eps ) return false;
+  return ( fabs( ( o - p1 ) ^ ( p2 - p1 ) ) / norm( p2 - p1 ) ) < tr;
 }
 void solve(){
   int q; scanf( "%d" , &q ); while( q -- ){
@@ -81,20 +79,37 @@ void solve(){
       for( int xx = x1 ; xx <= x2 ; xx ++ )
         if( gr[ xx ][ y1 ] )
           ans ++;
-    }else{
-      Line tl = { { x1 , y1 } , { x2 , y2 } };
+    }else if( abs( x2 - x1 ) > abs( y2 - y1 ) ){
       double dlt = (double)( y2 - y1 ) / (double)( x2 - x1 );
       double cury = y1;
       for( int xx = x1 ; xx <= x2 ; xx ++ ){
-        int my = round( cury );
-        for( int yy = max( 1 , my - 1 ) ;
-                 yy <= my + 1 ;
+        int my = cury;
+        for( int yy = max( 1 , my - 2 ) ;
+                 yy <= my + 2 ;
                  yy ++ ){
           if( not gr[ xx ][ yy ] ) continue;
-          if( dst( { xx , yy } , tl ) < r[ xx ][ yy ] )
+          if( in( { xx , yy } , r[ xx ][ yy ] , { x1 , y1 } , { x2 , y2 } ) )
             ans ++;
         }
         cury += dlt;
+      }
+    }else{
+      if( y1 > y2 ){
+        swap( x1 , x2 );
+        swap( y1 , y2 );
+      }
+      double dlt = (double)( x2 - x1 ) / (double)( y2 - y1 );
+      double curx = x1;
+      for( int yy = y1 ; yy <= y2 ; yy ++ ){
+        int mx = curx;
+        for( int xx = max( 1 , mx - 2 ) ;
+                 xx <= mx + 2 ;
+                 xx ++ ){
+          if( not gr[ xx ][ yy ] ) continue;
+          if( in( { xx , yy } , r[ xx ][ yy ] , { x1 , y1 } , { x2 , y2 } ) )
+            ans ++;
+        }
+        curx += dlt;
       }
     }
     printf( "%d\n" , ans );
@@ -105,9 +120,6 @@ void reset(){
     gr[ x[ i ] ][ y[ i ] ] = false;
 }
 int main(){
-  for( int i = 0 ; i < K ; i ++ )
-    for( int j = 0 ; j < K ; j ++ )
-      r[ i ][ j ] = -1;
   while( scanf( "%d" , &n ) == 1 ){
     init();
     solve();
