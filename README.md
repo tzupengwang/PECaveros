@@ -127,6 +127,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XVII GP of Ural           | 2017/04/30    |  32  | A | B | C | . | . | . | G | H | . | J | K | L | . |
 | XVI GP of Europe          | 2017/05/20    |  13  | A | B | . | D | E | F | **G** | H | I | J | K | . |
 | XVI GP of Ukraine         | 2017/05/27    |  13  | A | B | C | D | E | F | G | H | . | J | K | L | M |
+| XVI GP of Eurasia         | 2017/06/03    |  15  | A | B | C | D | E | F | . | H | I | J | K | L |
 
 - A : 賽內AC  
 - **A** : 賽後AC
