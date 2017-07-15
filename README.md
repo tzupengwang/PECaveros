@@ -130,6 +130,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XVI GP of Eurasia         | 2017/06/03    |  15  | A | B | C | D | E | F | . | H | I | J | K | L |
 | XVI GP of Ekaterinburg    | 2017/06/25    |   3  | A | B | C | D | E | F | G | H | I | J | K | 
 | XVI GP of SPb             | 2017/07/01    |  15  | A | **B** | . | D | E | F | G | H | I | J | K | L |
+| XVI GP of Japan           | 2017/07/15    |  15  | A | B | . | D | . | F | G | . | I | J | 
 
 - A : 賽內AC  
 - **A** : 賽後AC
