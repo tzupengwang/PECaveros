@@ -134,6 +134,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XVII GP of Eastern        | 2017/07/18    |   5  | A | B | C | D | E | F | G | H | I | . | K | L |
 | ASC 32                    | 2017/07/22    |   3  | A | B | C | D | E | F | G | . | I | J | K |
 | XVII GP of 2 Capitals     | 2017/07/25    |  23  | A | B | C | D | . | F | . | H | . | J | K |
+| ASC 31                    | 2017/08/19    |   1  | A | B | C | D | E | F | G | . | I | J | K |
 
 - A : 賽內AC  
 - **A** : 賽後AC
