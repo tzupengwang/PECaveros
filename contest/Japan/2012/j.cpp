@@ -67,7 +67,18 @@ void add(int i, int j, int k, int ii, int jj, int kk) {
 }
 
 
-#define BS 60
+#define BS 420
+
+bool ok[ BS + 1 ];
+
+void build(){
+  ok[ 0 ] = ok[ BS ] = true;
+  for( int i = 1 ; i < BS ; i ++ ){
+    int gg = __gcd( i , BS );
+    if( BS / gg <= 7 )
+      ok[ i ] = true;
+  }
+}
 
 inline int enc(int x, int y, int z) {
   return x*(3 * BS + 1) * (3 * BS + 1) +
@@ -98,22 +109,28 @@ void build(pair<XD, XD> p) {
   p2.z *= BS;
   vector<XD> pts;
   for (int i = p1.x; i <= p2.x; ++i) {
-    pts.push_back(XD{i, p1.y, p1.z});
+    if( ok[ i - p1.x ] )
+      pts.push_back(XD{i, p1.y, p1.z});
   }
   for (int i = p1.y; i <= p2.y; ++i) {
-    pts.push_back(XD{p1.x, i, p1.z});
+    if( ok[ i - p1.y ] )
+      pts.push_back(XD{p1.x, i, p1.z});
   }
   for (int i = p1.z; i <= p2.z; ++i) {
-    pts.push_back(XD{p1.x, p1.y, i});
+    if( ok[ i - p1.z ] )
+      pts.push_back(XD{p1.x, p1.y, i});
   }
   for (int i = p1.x; i <= p2.x; ++i) {
-    pts.push_back(XD{i, p2.y, p2.z});
+    if( ok[ i - p1.x ] )
+      pts.push_back(XD{i, p2.y, p2.z});
   }
   for (int i = p1.y; i <= p2.y; ++i) {
-    pts.push_back(XD{p2.x, i, p2.z});
+    if( ok[ i - p1.y ] )
+      pts.push_back(XD{p2.x, i, p2.z});
   }
   for (int i = p1.z; i <= p2.z; ++i) {
-    pts.push_back(XD{p2.x, p2.y, i});
+    if( ok[ i - p1.z ] )
+      pts.push_back(XD{p2.x, p2.y, i});
   }
   sort( pts.begin() , pts.end() );
   pts.resize( unique( pts.begin() , pts.end() ) - pts.begin() );
@@ -181,6 +198,7 @@ void solve() {
 }
 
 int main(){
+  build();
   while (init()) {
     solve();
   }
