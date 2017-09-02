@@ -136,6 +136,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XVII GP of 2 Capitals     | 2017/07/25    |  23  | A | B | C | D | . | F | . | H | . | J | K |
 | ASC 31                    | 2017/08/19    |   1  | A | B | C | D | E | F | G | . | I | J | K |
 | Japan 2012                | 2017/08/26    |   1  | A | B | C | D | E | F | G | H | I | **J** |
+| Hatyai 2012               | 2017/09/02    |   1  | A | B | C | D | E | F | G | H | I | J |
 
 - A : 賽內AC  
 - **A** : 賽後AC
