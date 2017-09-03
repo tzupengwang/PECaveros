@@ -10,7 +10,7 @@ struct Maxflow {
   int s, t;
   vector<Edge> G[MAXV*2];
   int iter[MAXV*2], d[MAXV*2], gap[MAXV*2], tot;
-  void flowinit(int x) {
+  void init(int x) {
     tot = x+2;
     s = x+1, t = x+2;
     for(int i = 0; i <= tot; i++) {
@@ -43,12 +43,10 @@ struct Maxflow {
     }
     return 0;
   }
-  int maxflow() {
-    //puts("MF");
+  int solve() {
     int res = 0;
     gap[0] = tot;
     for(res = 0; d[s] < tot; res += dfs(s, INF));
     return res;
   }
 } flow;
-Maxflow::Edge e(1, 1, 1);
