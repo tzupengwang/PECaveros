@@ -138,6 +138,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Japan 2012                | 2017/08/26    |   1  | A | B | C | D | E | F | G | H | I | **J** |
 | Hatyai 2012               | 2017/09/02    |   1  | A | B | C | D | E | F | G | H | I | J |
 | Japan 2011                | 2017/09/09    |   1  | A | B | C | D | E | F | **G** | H | I | J |
+| ASC 30                    | 2017/09/15    |   3  | A | B | C | D | E | F | G | H | I | J |
 
 - A : 賽內AC  
 - **A** : 賽後AC
