@@ -142,6 +142,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | NTU 2012 Team Ranking     | 2017/09/16    |   1  | A | B | **C** | **D** | E | F | . | H | . | J |
 | NTU 2012 PK               | 2017/09/17    |   1  | A | B | . | . | E | F | **G** | **H** | I | **J** | **K** | L |
 | XVII GP of Eurasia        | 2017/09/22    |  36  | **1** | 2 | 3 | . | 5 | 6 | 7 | 8 | 9 | 10 | 11 | . |
+| ASC 29                    | 2017/09/15    |   7  | A | B | C | . | E | F | . | H | I | J |
 
 - A : 賽內AC  
 - **A** : 賽後AC
