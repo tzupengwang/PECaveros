@@ -1,4 +1,5 @@
 // time: O(|E| \lg |E| + |V| \lg |V| + K)
+// memory: O(|E| \lg |E| + |V|)
 struct KSP{ // 1-base
   struct nd{
     int u, v, d;
