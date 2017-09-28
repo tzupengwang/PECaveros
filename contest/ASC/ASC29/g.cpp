@@ -1,3 +1,4 @@
+#pragma GCC optimize("O3")
 #include <bits/stdc++.h>
 using namespace std;
 #define N 404040
@@ -5,77 +6,110 @@ typedef long long LL;
 int ans[ N ];
 #define K 20
 int root;
+struct SegT{
+  pair<int,int> st[ N ] , tg[ N ];
+#define L(X) (X<<1)
+#define R(X) (1+(X<<1))
+#define mid ((l+r)>>1)
+  vector<size_t> sp;
+  vector< pair< pair<int,int>*,  pair<int,int> > > rc;
+  void init( int no , int l , int r ){
+    st[ no ] = { 0 , 0 };
+    tg[ no ] = { 0 , 0 };
+    if( l == r ) return;
+    init( L( no ) , l , mid );
+    init( R( no ) , mid + 1 , r );
+  }
+  void assign( pair<int,int> *x , pair<int,int> v ){
+    rc.push_back( { x , *x } );
+    *x = v;
+  }
+  void push( int no , int l , int r ){
+    if( tg[ no ].first == 0 ) return;
+    if( tg[ no ] > tg[ L( no ) ] )
+      assign( &tg[ L( no ) ] , tg[ no ] );
+    if( tg[ no ] > tg[ R( no ) ] )
+      assign( &tg[ R( no ) ] , tg[ no ] );
+    if( tg[ no ] > st[ L( no ) ] )
+      assign( &st[ L( no ) ] , tg[ no ] );
+    if( tg[ no ] > st[ R( no ) ] )
+      assign( &st[ R( no ) ] , tg[ no ] );
+    assign( &tg[ no ] , { 0 , 0 } );
+  }
+  void modify( int no , int l , int r , int ql , int qr , pair<int,int> v ){
+    if( r < ql or l > qr ) return;
+    if( ql <= l and r <= qr ){
+      if( v > tg[ no ] )
+        assign( &tg[ no ] , v );
+      if( v > st[ no ] )
+        assign( &st[ no ] , v );
+      return;
+    }
+    push( no , l , r );
+    modify( L( no ) , l , mid , ql , qr , v );
+    modify( R( no ) , mid + 1 , r , ql , qr , v );
+  }
+  pair<int,int> query( int no , int l , int r , int p ){
+    if( l == r ) return st[ no ];
+    push( no , l , r );
+    if( p <= mid ) return query( L( no ) , l , mid , p );
+    return query( R( no ) , mid + 1 , r , p );
+  }
+  void save(){
+    sp.push_back(rc.size());
+  }
+  void undo(){
+    while(rc.size()>sp.back()){
+      *rc.back().first = rc.back().second;
+      rc.pop_back();
+    }
+    sp.pop_back();
+  }
+} seg;
 struct Tree{
-  int n , tag;
-  vector< pair<int,int> > g[ N ];
-  void init( int _n , int _tag ){
+  int n;
+  vector< pair<int,int> > g[ N ] , son[ N ];
+  void init( int _n ){
     n = _n;
-    for( int i = 1 ; i <= n ; i ++ )
+    for( int i = 1 ; i <= n ; i ++ ){
       g[ i ].clear();
+      son[ i ].clear();
+    }
   }
   void add_edge( int ui , int vi , int id ){
     g[ ui ].push_back( { vi , id } );
   }
-  int prt[ K ][ N ] , ss[ N ] , dep[ N ];
+  int ss[ N ] , dep[ N ] , prt[ N ];
   bool vst[ N ];
   void dfs( int now , int p ){
-    for( auto i : g[ now ] ){
-      if( prt[ 0 ][ i.first ] != now )
+    for( auto i : son[ now ] ){
+      if( prt[ i.first ] != now )
         continue;
       dfs( i.first , now );
       ans[ i.second ] += ss[ i.first ];
       ss[ now ] += ss[ i.first ];
     }
   }
+  int in[ N ] , out[ N ] , stmp;
   void go( int now , int p , int tdep ){
+    in[ now ] = ++ stmp;
     vst[ now ] = true;
-    prt[ 0 ][ now ] = p;
+    prt[ now ] = p;
     dep[ now ] = tdep;
     for( auto i : g[ now ] )
-      if( not vst[ i.first ] )
+      if( not vst[ i.first ] ){
+        son[ now ].push_back( i );
         go( i.first , now , tdep + 1 );
-  }
-  int lca( int x , int y ){
-    if( dep[ x ] > dep[ y ] ) swap( x , y );
-    int dlt = dep[ y ] - dep[ x ];
-    while( dlt ){
-      int bt = __lg( dlt );
-      y = prt[ bt ][ y ];
-      dlt ^= (1 << bt);
-    }
-    if( x == y ) return x;
-    for( int i = K - 1 ; i >= 0 ; i -- )
-      if( prt[ i ][ x ] != prt[ i ][ y ] ){
-        x = prt[ i ][ x ];
-        y = prt[ i ][ y ];
       }
-    return prt[ 0 ][ x ];
-  }
-  int part( int y , int up ){
-    while( up ){
-      int bt = __lg( up );
-      y = prt[ bt ][ y ];
-      up ^= (1 << bt);
-    }
-    return y;
-  }
-  bool is_a( int x , int y ){
-    return lca( x , y ) == x;
+    out[ now ] = stmp;
   }
   void build(){
     for( int i = 1 ; i <= n ; i ++ ){
       vst[ i ] = false;
       ss[ i ] = 0;
-      if( tag )
-        reverse( g[ i ].begin() , g[ i ].end() );
-      random_shuffle( g[ i ].begin() , g[ i ].end() );
     }
-    queue<int> Q;
-    Q.push( root );
-    go( root , root , 0 );
-    for( int i = 1 ; i < K ; i ++ )
-      for( int j = 1 ; j <= n ; j ++ )
-        prt[ i ][ j ] = prt[ i - 1 ][ prt[ i - 1 ][ j ] ];
+    stmp = 0;
+    go( root , root , 1 );
   }
 } g , rg;
 int a , b , m , s[ N ] , t[ N ];
@@ -85,9 +119,9 @@ void init(){
     scanf( "%d" , &s[ i ] );
   for( int i = 1 ; i <= b ; i ++ )
     scanf( "%d" , &t[ i ] );
-  root = rand() % a + 1;
-  g.init( a + b , 0 );
-  rg.init( a + b , 1 );
+  root = 1;
+  g.init( a + b );
+  rg.init( a + b );
   for( int i = 1 ; i <= m ; i ++ ){
     int ui , vi;
     scanf( "%d%d" , &ui , &vi );
@@ -101,40 +135,40 @@ void init(){
   g.build();
   rg.build();
 }
-vector< tuple<int,int,int> > cand;
+vector< pair<int,int> > cand[ N ];
+void gogo( int now , int prt ){
+  seg.save();
+  seg.modify( 1 , 1 , a + b ,
+              rg.in[ now ] , rg.out[ now ] , { rg.dep[ now ] , now } );
+  for( auto qq : cand[ now ] ){
+    int who = seg.query( 1 , 1 , a + b , rg.in[ qq.first ] ).second;
+    assert( who > 0 );
+    g.ss[ now ] += qq.second;
+    g.ss[ who ] -= qq.second;
+    rg.ss[ qq.first ] += qq.second;
+    rg.ss[ who ] -= qq.second;
+  }
+  for( auto son : g.son[ now ] )
+    gogo( son.first , now );
+  seg.undo();
+}
 void solve(){
-  int c = accumulate( s + 1 , s + a + 1 , 0 );
   int iter = 1;
   for( int i = 1 ; i <= a ; i ++ ){
     while( s[ i ] ){
       while( t[ iter ] == 0 ) iter ++;
       int cc = min( t[ iter ] , s[ i ] );
-      cand.push_back( make_tuple( i , a + iter , cc ) );
+      cand[ a + iter ].push_back( { i , cc } );
       t[ iter ] -= cc;
       s[ i ] -= cc;
     }
   }
-  for( auto i : cand ){
-    int ss = get<0>( i );
-    int tt = get<1>( i );
-    int ff = get<2>( i );
-    if( g.is_a( ss , tt ) ){
-      g.ss[ tt ] += ff;
-      g.ss[ ss ] -= ff;
-    }else if( rg.is_a( tt , ss ) ){
-      rg.ss[ ss ] += ff;
-      rg.ss[ tt ] -= ff;
-    }else{
-      rg.ss[ root ] -= ff;
-      g.ss[ root ] -= ff;
-      rg.ss[ ss ] += ff;
-      g.ss[ tt ] += ff;
-    }
-  }
+  seg.init( 1 , 1 , a + b );
+  gogo( root , root );
   g.dfs( root , root );
   rg.dfs( root , root );
-  for( int i = 1 ; i <= m ; i ++ )
-    assert( ans[ i ] <= c );
+  //for( int i = 1 ; i <= m ; i ++ )
+    //assert( ans[ i ] <= c );
   puts( "YES" );
   for( int i = 1 ; i <= m ; i ++ )
     printf( "%d%c" , ans[ i ] , " \n"[ i == m ] );
