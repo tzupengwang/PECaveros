@@ -144,6 +144,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XVII GP of Eurasia        | 2017/09/22    |  36  | **1** | 2 | 3 | . | 5 | 6 | 7 | 8 | 9 | 10 | 11 | . |
 | ASC 29                    | 2017/09/23    |   7  | A | B | C | **D** | E | F | **G** | H | I | J |
 | JAG Autumn 2016           | 2017/09/24    |   2  | A | B | C | D | E | F | G | H | **I** | J | **K** |
+| XVII GP of Tatarstan      | 2017/09/29    |  41  | A | . | . | D | . | F | . | H | I | J | K | L |
 
 - A : 賽內AC  
 - **A** : 賽後AC
