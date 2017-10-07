@@ -148,6 +148,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Bangkok 2016              | 2017/09/30    |   5  | A | B | C | D | E | F | G | H | I | J | . | L |
 | XVIII GP of Eurasia       | 2017/10/01    |  42  | 1 | 2 | . | 4 | **5** | . | . | 8 | . | 10 | **11** | 12 |
 | ASC 28                    | 2017/10/06    |   2  | A | B | C | D | E | F | G | H | I | J |
+| NTU 2017 Team Ranking     | 2017/10/07    |   1  | A | B | **C** | D | E | F | G | H | I | **J** |
 
 - A : 賽內AC  
 - **A** : 賽後AC
