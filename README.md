@@ -150,6 +150,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | ASC 28                    | 2017/10/06    |   2  | A | B | C | D | E | F | G | H | I | J |
 | NTU 2017 Team Ranking     | 2017/10/07    |   1  | A | B | **C** | D | E | F | G | H | I | **J** |
 | Daejeon 2016              | 2017/10/14    |   1  | A | B | C | D | E | F | G | H | I | . | K | L |
+| BSUIR Open 2017           | 2017/10/20    |  10  | A | B | C | . | E | F | G | H | I | . |
 
 - A : 賽內AC  
 - **A** : 賽後AC
