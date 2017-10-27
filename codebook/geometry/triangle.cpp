@@ -5,7 +5,7 @@ Pt inCenter( Pt &A,  Pt &B,  Pt &C) { // 内心
 Pt circumCenter( Pt &a,  Pt &b,  Pt &c) { // 外心
 	Pt bb = b - a, cc = c - a;
 	double db=norm2(bb), dc=norm2(cc), d=2*(bb ^ cc);
-	return a+Pt(bb.Y*dc-cc.Y*db, cc.X*db-bb.X*dc) / d;
+	return a-Pt(bb.Y*dc-cc.Y*db, cc.X*db-bb.X*dc) / d;
 }
 Pt othroCenter( Pt &a,  Pt &b,  Pt &c) { // 垂心
 	Pt ba = b - a, ca = c - a, bc = b - c;
