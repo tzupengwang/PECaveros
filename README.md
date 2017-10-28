@@ -151,6 +151,8 @@ codebook by eddy1021, c2251393, tzupengwang
 | NTU 2017 Team Ranking     | 2017/10/07    |   1  | A | B | **C** | D | E | F | G | H | I | **J** |
 | Daejeon 2016              | 2017/10/14    |   1  | A | B | C | D | E | F | G | H | I | . | K | L |
 | BSUIR Open 2017           | 2017/10/20    |  10  | A | B | C | . | E | F | G | H | I | . |
+| NCPC 2017                 | 2017/10/21    |   1  | A | B | C | D | E | F | G | H | I | . | . | L |
+| Jakarta 2016              | 2017/10/28    |   1  | A | B | C | D | E | F | G | H | I | J | K | L |
 
 - A : 賽內AC  
 - **A** : 賽後AC
