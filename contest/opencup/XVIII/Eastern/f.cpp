@@ -74,8 +74,8 @@ int Blah(int d, int l, int r, vector<ii> &pr, vector<int> &len) {
 }
 
 int BlahBlah(vector<ii> &pr, vector<int> &len) {
-  //int l1 = len.size();
-  int l2 = pr.size();
+  int l1 = len.size();
+  int l2 = m - l1;
   ll tans = 0;
 
   int sl = 0, sr = 0, slr = 0;
