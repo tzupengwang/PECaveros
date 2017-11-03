@@ -1,3 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long type;
+typedef pair<type,type> Pt;
+typedef pair<Pt,Pt> Line;
+typedef pair<Pt,type> Circle;
+#define X first
+#define Y second
+#define O first
+#define R second
+Pt operator+( const Pt& p1 , const Pt& p2 ){
+  return { p1.X + p2.X , p1.Y + p2.Y };
+}
+Pt operator-( const Pt& p1 , const Pt& p2 ){
+  return { p1.X - p2.X , p1.Y - p2.Y };
+}
+Pt operator*( const Pt& tp , const type& tk ){
+  return { tp.X * tk , tp.Y * tk };
+}
+Pt operator/( const Pt& tp , const type& tk ){
+  return { tp.X / tk , tp.Y / tk };
+}
+type operator*( const Pt& p1 , const Pt& p2 ){
+  return p1.X * p2.X + p1.Y * p2.Y;
+}
+type operator^( const Pt& p1 , const Pt& p2 ){
+  return p1.X * p2.Y - p1.Y * p2.X;
+}
+type norm2( const Pt& tp ){
+  return tp * tp;
+}
+double norm( const Pt& tp ){
+  return sqrt( norm2( tp ) );
+}
+Pt perp( const Pt& tp ){
+  return { tp.Y , -tp.X };
+}
+
 /*
    Delaunay Triangulation:
    Given a sets of points on 2D plane, find a triangulation
@@ -143,4 +181,27 @@ void build( int n , Pt* ps ){
   for(int i = 0; i < n; ++ i)
     tri.add_point(ps[i]);
   go( tri.the_root );
+}
+
+int n;
+Pt ps[N];
+int rand_int( int lb , int rb ){
+  return (long long)rand() * rand() % ( rb - lb + 1 ) + lb;
+}
+int main(){
+#ifdef RANDOM
+  n = 1000;
+  set< pair<int,int> > S;
+  while( (int)S.size() < n )
+    S.insert( { rand_int( 0 , 1e2 ) ,
+              rand_int( 0 , 1e2 ) } );
+  n = 0;
+  for( auto i : S )
+    ps[ n ++ ] = i;
+#else
+  cin >> n;
+  for( int i = 0 ; i < n ; i ++ )
+    cin >> ps[ i ].X >> ps[ i ].Y;
+#endif
+  build( n , ps );
 }
