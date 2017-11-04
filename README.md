@@ -154,6 +154,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | NCPC 2017                 | 2017/10/21    |   1  | A | B | C | D | E | F | G | H | I | . | . | L |
 | Jakarta 2016              | 2017/10/28    |   1  | A | B | C | D | E | F | G | H | I | J | K | L |
 | XVIII GP of Eastern       | 2017/10/29    |   8  | A | B | C | D | E | **F** | G | H | I | J | K | L |
+| Japan 2016                | 2017/11/04    |   1  | A | B | C | D | E | F | G | H | I | J | K |
 
 - A : 賽內AC
 - **A** : 賽後AC
