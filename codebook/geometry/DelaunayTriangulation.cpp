@@ -1,8 +1,7 @@
-/*
-   Delaunay Triangulation:
-   Given a sets of points on 2D plane, find a triangulation
-   such that no points will strictly inside circumcircle
-   of any triangle.
+/* Delaunay Triangulation:
+Given a sets of points on 2D plane, find a
+triangulation such that no points will strictly
+inside circumcircle of any triangle.
 
 find : return a triangle contain given point
 add_point : add a point into triangulation
@@ -11,8 +10,7 @@ A Triangle is in triangulation iff. its has_chd is 0.
 Region of triangle u: iterate each u.edge[i].tri,
 each points are u.p[(i+1)%3], u.p[(i+2)%3]
 
-calculation involves O(|V|^6)
-*/
+calculation involves O(|V|^6) */
 const int N = 100000 + 5;
 const type inf = 2e3;
 type eps = 1e-6; // 0 when integer

@@ -1,7 +1,3 @@
-/*
-  A template for Min Cost Max Flow
-  tested with TIOJ 1724
-*/
 struct MinCostMaxFlow{
 typedef int Tcost;
   static const int MAXV = 20010;
