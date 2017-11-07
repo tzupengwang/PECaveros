@@ -35,7 +35,6 @@ typedef long long LL;
 // ntt( n , c , 1 );
 //
 // then you have the result in c :: [LL]
-
 template<LL P, LL root, int MAXN>
 struct NTT{
   static LL bigmod(LL a, LL b) {
@@ -91,7 +90,6 @@ struct NTT{
     tran(n, a, inv_ntt);
   }
 };
-
 const LL P=2013265921,root=31;
 const int MAXN=4194304;
 NTT<P, root, MAXN> ntt;
