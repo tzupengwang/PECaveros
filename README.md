@@ -149,7 +149,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XVIII GP of Eurasia       | 2017/10/01    |  42  | 1 | 2 | . | 4 | **5** | . | . | 8 | . | 10 | **11** | 12 |
 | ASC 28                    | 2017/10/06    |   2  | A | B | C | D | E | F | G | H | I | J |
 | NTU 2017 Team Ranking     | 2017/10/07    |   1  | A | B | **C** | D | E | F | G | H | I | **J** |
-| Daejeon 2016              | 2017/10/14    |   1  | A | B | C | D | E | F | G | H | I | . | K | L |
+| Daejeon 2016              | 2017/10/14    |   1  | A | B | C | D | E | F | G | H | I | **J** | K | L |
 | BSUIR Open 2017           | 2017/10/20    |  10  | A | B | C | . | E | F | G | H | I | . |
 | NCPC 2017                 | 2017/10/21    |   1  | A | B | C | D | E | F | G | H | I | . | . | L |
 | Jakarta 2016              | 2017/10/28    |   1  | A | B | C | D | E | F | G | H | I | J | K | L |
