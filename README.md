@@ -155,6 +155,11 @@ codebook by eddy1021, c2251393, tzupengwang
 | Jakarta 2016              | 2017/10/28    |   1  | A | B | C | D | E | F | G | H | I | J | K | L |
 | XVIII GP of Eastern       | 2017/10/29    |   8  | A | B | C | D | E | **F** | G | H | I | J | K | L |
 | Japan 2016                | 2017/11/04    |   1  | A | B | C | D | E | F | G | H | I | J | K |
+| Jakarta 2017 Onsite       | 2017/11/12    |   2  | A | B | C | D | . | F | . | . | I | J | . | L |
+| NEERC Northern 2017       | 2017/11/17    |  16  | A | B | C | . | E | . | G | H | I | . | K | L |
+| Latin American 2012       | 2017/11/18    |   1  | A | B | C | D | E | F | G | H | I | J |
+| Taiwan 2017 Onsite        | 2017/11/25    |   1  | A | B | C | D | E | . | G | H | I | J | K | L | M |
+
 
 - A : 賽內AC
 - **A** : 賽後AC
