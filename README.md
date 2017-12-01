@@ -160,6 +160,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Latin American 2012       | 2017/11/18    |   1  | A | B | C | D | E | F | G | H | I | J |
 | Taiwan 2017 Onsite        | 2017/11/25    |   1  | A | B | C | D | E | . | G | H | I | J | K | L | M |
 | XVIII GP of Europe        | 2017/11/26    |  16  | A | . | . | D | . | F | G | H | . | J | . | L |
+| NEERC Moscow 2017         | 2017/12/01    |   4  | A | B | C | D | . | F | G | H | I | . |
 
 
 - A : 賽內AC
