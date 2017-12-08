@@ -162,6 +162,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XVIII GP of Europe        | 2017/11/26    |  16  | A | . | . | D | . | F | G | H | . | J | . | L |
 | NEERC Moscow 2017         | 2017/12/01    |   4  | A | B | C | D | . | F | G | H | I | . |
 | BSUIR Semifinal 2016      | 2017/12/03    |   2  | A | B | C | D | E | F | G | H | I | J | K |
+| XVIII GP of SPb           | 2017/12/08    |  15  | A | B | C | D | E | . | G | . | I | J | K | L |
 
 
 - A : 賽內AC
