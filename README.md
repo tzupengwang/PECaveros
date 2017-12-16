@@ -159,11 +159,11 @@ codebook by eddy1021, c2251393, tzupengwang
 | NEERC Northern 2017       | 2017/11/17    |  16  | A | B | C | . | E | . | G | H | I | . | K | L |
 | Latin American 2012       | 2017/11/18    |   1  | A | B | C | D | E | F | G | H | I | J |
 | Taiwan 2017 Onsite        | 2017/11/25    |   1  | A | B | C | D | E | . | G | H | I | J | K | L | M |
-| XVIII GP of Europe        | 2017/11/26    |  16  | A | . | . | D | . | F | G | H | . | J | . | L |
+| XVIII GP of Europe        | 2017/11/26    |  16  | A | **B** | . | D | . | F | G | H | **I** | J | . | L |
 | NEERC Moscow 2017         | 2017/12/01    |   4  | A | B | C | D | . | F | G | H | I | . |
 | BSUIR Semifinal 2016      | 2017/12/03    |   2  | A | B | C | D | E | F | G | H | I | J | K |
 | XVIII GP of SPb           | 2017/12/08    |  15  | A | B | C | D | E | . | G | . | I | J | K | L |
-| XVIII GP of Urals         | 2017/12/15    |  21  | A | B | C | D | . | . | . | . | . | . | K |
+| XVIII GP of Urals         | 2017/12/15    |  21  | A | B | C | D | . | . | . | . | . | **J** | K |
 
 
 - A : 賽內AC
