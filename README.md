@@ -165,7 +165,8 @@ codebook by eddy1021, c2251393, tzupengwang
 | XVIII GP of SPb           | 2017/12/08    |  15  | A | B | C | D | E | . | G | . | I | J | K | L |
 | XVIII GP of Urals         | 2017/12/15    |  21  | A | B | C | D | . | . | . | . | **I** | **J** | K |
 | Dhaka 2017                | 2017/12/16    |   1  | A | B | C | D | E | F | G | H | I | J | K |
-| XVIII GP of Peterhof      | 2017/12/17    |  21  | A | . | C | D | E | . | . | . | I | J |
+| XVIII GP of Peterhof      | 2017/12/17    |  21  | A | . | C | D | E | . | . | **H** | I | J |
+| XVI GP of Peterhof        | 2017/12/29    |  11  | A | . | C | D | E | F | G | H | . |
 
 
 - A : 賽內AC
