@@ -15,8 +15,9 @@ struct MMC{
   void init( int _n ){
     n = _n; m = 0;
   }
-  void add_edge( int vi , int ui , int ci ){
-    e[ m ++ ] = { vi , ui , (double)ci }; 
+  // WARNING: TYPE matters
+  void add_edge( int vi , int ui , double ci ){
+    e[ m ++ ] = { vi , ui , ci }; 
   }
   void bellman_ford() {
     for(int i=0; i<n; i++) d[0][i]=0;
