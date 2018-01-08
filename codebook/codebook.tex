@@ -99,8 +99,8 @@ stringstyle=\itshape\color{Green4},
 %\subsection{Increase Stack Size}
 %\lstinputlisting{basic/IncStack.cpp}
 
-\subsection{Increase Stack Size}
-\lstinputlisting{basic/IncStack_windows.cpp}
+%\subsection{Increase Stack Size}
+%\lstinputlisting{basic/IncStack_windows.cpp}
 
 \subsection{Misc}
 \lstinputlisting{basic/misc.cpp}
@@ -131,6 +131,8 @@ stringstyle=\itshape\color{Green4},
 \subsection{SW min-cut}
 \lstinputlisting{flow/SW-mincut.cpp}
 
+\newpage
+
 \subsection{Max Cost Circulation}
 \lstinputlisting{flow/MaxCostCirculation.cpp}
 
@@ -153,8 +155,13 @@ stringstyle=\itshape\color{Green4},
 \subsection{NTT}
 \lstinputlisting{math/ntt.cpp}
 
+\newpage
+
 \subsection{Fast Walsh Transform}
 \lstinputlisting{math/FWT.cpp}
+
+\subsection{Poly operator}
+\lstinputlisting{math/polyop.cpp}
 
 %\subsection{BigInt}
 %\lstinputlisting{math/Bigint.cpp}
@@ -192,6 +199,8 @@ stringstyle=\itshape\color{Green4},
 \subsection{SchreierSims}
 \lstinputlisting{math/SchreierSims.cpp}
 
+\newpage
+
 \subsection{Romberg}
 \lstinputlisting{math/Romberg.cpp}
 
@@ -204,15 +213,16 @@ stringstyle=\itshape\color{Green4},
 \subsection{Roots of Polynomial}
 \lstinputlisting{math/rootsOfPolynomial.cpp}
 
-\subsection{Mod}
-\lstinputlisting{math/MOD.cpp}
+%\subsection{Mod}
+%\lstinputlisting{math/MOD.cpp}
 
 \subsection{Primes and $\mu$ function}
 \lstinputlisting{math/primes.cpp}
 
 \subsection{Result}
-\lstinputlisting{math/theorem.cpp}
+\input{math/theorem.tex}
 
+\newpage
 
 \section{Geometry}
 
@@ -232,8 +242,8 @@ stringstyle=\itshape\color{Green4},
 \subsection{Intersection of 2 segments}
 \lstinputlisting{geometry/Intersection_of_two_segments.cpp}
 
-%\subsection{Intersection of circle and segment}
-%\lstinputlisting{geometry/Intersection_of_circle_and_segment.cpp}
+\subsection{Intersection of circle and segment}
+\lstinputlisting{geometry/Intersection_of_circle_and_segment.cpp}
 
 %\subsection{Intersection of polygon and circle}
 %\lstinputlisting{geometry/Intersection_of_polygon_and_circle.cpp}
@@ -320,8 +330,14 @@ stringstyle=\itshape\color{Green4},
 \subsection{BCC based on vertex}
 \lstinputlisting{graph/bcc_vertex.cpp}
 
+\subsection{Min Mean Cycle}
+\lstinputlisting{graph/MinMeanCycle.cpp}
+
+%\subsection{K-th Shortest Path}
+%\lstinputlisting{graph/KSP.cpp}
+
 \subsection{Graph Hash}
-\lstinputlisting{graph/graphHash.tex}
+\input{graph/graphHash.tex}
 
 
 \section{String}
@@ -380,13 +396,13 @@ stringstyle=\itshape\color{Green4},
 
 \section{Others}
 
-%\subsection{Find max tangent(x,y is increasing)}
-%\lstinputlisting{others/maxtan.cpp}
+\subsection{Find max tangent(x,y is increasing)}
+\lstinputlisting{others/maxtan.cpp}
 
 %\subsection{Exact Cover Set}
 %\lstinputlisting{others/exactCoverSet.cpp}
 
-\subsection{\# of Intersection of segments}
-\lstinputlisting{others/painter.cpp}
+%\subsection{\# of Intersection of segments}
+%\lstinputlisting{others/painter.cpp}
 
 \end{document}
