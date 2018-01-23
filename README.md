@@ -168,6 +168,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XVIII GP of Peterhof      | 2017/12/17    |  21  | A | . | C | D | E | . | . | **H** | I | J |
 | XVI GP of Peterhof        | 2017/12/29    |  11  | A | . | C | D | E | F | G | H | . |
 | XV GP of 3 Capitals       | 2017/01/05    |  11  | A | B | C | D | E | F | G | H | **I** | . | K |
+| NEERC 2015                | 2017/01/23    |   4  | A | B | C | D | E | F | G | **H** | . | J | K | L |
 
 
 - A : 賽內AC
