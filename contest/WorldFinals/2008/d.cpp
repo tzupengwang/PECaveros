@@ -7,7 +7,7 @@ typedef long long LL;
 struct Rd{
   int to , deg , odeg , dst , mrk , nxt;
 } rd[ N + N ];
-bool used[ N + N ];
+bool used[ 360 ];
 int from[ N ];
 
 int stmp;
@@ -35,11 +35,6 @@ void find_ord( int st , int sdir ){
     wt.push_back( { cdir , j } );
   }
   sort( wt.begin() , wt.end() , cmp );
-
-  //printf( "%d %d\n" , st , sdir );
-  //for( auto i : wt )
-    //printf( "  %d %d to = %d mark = %d\n" ,
-            //i.first , i.second , rd[ i.second ].to , rd[ i.second ].mrk );
 
   ord[ st ][ sdir ].clear();
   for( auto i : wt )
@@ -71,7 +66,6 @@ void init(){
     from[ ui ] = i * 2;
     rd[ i * 2 + 1 ] = { ui , in , out , dd , -1 , from[ vi ] };
     from[ vi ] = i * 2 + 1;
-    used[ i ] = false;
   }
   while( m -- ){
     int si , ei , at;
@@ -88,7 +82,7 @@ int stk[ (1 << 20) ];
 vector<int> route;
 LL ans , pans;
 
-bool go( int now , int ndir , int ndep , int from );
+bool go( int now , int ndir , int ndep );
 bool goc( int now , int ndir , int ndep , int resd ){
   if( choice[ now ] and resd != mxd ) return false;
   if( resd == 0 ) return false;
@@ -98,8 +92,8 @@ bool goc( int now , int ndir , int ndep , int resd ){
       find_ord( now , ndir );
       int id = -1;
       for( auto i : ord[ now ][ ndir ] )
-        if( not used[ i / 2 ] ){
-          used[ i / 2 ] = true;
+        if( not used[ rd[ i ].deg ] ){
+          used[ rd[ i ].deg ] = true;
           id = i;
           break;
         }
@@ -109,7 +103,7 @@ bool goc( int now , int ndir , int ndep , int resd ){
         ans += rd[ id ].dst;
         stk[ ndep ] = id;
         //printf( "good choice trying %d %d, road id = %d\n" , now , rd[ id ].to , id );
-        assert( go( rd[ id ].to , rd[ id ].odeg , ndep + 1 , id / 2 ) );
+        assert( go( rd[ id ].to , rd[ id ].odeg , ndep + 1 ) );
         return true;
       }
       if( rd[ id ].dst >= resd ){
@@ -134,7 +128,7 @@ bool goc( int now , int ndir , int ndep , int resd ){
       ans += rd[ id ].dst;
       stk[ ndep ] = id;
       //printf( "good choice trying %d %d, road id = %d\n" , now , rd[ id ].to , id );
-      assert( go( rd[ id ].to , rd[ id ].odeg , ndep + 1 , id / 2 ) );
+      assert( go( rd[ id ].to , rd[ id ].odeg , ndep + 1 ) );
       return true;
     }
     if( rd[ id ].dst >= resd ){
@@ -154,7 +148,7 @@ bool goc( int now , int ndir , int ndep , int resd ){
   return false;
 }
 
-bool go( int now , int ndir , int ndep , int fr ){
+bool go( int now , int ndir , int ndep ){
   if( now == t ){
     for( int i = 0 ; i < ndep ; i ++ ){
       pans += rd[ stk[ i ] ].dst;
@@ -164,17 +158,14 @@ bool go( int now , int ndir , int ndep , int fr ){
   }
   find_ord( now , ndir );
   if( choice[ now ] ){
-    for( int i = from[ now ] ; i ; i = rd[ i ].nxt )
-      used[ i / 2 ] = false;
-    if( fr != -1 )
-      used[ fr ] = true;
+    for( int i = 0 ; i < 360 ; i ++ )
+      used[ i ] = false;
+    used[ ndir ] = true;
     return goc( now , ndir , ndep , mxd );
   }
   stk[ ndep ] = ord[ now ][ ndir ][ 0 ];
   ans += rd[ stk[ ndep ] ].dst;
-  //printf( "trying %d %d\n" , now , rd[ stk[ ndep ] ].to );
-  //used[ stk[ ndep ] / 2 ] = true;
-  return go( rd[ stk[ ndep ] ].to , rd[ stk[ ndep ] ].odeg , ndep + 1 , stk[ ndep ] / 2 );
+  return go( rd[ stk[ ndep ] ].to , rd[ stk[ ndep ] ].odeg , ndep + 1 );
 }
 
 int _cs;
@@ -182,7 +173,7 @@ int _cs;
 void solve(){
   pans = ans = 0;
   route.clear();
-  assert( go( s , dir , 0 , -1 ) );
+  assert( go( s , dir , 0 ) );
 
   printf( "Case %d:\n" , ++ _cs );
   printf( "   Length of hare's route is %lld\n" , pans );
