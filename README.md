@@ -170,7 +170,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XV GP of 3 Capitals       | 2017/01/05    |  11  | A | B | C | D | E | F | G | H | **I** | . | K |
 | NEERC 2015                | 2017/01/23    |   4  | A | B | C | D | E | F | G | **H** | **I** | J | K | L |
 | XV GP of America          | 2017/01/25    |  17  | . | B | C | **D** | E | F | G | H | I | J |
-| WF 2008                   | 2017/01/27    |  13  | **A** | B | **C** | **D** | E | F | **G** | . | I | J | K |
+| WF 2008                   | 2017/01/27    |  13  | **A** | B | **C** | **D** | E | F | **G** | **H** | I | J | K |
 
 
 - A : 賽內AC

@@ -1,201 +1,461 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-#define F first
-#define S second
-#define PB push_back
-#define IOS ios_base::sync_with_stdio(0); cin.tie(0);
-#define SZ(x) ((int)((x).size()))
-#define ALL(x) begin(x),end(x)
-#define REP(i,x) for (int i=0; i<(x); i++)
-#define REP1(i,a,b) for (int i=(a); i<=(b); i++)
-
-typedef long long ll;
-typedef pair<ll,ll> pll;
-
-typedef pll Point;
-const int MXN = 100005;
-
-Point operator + (const Point &a, const Point &b) { return Point(a.F+b.F, a.S+b.S); }
-Point operator - (const Point &a, const Point &b) { return Point(a.F-b.F, a.S-b.S); }
-ll operator * (const Point &a, const Point &b) { return a.F*b.F + a.S*b.S; }
-ll operator % (const Point &a, const Point &b) { return a.F*b.S - a.S*b.F; }
-
-struct Segment {
-  int v,id;
-  Point p,q;
-  Segment () {}
-  Segment (int _v, int _id, Point _p, Point _q) :
-    v(_v), id(_id), p(_p), q(_q) {}
-};
-bool operator < (const Segment &a, const Segment &b) {
-  if (a.p == b.q) return false;
-  if (a.q == b.p) return true;
-  if (a.p == b.p) return (a.q-a.p) % (b.q-a.p) > 0;
-  if (a.q == b.q) return (a.p-a.q) % (b.p-a.q) < 0;
-  if (a.p.F == b.p.F) return a.p.S < b.p.S;
-  if (a.q.F == b.q.F) return a.q.S < b.q.S;
-  if (a.p.F < b.p.F) return (a.q-a.p) % (b.p-a.p) > 0;
-  else return (b.q-b.p) % (a.p-b.p) < 0;
+#define N 303030
+typedef long long LL;
+typedef long double D;
+inline LL getint(){
+  LL _x=0,_tmp=1; char _tc=getchar();    
+  while( (_tc<'0'||_tc>'9')&&_tc!='-' ) _tc=getchar();
+  if( _tc == '-' ) _tc=getchar() , _tmp = -1;
+  while(_tc>='0'&&_tc<='9') _x*=10,_x+=(_tc-'0'),_tc=getchar();
+  return _x*_tmp;
 }
-bool operator == (const Segment &a, const Segment &b) {
-  return tie(a.v,a.id,a.p,a.q) == tie(b.v,b.id,b.p,b.q);
+typedef pair<D,D> Pt;
+typedef pair<LL,LL> PLL;
+typedef pair<Pt,Pt> Seg;
+typedef pair<PLL,PLL> lSeg;
+#define X first
+#define Y second
+#define A first
+#define B second
+template<class T>
+pair<T,T> operator+( const pair<T,T>& p1 , const pair<T,T>& p2 ){
+  return { p1.X + p2.X , p1.Y + p2.Y };
 }
-struct Triangle {
-  Point pt[3];
-}ip[MXN];
-
-const int MEM = 350004;
-struct Treap {
-  static Treap nil, mem[MEM], *pmem;
-  Treap *l, *r;
-  int sum,presum,size;
-  Segment seg;
-  Treap () : l(&nil), r(&nil), sum(0), presum(0), size(0), seg() {}
-  Treap (Segment _val) : 
-    l(&nil), r(&nil), sum(_val.v), presum(max(_val.v,0)), size(1), seg(_val) {}
-} Treap::nil, Treap::mem[MEM], *Treap::pmem = Treap::mem;
-
-int size(const Treap *t) { return t->size; }
-void pull(Treap *t) {
-  if (!size(t)) return;
-  t->size = size(t->l) + size(t->r) + 1;
-  t->sum = t->l->sum + t->seg.v + t->r->sum;
-  t->presum = max(t->l->presum, t->l->sum + t->seg.v);
-  t->presum = max(t->presum, t->l->sum + t->seg.v + t->r->presum);
+template<class T>
+pair<T,T> operator-( const pair<T,T>& p1 , const pair<T,T>& p2 ){
+  return { p1.X - p2.X , p1.Y - p2.Y };
 }
-Treap* merge(Treap *a, Treap *b) {
-  if (!size(a)) return b;
-  if (!size(b)) return a;
-  Treap *t;
-  if (rand() % (size(a) + size(b)) < size(a)) {
-    t = a;
-    t->r = merge(a->r, b);
-  } else {
-    t = b;
-    t->l = merge(a, b->l);
-  }
-  pull(t);
-  return t;
+template<class T>
+pair<T,T> operator*( const pair<T,T>& tp , const T& tk ){
+  return { tp.X * tk , tp.Y * tk };
 }
-void split(Treap *t, int k, Treap *&a, Treap *&b) {
-  if (!size(t)) a = b = &Treap::nil;
-  else if (size(t->l) + 1 <= k) {
-    a = t;
-    split(t->r, k - size(t->l) - 1, a->r, b);
-    pull(a);
-  } else {
-    b = t;
-    split(t->l, k, a, b->l);
-    pull(b);
-  }
+template<class T>
+pair<T,T> operator/( const pair<T,T>& tp , const T& tk ){
+  return { tp.X / tk , tp.Y / tk };
 }
-int get_rank(Treap *t, Segment x) {
-  if (!size(t)) return 0;
-  if (x < t->seg) return get_rank(t->l, x);
-  return get_rank(t->r,x) + size(t->l) + 1;
+template<class T>
+T operator*( const pair<T,T>& p1 , const pair<T,T>& p2 ){
+  return p1.X * p2.X + p1.Y * p2.Y;
 }
-Treap* find_leftist(Treap *t) {
-  while (size(t->l)) t = t->l;
-  return t;
+template<class T>
+T operator^( const pair<T,T>& p1 , const pair<T,T>& p2 ){
+  return p1.X * p2.Y - p1.Y * p2.X;
 }
-Treap* find_rightist(Treap *t) {
-  while (size(t->r)) t = t->r;
-  return t;
+template<class T>
+T norm2( const pair<T,T>& tp ){
+  return tp * tp;
+}
+template<class T>
+D norm( const pair<T,T>& tp ){
+  return sqrt( norm2( tp ) );
 }
 
-int N;
-vector<int> allx;
-vector<Segment> _seg[3*MXN];
-#define seg(x) _seg[(x)+100000]
 
-inline void add_seg(Segment s) {
-  seg(s.p.F).PB(s);
-  if (s.q.F != s.p.F) seg(s.q.F).PB(s);
-}
-void predo() {
-  allx.clear();
-  REP(i,N) REP(j,3) {
-    seg(ip[i].pt[j].F).clear();
-    allx.PB(ip[i].pt[j].F);
-  }
-  sort(ALL(allx));
-  allx.resize(unique(ALL(allx))-begin(allx));
-  REP(i,N) {
-    sort(ip[i].pt, ip[i].pt+3);
-    Point *pt = ip[i].pt;
-    Segment seg1 = Segment(1,i,pt[0],pt[1]);
-    Segment seg2 = Segment(1,i,pt[0],pt[2]);
-    Segment seg3 = Segment(1,i,pt[1],pt[2]);
-    if (seg2 < seg1) seg1.v = -1;
-    else seg2.v = -1;
-    seg3.v = seg1.v;
-    add_seg(seg1);
-    add_seg(seg2);
-    add_seg(seg3);
-  }
-}
-inline int sgn(ll x) { return x < 0 ? -1 : x > 0; }
-bool interPnt(Point p1, Point p2, Point q1, Point q2){
-  ll c1 = (p2-p1)%(q1-p1), c2 = (p2-p1)%(q2-p1);
-  ll c3 = (q2-q1)%(p1-q1), c4 = (q2-q1)%(p2-q1);
-  return sgn(c1) * sgn(c2) <= 0 and sgn(c3) * sgn(c4) <= 0;
-}
-bool check_error(Segment a, Segment b) {
-  if (a.id == b.id) return false;
-  return interPnt(a.p,a.q,b.p,b.q);
-}
-int solve() {
-  Treap::pmem = Treap::mem;
-  Treap *rt = &Treap::nil;
-  int res = 0;
-  for (auto i:allx) {
-    for (auto l:seg(i)) {
-      int k = get_rank(rt, l);
-      Treap *t,*tl,*tm,*tr;
-      split(rt,k,tl,tr);
-      t = find_rightist(tl);
-      if (size(t) and check_error(t->seg,l)) return -1;
-      t = find_leftist(tr);
-      if (size(t) and check_error(t->seg,l)) return -1;
-      rt = merge(tl,tr);
-      if (l.p.F == i and l.p.F != l.q.F) { 
-        k = get_rank(rt, l);
-        split(rt,k,tl,tr);
-        tm = new (Treap::pmem++) Treap(l);
-        rt = merge(merge(tl,tm),tr);
-      } 
+
+/******* Begin of test intersection *******/
+namespace Inter{
+  const D eps = 1e-9;
+  struct Treap{
+    int sz , val , pri;
+    Treap *l , *r;
+    Treap( int _val ){
+      val = _val; sz = 1;
+      pri = rand(); l = r = NULL;
     }
-    for (auto l:seg(i)) {
-      if (l.q.F == i and l.p.F != l.q.F) {
-        Treap *tl,*tm,*tr;
-        int k = get_rank(rt, l);
-        split(rt,k-1,tl,tm);
-        split(tm,1,tm,tr);
-        Treap *t1=find_rightist(tl),*t2=find_leftist(tr);
-        if (size(t1) and size(t2) and check_error(t1->seg,t2->seg)) return -1;
-        rt = merge(tl,tr);
+  };
+  int Size( Treap * a ){ return a ? a->sz : 0; }
+  void pull( Treap * a ){
+    a->sz = Size( a->l ) + Size( a->r ) + 1;
+  }
+  Treap* merge( Treap *a , Treap *b ){
+    if( !a || !b ) return a ? a : b;
+    if( a->pri > b->pri ){
+      a->r = merge( a->r , b );
+      pull( a );
+      return a;
+    }else{
+      b->l = merge( a , b->l );
+      pull( b );
+      return b;
+    }
+  }
+  void split( Treap *t , int k , Treap*&a , Treap*&b ){
+    if( !t ){ a = b = NULL; return; }
+    if( Size( t->l ) + 1 <= k ){
+      a = t;
+      split( t->r , k - Size( t->l ) - 1 , a->r , b );
+      pull( a );
+    }else{
+      b = t;
+      split( t->l , k , a , b->l );
+      pull( b );
+    }
+  }
+  D curx;
+  D y_of_x( const Seg& ss , D nx ){
+    return ss.A.Y + (ss.B.Y - ss.A.Y) * (nx - ss.A.X) / (ss.B.X - ss.A.X);
+  }
+  bool lower( const Seg& s1 , const Seg& s2 ){
+    D lx = max( s1.A.X , s2.A.X );
+    D rx = min( s1.B.X , s2.B.X );
+    //if( lx < rx + eps ){
+      D sx = min( rx , max( lx , curx ) );
+      return y_of_x( s1 , sx ) <
+             y_of_x( s2 , sx );
+    //}
+    //return s1.A.X < s2.A.X;
+  }
+  vector<Seg> cand;
+  int rank( Treap* t , int c_id ){
+    if( !t ) return 0;
+    if( lower( cand[ t->val ] , cand[ c_id ] ) )
+      return Size( t->l ) + 1 + rank( t->r , c_id );
+    return rank( t->l , c_id );
+  }
+  int leftist( Treap* t ){
+    if( !t ) return -1;
+    if( t->l ) return leftist( t->l );
+    return t->val;
+  }
+  int rightist( Treap* t ){
+    if( !t ) return -1;
+    if( t->r ) return rightist( t->r );
+    return t->val;
+  }
+  struct Events{ int i , j; D x; };
+  bool operator<( const Events& e1 , const Events& e2 ){
+    if( fabs( e1.x - e2.x ) > eps ) return e1.x < e2.x;
+    if( e1.i != e2.i ) return e1.i < e2.i;
+    return e1.j < e2.j;
+  }
+  set< Events > S;
+  int ori( const Pt& o , const Pt& a , const Pt& b ){
+    D ret = ( a - o ) ^ ( b - o );
+    return (ret > eps) - (ret < -eps);
+  }
+  // p1 == p2 || q1 == q2 need to be handled
+  bool banana( const Pt& p1 , const Pt& p2 ,
+               const Pt& q1 , const Pt& q2 ){
+    if( fabs( ( p2 - p1 ) ^ ( q2 - q1 ) ) < eps ){ // parallel
+      if( ori( p1 , p2 , q1 ) ) return false;
+      return ( ( p1 - q1 ) * ( p2 - q1 ) ) < eps ||
+             ( ( p1 - q2 ) * ( p2 - q2 ) ) < eps ||
+             ( ( q1 - p1 ) * ( q2 - p1 ) ) < eps ||
+             ( ( q1 - p2 ) * ( q2 - p2 ) ) < eps;
+    }
+    return (ori( p1, p2, q1 ) * ori( p1, p2, q2 ) <= 0) &&
+           (ori( q1, q2, p1 ) * ori( q1, q2, p2 ) <= 0);
+  }
+  bool check( int id1 , int id2 ){
+    if( id1 == -1 or id2 == -1 ) return false;
+    if( id1 / 3 == id2 / 3 ) return false;
+    return banana( cand[ id1 ].A , cand[ id1 ].B ,
+                   cand[ id2 ].A , cand[ id2 ].B );
+  }
+  void clear( Treap* t ){
+    if( !t ) return;
+    clear( t->l );
+    clear( t->r );
+    delete t;
+  }
+  void print_treap( Treap* t ){
+    if( !t ) return;
+    print_treap( t->l );
+    printf( "%d " , t->val );
+    print_treap( t->r );
+  }
+  bool has_inter( const vector<Seg>& _cand ){
+    D ang = 1021;
+    D cosv = cosl( ang );
+    D sinv = sinl( ang );
+    cand.clear();
+    S.clear();
+    for( auto seg : _cand ){
+      Pt pA = { seg.A.X * cosv - seg.A.Y * sinv ,
+                seg.A.X * sinv + seg.A.Y * cosv };
+      Pt pB = { seg.B.X * cosv - seg.B.Y * sinv ,
+                seg.B.X * sinv + seg.B.Y * cosv };
+      //printf( "Segment %.6f %.6f %.6f %.6f\n" , pA.X , pA.Y , pB.X , pB.Y );
+      if( pB < pA ) swap( pA , pB );
+      S.insert( { (int)cand.size() , -1 , pA.X } );
+      S.insert( { (int)cand.size() , -2 , pB.X } );
+      cand.push_back( {pA, pB} );
+    }
+    Treap *t = NULL , *tl = NULL , *tr = NULL;
+    D px = S.begin()->x - 2;
+    while( S.size() ){
+      Events e = *S.begin();
+      S.erase( S.begin() );
+      curx = (px + e.x) * .5;
+      int ii = e.j , who = e.i;
+      if( ii == -1 ){ // in
+        int rnk = rank( t , who );
+        split( t , rnk , tl , tr );
+        int lc = rightist( tl );
+        int rc = leftist( tr );
+        if( check( lc , who ) or
+            check( rc , who ) or
+            check( lc , rc ) ){
+          clear( tl );
+          clear( tr );
+          return true;
+        }
+        t = merge( merge( tl , new Treap( who ) ) , tr );
+      }else{
+        int rnk = rank( t , who );
+        split( t , rnk , tl , t );
+        split( t , 1 , t , tr );
+        assert( t and t->val == who );
+        int lc = rightist( tl );
+        int rc = leftist( tr );
+        if( check( lc , rc ) or
+            check( lc , who ) or
+            check( who , rc ) ){
+          clear( t );
+          clear( tl );
+          clear( tr );
+          return true;
+        }
+        delete t;
+        t = merge( tl , tr );
+      }
+      px = e.x;
+    }
+    clear( t );
+    return false;
+  }
+};
+/******* End of test intersection *******/
+
+void scan( PLL& pp ){
+  pp.X = getint();
+  pp.Y = getint();
+}
+
+int n;
+PLL p[ N ];
+
+inline bool error(){
+  set<PLL> found;
+  for( int i = 0 ; i < 3 * n ; i += 3 )
+    for( int j = 0 ; j < 3 ; j ++ ){
+      if( found.find( p[ i + j ] ) != found.end() )
+        return true;
+      found.insert( p[ i + j ] );
+    }
+  vector<Seg> cand;
+  for( int i = 0 ; i < 3 * n ; i += 3 ){
+    D sft = 1e-6;
+    for( int j = 0 ; j < 3 ; j ++ ){
+      Pt s = p[ i + j ];
+      Pt t = p[ i + (j + 1) % 3 ];
+      Pt dir = (t - s) * (sft / norm(t - s) );
+      cand.push_back( { s + dir , t + dir } );
+    }
+  }
+  return Inter::has_inter( cand );
+}
+
+vector<lSeg> seg;
+vector<int> seg_vl;
+
+void init(){
+  for( int i = 0 ; i < 3 * n ; i ++ )
+    scan( p[ i ] );
+  for( int i = 0 ; i < 3 * n ; i += 3 )
+    sort( p + i , p + i + 3 );
+}
+
+struct Treap{
+	int sz , val , ss , pri;
+  int sum , psum;
+	Treap *l , *r;
+	Treap( int _val , int _s ){
+		val = _val;
+    ss = sum = _s;
+    psum = max( _s , 0 );
+    sz = 1;
+		pri = rand(); l = r = NULL;
+	}
+};
+int Size( Treap * a ){ return a ? a->sz : 0; }
+int Sum( Treap * a ){ return a ? a->sum : 0; }
+int Psum( Treap * a ){ return a ? a->psum : 0; }
+void pull( Treap * a ){
+	a->sz = Size( a->l ) + Size( a->r ) + 1;
+  a->sum = a->ss + Sum( a->l ) + Sum( a->r );
+  a->psum = max( Psum( a->l ) ,
+                 Sum( a->l ) + a->ss + Psum( a->r ) );
+}
+Treap* merge( Treap *a , Treap *b ){
+	if( !a || !b ) return a ? a : b;
+	if( a->pri > b->pri ){
+		a->r = merge( a->r , b );
+		pull( a );
+		return a;
+	}else{
+		b->l = merge( a , b->l );
+		pull( b );
+		return b;
+	}
+}
+void split( Treap *t , int k , Treap*&a , Treap*&b ){
+	if( !t ){ a = b = NULL; return; }
+	if( Size( t->l ) + 1 <= k ){
+		a = t;
+		split( t->r , k - Size( t->l ) - 1 , a->r , b );
+		pull( a );
+	}else{
+		b = t;
+		split( t->l , k , a , b->l );
+		pull( b );
+	}
+}
+bool err;
+int sgn( LL x ){
+  return (x > 0) - (x < 0);
+}
+void err_check( const lSeg& s1 , const lSeg& s2 ){
+  LL lx = max( s1.A.X , s2.A.X );
+  LL rx = min( s1.B.X , s2.B.X );
+  int sgn1 = ( s1.A.Y * (s1.B.X - s1.A.X) * (s2.B.X - s2.A.X) + (s1.B.Y - s1.A.Y) * (lx - s1.A.X) * (s2.B.X - s2.A.X) ) -
+             ( s2.A.Y * (s1.B.X - s1.A.X) * (s2.B.X - s2.A.X) + (s2.B.Y - s2.A.Y) * (lx - s2.A.X) * (s1.B.X - s1.A.X) );
+  int sgn2 = ( s1.A.Y * (s1.B.X - s1.A.X) * (s2.B.X - s2.A.X) + (s1.B.Y - s1.A.Y) * (rx - s1.A.X) * (s2.B.X - s2.A.X) ) -
+             ( s2.A.Y * (s1.B.X - s1.A.X) * (s2.B.X - s2.A.X) + (s2.B.Y - s2.A.Y) * (rx - s2.A.X) * (s1.B.X - s1.A.X) );
+  if( sgn1 == 0 or sgn2 == 0 ) err = true;
+  if( sgn1 == 1 and sgn2 == -1 ) err = true;
+  if( sgn2 == 1 and sgn1 == -1 ) err = true;
+}
+bool lower( const lSeg& s1 , const lSeg& s2 ){
+  LL lx = max( s1.A.X , s2.A.X );
+  LL rx = min( s1.B.X , s2.B.X );
+  if( lx <= rx ){
+    LL mx = (lx + rx) / 2;
+    return s1.A.Y * (s1.B.X - s1.A.X) * (s2.B.X - s2.A.X) + (s1.B.Y - s1.A.Y) * (mx - s1.A.X) * (s2.B.X - s2.A.X) <
+           s2.A.Y * (s1.B.X - s1.A.X) * (s2.B.X - s2.A.X) + (s2.B.Y - s2.A.Y) * (mx - s2.A.X) * (s1.B.X - s1.A.X);
+    //return s1.A.Y + (s1.B.Y - s1.A.Y) * (mx - s1.A.X) / (s1.B.X - s1.A.X) <
+           //s2.A.Y + (s2.B.Y - s2.A.Y) * (mx - s2.A.X) / (s2.B.X - s2.A.X)
+  }
+  return s1.A.X < s2.A.X;
+}
+bool same( int i1 , int i2 ){
+  return seg[ i1 ].A == seg[ i2 ].A or
+         seg[ i1 ].A == seg[ i2 ].B or
+         seg[ i1 ].B == seg[ i2 ].A or
+         seg[ i1 ].B == seg[ i2 ].B;
+}
+int rank( Treap* t , int c_id ){
+  if( !t ) return 0;
+  if( lower( seg[ t->val ] , seg[ c_id ] ) ){
+    //if( not same( t->val , c_id ) )
+      //err_check( seg[ t->val ] , seg[ c_id ] );
+    return Size( t->l ) + 1 + ::rank( t->r , c_id );
+  }
+  return ::rank( t->l , c_id );
+}
+
+int _cs;
+vector<int> candx;
+#define D 201010
+vector< pair<int,int> > wt[ D + D ];
+
+bool cmp( pair<int,int> p1 , pair<int,int> p2 ){
+  return p1.second < p2.second;
+}
+
+void add_seg( PLL p1 , PLL p2 , int vv ){
+  assert( p1 < p2 );
+  p1.X = p1.X * 2;
+  p2.X = p2.X * 2;
+  candx.push_back( p1.X + D );
+  candx.push_back( p2.X + D );
+  wt[ p1.X + D ].push_back( { seg.size() , +1 } );
+  wt[ p2.X + D ].push_back( { seg.size() , -1 } );
+  //printf( "Segment %lld %lld %lld %lld %d\n" , p1.X , p1.Y , p2.X , p2.Y , vv );
+  seg.push_back( {p1, p2} );
+  seg_vl.push_back( vv );
+}
+void print_treap( Treap* t ){
+  if( !t ) return;
+  print_treap( t->l );
+  printf( "%d " , t->val );
+  print_treap( t->r );
+}
+void clear( Treap* t ){
+  if( !t ) return;
+  clear( t->l );
+  clear( t->r );
+  delete t;
+}
+void solve(){
+  printf( "Case %d: " , ++ _cs );
+  if( error() ){
+    puts( "ERROR" );
+    return;
+  }
+  seg.clear();
+  seg_vl.clear();
+  candx.clear();
+  for( int i = 0 ; i < 3 * n ; i += 3 )
+    if( p[ i + 0 ].X == p[ i + 1 ].X ){
+      add_seg( p[ i + 0 ] , p[ i + 2 ] , +1 );
+      add_seg( p[ i + 1 ] , p[ i + 2 ] , -1 );
+    }else if( p[ i + 1 ].X == p[ i + 2 ].X ){
+      add_seg( p[ i + 0 ] , p[ i + 1 ] , +1 );
+      add_seg( p[ i + 0 ] , p[ i + 2 ] , -1 );
+    }else{
+      LL cc = (p[ i + 2 ] - p[ i ]) ^ (p[ i + 1 ] - p[ i ]);
+      assert( cc != 0 );
+      if( cc > 0 ){
+        add_seg( p[ i + 0 ] , p[ i + 2 ] , +1 );
+        add_seg( p[ i + 0 ] , p[ i + 1 ] , -1 );  
+        add_seg( p[ i + 1 ] , p[ i + 2 ] , -1 );  
+      }else{
+        add_seg( p[ i + 0 ] , p[ i + 2 ] , -1 );
+        add_seg( p[ i + 0 ] , p[ i + 1 ] , +1 );  
+        add_seg( p[ i + 1 ] , p[ i + 2 ] , +1 );  
       }
     }
-    res = max(res, rt->presum);
-  }
-  res++;
-  return res;
-}
-int main() {
-  IOS;
-  int cas = 0;
-  while (cin >> N) {
-    if (N == -1) break;
-    REP(i,N) {
-      REP(j,3) cin >> ip[i].pt[j].F >> ip[i].pt[j].S;
+  sort( candx.begin() , candx.end() );
+  candx.resize( unique( candx.begin() , candx.end() ) - candx.begin() );
+  Treap *t = NULL , *tl = NULL , *tr = NULL;
+  int ans = 0;
+  err = false;
+  for( int x : candx ){
+    sort( wt[ x ].begin() , wt[ x ].end() , cmp );
+    for( auto tp : wt[ x ] ){
+      int who = tp.first;
+      //printf( "%d %d\n" , who , tp.second );
+      if( tp.second == +1 ){
+        int rnk = ::rank( t , who );
+        split( t , rnk , tl , tr );
+        t = merge( tl , merge( new Treap( who , seg_vl[ who ] ) , tr ) );
+      }else{
+        int rnk = ::rank( t , who );
+        split( t , rnk , tl , t );
+        split( t , 1 , t , tr );
+        assert( t and t->val == who );
+        delete t;
+        t = merge( tl , tr );
+      }
+      //print_treap( t );
+      //puts( "" );
     }
-    predo();
-    int ans = solve();
-    cas++;
-    cout << "Case " << cas << ": ";
-    if (ans == -1) cout << "ERROR\n";
-    else cout << ans << " shades\n";
+    ans = max( ans , Psum( t ) );
+    wt[ x ].clear();
   }
+  clear( t );
+  if( err ){
+    puts( "ERROR" );
+    return;
+  }
+  printf( "%d shades\n" , ans + 1 );
+}
 
-  return 0;
+int main(){
+  while( cin >> n and (n != -1) ){
+    init();
+    solve();
+  }
 }
