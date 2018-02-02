@@ -119,8 +119,8 @@ double cal_prob( const vector<int>& tord ){
 
 #define GENERATIONS 30
 #define MAX_ALIVE 10
-#define MUTATE_TIMES 15
-#define CROSSS_TIMES 15
+#define MUTATE_TIMES 20
+#define CROSSS_TIMES 20
 
 
 vector<int> mutate( vector<int> _v ){
