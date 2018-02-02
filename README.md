@@ -172,7 +172,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XV GP of America          | 2018/01/25    |  17  | . | B | C | **D** | E | F | G | H | I | J |
 | WF 2008                   | 2018/01/27    |  13  | **A** | B | **C** | **D** | E | F | **G** | **H** | I | J | K |
 | XV GP of Tatarstan        | 2018/01/31    |   2  | A | B | **C** | D | E | F | G | H | I | J | K | L |
-| XV GP of Udmurtia         | 2018/02/02    |  14  | A | B | C | D | E | . | . | **H** | . | . |
+| XV GP of Udmurtia         | 2018/02/02    |  14  | A | B | C | D | E | . | . | **H** | . | **J** |
 
 
 - A : 賽內AC
