@@ -167,11 +167,12 @@ codebook by eddy1021, c2251393, tzupengwang
 | Dhaka 2017                | 2017/12/16    |   1  | A | B | C | D | E | F | G | H | I | J | K |
 | XVIII GP of Peterhof      | 2017/12/17    |  21  | A | . | C | D | E | . | . | **H** | I | J |
 | XVI GP of Peterhof        | 2017/12/29    |  11  | A | . | C | D | E | F | G | H | . |
-| XV GP of 3 Capitals       | 2017/01/05    |  11  | A | B | C | D | E | F | G | H | **I** | . | K |
-| NEERC 2015                | 2017/01/23    |   4  | A | B | C | D | E | F | G | **H** | **I** | J | K | L |
-| XV GP of America          | 2017/01/25    |  17  | . | B | C | **D** | E | F | G | H | I | J |
-| WF 2008                   | 2017/01/27    |  13  | **A** | B | **C** | **D** | E | F | **G** | **H** | I | J | K |
-| XV GP of Tatarstan        | 2017/01/31    |   2  | A | B | **C** | D | E | F | G | H | I | J | K | L |
+| XV GP of 3 Capitals       | 2018/01/05    |  11  | A | B | C | D | E | F | G | H | **I** | . | K |
+| NEERC 2015                | 2018/01/23    |   4  | A | B | C | D | E | F | G | **H** | **I** | J | K | L |
+| XV GP of America          | 2018/01/25    |  17  | . | B | C | **D** | E | F | G | H | I | J |
+| WF 2008                   | 2018/01/27    |  13  | **A** | B | **C** | **D** | E | F | **G** | **H** | I | J | K |
+| XV GP of Tatarstan        | 2018/01/31    |   2  | A | B | **C** | D | E | F | G | H | I | J | K | L |
+| XV GP of Udmurtia         | 2018/02/02    |  14  | A | B | C | D | E | . | . | **H** | . | . |
 
 
 - A : 賽內AC
