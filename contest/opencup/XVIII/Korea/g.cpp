@@ -1,144 +1,242 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define N 100010
-#define M 1202010
-#define MXQ M
-//#define int long long
+#define N 101010
 typedef long long LL;
-inline LL getint(){
-  LL _x=0,_tmp=1; char _tc=getchar();    
-  while( (_tc<'0'||_tc>'9')&&_tc!='-' ) _tc=getchar();
-  if( _tc == '-' ) _tc=getchar() , _tmp = -1;
-  while(_tc>='0'&&_tc<='9') _x*=10,_x+=(_tc-'0'),_tc=getchar();
-  return _x*_tmp;
+struct Nd{
+  int mx;
+  Nd *tl , *tr;
+};
+inline Nd* copy( Nd* x ){
+  Nd* ret = new Nd();
+  if( x ){
+    ret->mx = x->mx;
+    ret->tl = x->tl;
+    ret->tr = x->tr;
+  }
+  return ret;
 }
-
-/* Dynamic MST O( Q lg^2 Q )
- (qx[i], qy[i])->chg weight of edge No.qx[i] to qy[i]
- delete an edge: (i, \infty)
- add an edge: change from \infty to specific value
- */
-const int SZ=M+3*MXQ;
-int a[N],*tz;
-int find(int xx){
-	int root=xx; while(a[root]) root=a[root];
-	int next; while((next=a[xx])){a[xx]=root; xx=next; }
-	return root;
+#define mid ((l+r)>>1)
+inline int Mx( Nd* now ){ return now ? now->mx : 0; }
+void modify( Nd* now , int l , int r , int p , int v ){
+  if( l == r ){
+    now->mx = v;
+    return;
+  }
+  if( p <= mid ){
+    now->tl = copy( now->tl );
+    modify( now->tl , l , mid , p , v );
+  }else{
+    now->tr = copy( now->tr );
+    modify( now->tr , mid + 1 , r , p , v );
+  }
+  now->mx = max( Mx( now->tl ) , Mx( now->tr ) );
 }
-bool cmp(int aa,int bb){ return tz[aa]<tz[bb]; }
-int kx[N],ky[N],kt, vd[N],id[M], app[M];
-bool extra[M];
-
-bitset<M> useful;
-vector<LL> tmp_ans;
-int itt;
-
-void solve(int *qx,int *qy,int Q,int n,int *x,int *y,int *z,int m1,long long ans){
-	if(Q==1){
-		for(int i=1;i<=n;i++) a[i]=0;
-		z[ qx[0] ]=qy[0]; tz = z;
-		for(int i=0;i<m1;i++) id[i]=i;
-		sort(id,id+m1,cmp); int ri,rj;
-		for(int i=0;i<m1;i++){
-			ri=find(x[id[i]]); rj=find(y[id[i]]);
-			if(ri!=rj){ ans+=z[id[i]]; a[ri]=rj; }
-		}
-    if( useful[ itt ] )
-      tmp_ans.push_back( ans );
-    itt ++;
-		return;
-	}
-	int ri,rj;
-	//contract
-	kt=0;
-	for(int i=1;i<=n;i++) a[i]=0;
-	for(int i=0;i<Q;i++){
-		ri=find(x[qx[i]]); rj=find(y[qx[i]]); if(ri!=rj) a[ri]=rj;
-	}
-	int tm=0;
-	for(int i=0;i<m1;i++) extra[i]=true;
-	for(int i=0;i<Q;i++) extra[ qx[i] ]=false;
-	for(int i=0;i<m1;i++) if(extra[i]) id[tm++]=i;
-	tz=z; sort(id,id+tm,cmp);
-	for(int i=0;i<tm;i++){
-		ri=find(x[id[i]]); rj=find(y[id[i]]);
-		if(ri!=rj){
-			a[ri]=rj; ans += z[id[i]];
-			kx[kt]=x[id[i]]; ky[kt]=y[id[i]]; kt++;
-		}
-	}
-	for(int i=1;i<=n;i++) a[i]=0;
-	for(int i=0;i<kt;i++) a[ find(kx[i]) ]=find(ky[i]);
-	int n2=0;
-	for(int i=1;i<=n;i++) if(a[i]==0)
-	vd[i]=++n2;
-	for(int i=1;i<=n;i++) if(a[i])
-	vd[i]=vd[find(i)];
-	int m2=0, *Nx=x+m1, *Ny=y+m1, *Nz=z+m1;
-	for(int i=0;i<m1;i++) app[i]=-1;
-	for(int i=0;i<Q;i++) if(app[qx[i]]==-1){
-		Nx[m2]=vd[ x[ qx[i] ] ]; Ny[m2]=vd[ y[ qx[i] ] ]; Nz[m2]=z[ qx[i] ];
-		app[qx[i]]=m2; m2++;
-	}
-	for(int i=0;i<Q;i++){ z[ qx[i] ]=qy[i]; qx[i]=app[qx[i]]; }
-	for(int i=1;i<=n2;i++) a[i]=0;
-	for(int i=0;i<tm;i++){
-		ri=find(vd[ x[id[i]] ]);  rj=find(vd[ y[id[i]] ]);
-		if(ri!=rj){
-			a[ri]=rj; Nx[m2]=vd[ x[id[i]] ];
-			Ny[m2]=vd[ y[id[i]] ]; Nz[m2]=z[id[i]]; m2++;
-		}
-	}
-	int mid=Q/2;
-	solve(qx,qy,mid,n2,Nx,Ny,Nz,m2,ans);
-	solve(qx+mid,qy+mid,Q-mid,n2,Nx,Ny,Nz,m2,ans);
+int query( Nd* now , int l , int r , int ql , int qr ){
+  if( !now or r < ql or l > qr ) return 0;
+  if( ql <= l and r <= qr ) return now->mx;
+  return max( query( now->tl , l , mid , ql , qr ) ,
+              query( now->tr , mid + 1 , r , ql , qr ) );
 }
-//int x[SZ],y[SZ],z[SZ],qx[MXQ],qy[MXQ],n,m,Q;
-//void init(){
-	//scanf("%d%d",&n,&m);
-	//for(int i=0;i<m;i++) scanf("%d%d%d",x+i,y+i,z+i);
-	//scanf("%d",&Q);
-	//for(int i=0;i<Q;i++){ scanf("%d%d",qx+i,qy+i); qx[i]--; }
-//}
-//void work(){ if(Q) solve(qx,qy,Q,n,x,y,z,m,0); }
-//int main(){init(); work(); }
-#define MXQ M
-int x[MXQ],y[MXQ],z[MXQ],qx[MXQ],qy[MXQ],n,m,Q;
-vector<int> v[ N ];
-LL sum[ N ];
+int n , m , p[ N ];
+int f( int x ){
+  return x == p[ x ] ? x : p[ x ] = f( p[ x ] );
+}
+void uni( int x , int y ){
+  p[ f( x ) ] = f( y );
+}
+vector< pair<LL, pair<LL,LL>> > e;
+vector< pair<LL,LL> > v[ N ] , t[ N ];
 void init(){
-	//scanf("%d%d",&n,&m);
-  n = getint();
-  m = getint();
-	for(int i=0;i<m;i++){
-    //scanf("%d%d%d",x+i,y+i,z+i);
-    x[ i ] = getint();
-    y[ i ] = getint();
-    z[ i ] = getint();
-    v[ x[ i ] ].push_back( i );
-    v[ y[ i ] ].push_back( i );
-    sum[ x[ i ] ] += z[ i ];
-    sum[ y[ i ] ] += z[ i ];
+  scanf( "%d%d" , &n , &m );
+  while( m -- ){
+    int ui , vi , ci;
+    scanf( "%d%d%d" , &ui , &vi , &ci );
+    v[ ui ].push_back( { vi , ci } );
+    v[ vi ].push_back( { ui , ci } );
+    e.push_back( { ci , { ui , vi } } );
   }
+}
+LL mst_cst;
+void build_mst(){
+  for( int i = 1 ; i <= n ; i ++ ) p[ i ] = i;
+  sort( e.begin() , e.end() );
+  for( auto i : e ){
+    if( f( i.second.first ) ==
+        f( i.second.second  ) )
+      continue;
+    uni( i.second.first , i.second.second );
+    mst_cst += i.first;
+    t[ i.second.first ].push_back( { i.second.second , i.first } );
+    t[ i.second.second ].push_back( { i.second.first , i.first } );
+  }
+}
+#define K 18
+int pp[ K ][ N ] , dep[ N ] , in[ N ] , out[ N ] , stmp;
+Nd* root[ N ];
+void go( int now , int prt , int tdep ){
+  pp[ 0 ][ now ] = prt;
+  dep[ now ] = tdep;
+  in[ now ] = ++ stmp;
+  for( auto ee : t[ now ] ){
+    if( ee.first == prt ) continue;
+    root[ ee.first ] = copy( root[ now ] );
+    modify( root[ ee.first ] , 0 , N , tdep + 1 , ee.second );
+    go( ee.first , now , tdep + 1 );
+  }
+  out[ now ] = stmp;
+}
+inline int lca( int ui , int vi ){
+  if( dep[ ui ] > dep[ vi ] ) swap( ui , vi );
+  int dlt = dep[ vi ] - dep[ ui ];
+  while( dlt ){
+    int bt = __lg( dlt & (-dlt) );
+    vi = pp[ bt ][ vi ];
+    dlt ^= (1 << bt);
+  }
+  if( ui == vi ) return ui;
+  for( int i = K - 1 ; i >= 0 ; i -- )
+    if( pp[ i ][ ui ] != pp[ i ][ vi ] ){
+      ui = pp[ i ][ ui ];
+      vi = pp[ i ][ vi ];
+    }
+  return pp[ 0 ][ ui ];
+}
+void pre_solve(){
+  root[ 1 ] = new Nd();
+  go( 1 , 1 , 0 );
+  for( int j = 1 ; j < K ; j ++ )
+    for( int i = 1 ; i <= n ; i ++ )
+      pp[ j ][ i ] = pp[ j - 1 ][ pp[ j - 1 ][ i ] ];
+}
+int cand[ N ] , tag[ N ];
+bool cmp( int id1 , int id2 ){
+  if( out[ id1 ] != out[ id2 ] )
+    return out[ id1 ] < out[ id2 ];
+  return in[ id1 ] > in[ id2 ];
+}
+int ct;
+inline LL find_best( int ui , int vi ){
+  int tlca = lca( ui , vi );
+  int ret = 0;
+  if( ui != tlca )
+    ret = max( ret , query( root[ ui ] , 0 , N , dep[ tlca ] + 1 , N ) );
+  if( vi != tlca )
+    ret = max( ret , query( root[ vi ] , 0 , N , dep[ tlca ] + 1 , N ) );
+  return ret;
+}
+void go_cal( int i , const vector< pair<int,int> >& edges , LL ans ){
+  for( int j = 0 ; j < ct ; j ++ )
+    p[ cand[ j ] ] = cand[ j ];
+  for( auto ee : v[ i ] )
+    uni( i , ee.first );
+  vector< pair<LL, pair<int,int>> > ee;
+  for( auto j : edges ){
+    int ui = j.first;
+    int vi = j.second;
+    LL bst = find_best( ui , vi );
+    assert( bst );
+    ee.push_back( { bst , { ui , vi } } );
+    ans -= bst;
+  }
+  sort( ee.begin() , ee.end() );
+  for( auto j : ee ){
+    if( f( j.second.first ) ==
+        f( j.second.second ) )
+      continue;
+    ans += j.first;
+    uni( j.second.first ,
+         j.second.second );
+  }
+  printf( "%lld\n" , ans );
+}
+void solve(){
+  build_mst();
+  pre_solve();
   for( int i = 1 ; i <= n ; i ++ ){
- //(qx[i], qy[i])->chg weight of edge No.qx[i] to qy[i]
-    for( int eid : v[ i ] ){
-      qx[ Q ] = eid;
-      qy[ Q ++ ] = 0;
+    LL ans = mst_cst;
+    ct = 0;
+    cand[ ct ++ ] = i;
+    tag[ i ] = i;
+    for( auto ee : v[ i ] ){
+      ans += ee.second;
+      cand[ ct ++ ] = ee.first;
+      tag[ ee.first ] = i;
     }
-    useful[ Q - 1 ] = 1;
-    for( int eid : v[ i ] ){
-      qx[ Q ] = eid;
-      qy[ Q ++ ] = z[ eid ];
+    sort( cand , cand + ct , cmp );
+    vector<int> wt;
+    vector< pair<int,int> > edges;
+    int cur_sz = ct;
+    for( int ptr = 0 ; ptr < cur_sz ; ptr ++ ){
+      int who = cand[ ptr ];
+      while( true ){
+        bool keep = false;
+        if( (int)wt.size() > 1 ){
+          int wtsz = (int)wt.size();
+          int lst1 = wt[ wtsz - 1 ];
+          int lst2 = wt[ wtsz - 2 ];
+          if( lca( lst1 , lst2 ) == lst1 ){
+            if( lst1 != lst2 )
+              edges.push_back( { lst1 , lst2 } );
+            wt[ wtsz - 2 ] = lst1;
+            keep = true;
+            wt.pop_back();
+          }else if( dep[ lca( lst1 , lst2 ) ] > dep[ lca( lst2 , who ) ] ){
+            int tlca = lca( lst1 , lst2 );
+            if( tag[ tlca ] != i ){
+              tag[ tlca ] = i;
+              cand[ ct ++ ] = tlca;
+            }
+            if( lst1 != tlca )
+              edges.push_back( { lst1 , tlca } );
+            if( lst2 != tlca )
+              edges.push_back( { lst2 , tlca } );
+            wt.pop_back();
+            wt.pop_back();
+            wt.push_back( tlca );
+            keep = true;
+          }
+        }
+        if( keep ) continue;
+        if( not wt.empty() ){
+          if( lca( wt.back() , who ) == who ){
+            if( wt.back() != who )
+              edges.push_back( { wt.back() , who } );
+            wt.pop_back();
+            keep = true;
+          }
+        }
+        if( not keep ) break;
+      }
+      wt.push_back( who );
     }
+    while( (int)wt.size() > 1 ){
+      int wtsz = (int)wt.size();
+      int lst1 = wt[ wtsz - 1 ];
+      int lst2 = wt[ wtsz - 2 ];
+      if( lca( lst1 , lst2 ) == lst1 ){
+        if( lst1 != lst2 )
+          edges.push_back( { lst1 , lst2 } );
+        wt[ wtsz - 2 ] = lst1;
+        wt.pop_back();
+      }else{
+        int tlca = lca( lst1 , lst2 );
+        if( tag[ tlca ] != i ){
+          tag[ tlca ] = i;
+          cand[ ct ++ ] = tlca;
+        }
+        if( lst1 != tlca )
+          edges.push_back( { lst1 , tlca } );
+        if( lst2 != tlca )
+          edges.push_back( { lst2 , tlca } );
+        wt.pop_back();
+        wt.pop_back();
+        wt.push_back( tlca );
+      }
+    }
+    go_cal( i , edges , ans );
   }
 }
-void work(){
-  solve(qx,qy,Q,n,x,y,z,m,0);
-  for( int i = 1 ; i <= n ; i ++ )
-    printf( "%lld\n" , sum[ i ] + tmp_ans[ i - 1 ] );
-}
-int32_t main(){
+int main(){
   init();
-  work();
+  solve();
 }
