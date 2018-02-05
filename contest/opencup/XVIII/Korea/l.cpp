@@ -1,82 +1,70 @@
-#pragma GCC optimize("O3")
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
+typedef unsigned long long ULL;
 
 const int N = 2e5+2;
 
-inline LL getint(){
-  LL _x=0,_tmp=1; char _tc=getchar();    
-  while( (_tc<'0'||_tc>'9')&&_tc!='-' ) _tc=getchar();
-  if( _tc == '-' ) _tc=getchar() , _tmp = -1;
-  while(_tc>='0'&&_tc<='9') _x*=10,_x+=(_tc-'0'),_tc=getchar();
-  return _x*_tmp;
-}
 int n, k;
 LL T;
-bitset<N> f, F, tF, msk;
 int x[N];
-
-void predo() {
-  for (int i = 0; i < n; ++i) msk[i] = 1;
-  for (int i = 0; i < k; ++i) f[i] = 1;
-  F[0] = 1;
-  LL tt = T;
-  while (tt) {
-    if (tt&1) {
-      tF.reset();
-      if( F.count() < f.count() ){
-        for (int i = 0; i < n; ++i) if (F[i])
-          tF ^= (f << i);
-      }else{
-        for (int i = 0; i < n; ++i) if (f[i])
-          tF ^= (F << i);
-      }
-      F = (tF ^ (tF >> n)) & msk;
-      //polyop.Mul(n, f, n, F, F);
-      //for (int i = n; i < n+n; ++i) F[i-n] += F[i];
-      //for (int i = 0; i < n; ++i) F[i] &= 1;
-    }
-    tF.reset();
-    for (int i = 0; i < n; ++i) if (f[i]) 
-      tF ^= (f << i);
-    f = (tF ^ (tF >> n)) & msk;
-    //polyop.Mul(n, f, n, f, f);
-    //for (int i = n; i < n+n; ++i) f[i-n] += f[i];
-    //for (int i = 0; i < n; ++i) f[i] &= 1;
-    //printf("tt %lld\n", tt);
-    tt >>= 1;
-  }
-  //for (int i = 0; i < n; ++i) printf("%c", "01"[F[i]]); puts("");
-}
-
 int y[N];
-bitset<N> xb, yb;
+bool vis[N];
+vector<int> psum[N];
+int sz[N], rt[N], xr[N], all[N], id[N];
 
 void solve() {
+  LL tt = T; int p2 = 1;
+  while (tt) {
+    if (tt&1) {
+      fill(y, y+n, 0);
+      fill(vis, vis+n, 0);
+      for (int i = 0; i < n; ++i) {
+        psum[i].clear();
+        sz[i] = 0;
+        all[i] = 0;
+      }
+      for (int i = 0; i < n; ++i) if (!vis[i]) {
+        int cur = i, prv = 0, cid = 0;
+        while (!vis[cur]) {
+          vis[cur] = 1;
+          rt[cur] = i;
+          id[cur] = cid++;
+          prv ^= x[cur];
+          xr[cur] = prv;
 
-  for (int b = 0; b < 30; ++b) {
-    for (int i = 0; i < n; ++i) xb[i+n] = xb[i] = ((x[i]>>b)&1);
-    yb.reset();
-    for (int i = 0; i < n; ++i) if (F[i]) {
-      yb ^= (xb>>i);
+          psum[i].push_back(xr[cur]);
+          sz[i]++;
+          cur = (cur+p2) % n;
+        }
+        all[i] = prv;
+        for(int j = 0; j < sz[i]; ++j)
+          psum[i].push_back(prv ^ psum[i][j]);
+      }
+      for (int i = 0; i < n; ++i) {
+        int rnd = k / sz[rt[i]];
+        y[i] = (rnd&1) * all[rt[i]];
+        int rst = k % sz[rt[i]];
+        //printf("i %d %d %d\n", i, id[i], id[i]+rst-1);
+        y[i] ^= psum[rt[i]][id[i]+rst-1];
+        if (id[i]) {
+          y[i] ^= psum[rt[i]][id[i]-1];
+        }
+      }
+      copy(y, y+n, x);
     }
-    for (int i = 0; i < n; ++i) if (yb[i]) y[i] |= (1<<b);
+    tt >>= 1;
+    p2 <<= 1;
+    p2 %= n;
   }
   for (int i = 0; i < n; ++i) printf("%d%c", y[i], " \n"[i+1==n]);
 }
 
 int main(){
-  //scanf("%d%d%lld", &n, &k, &T);
-  n = getint();
-  k = getint();
-  T = getint();
+  scanf("%d%d%lld", &n, &k, &T);
   for (int i = 0; i < n; ++i)
-    x[ i ] = getint();
-    //scanf("%d", x+i);
-  //n = 100000, k = 90000, T = (1LL<<60)-1;
-  //for (int i = 0; i < n; ++i) x[i] = rand()*rand() % (int(1e9));
-  predo();
-  //exit(0);
+    scanf("%d", x+i);
+  //n = 1e5, k = 4e4, T = (1ll<<60)-1;
+  //for (int i = 0; i < n; ++i) x[i] = rand() * rand() % int(1e9);
   solve();
 }
