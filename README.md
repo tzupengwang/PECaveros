@@ -175,6 +175,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XV GP of Udmurtia         | 2018/02/02    |  14  | A | B | C | D | E | **F** | . | **H** | . | **J** |
 | XVIII GP of Korea         | 2018/02/04    |   7  | A | . | C | D | E | F | **G** | . | I | . | **K** | **L** |
 | XV GP of Karelia          | 2018/02/06    |   2  | A | B | C | D | E | F | G | H |
+| XV GP of Peterhof         | 2018/02/08    |   6  | A | B | C | . | . | . | . | H | I | J | K |
 
 
 - A : 賽內AC
