@@ -176,7 +176,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XVIII GP of Korea         | 2018/02/04    |   7  | A | . | C | D | E | F | **G** | . | I | . | **K** | **L** |
 | XV GP of Karelia          | 2018/02/06    |   2  | A | B | C | D | E | F | G | H |
 | XV GP of Peterhof         | 2018/02/08    |   6  | A | B | C | . | . | . | . | H | I | J | K |
-| WF 2011                   | 2018/02/10    |   1  | A | . | C | . | E | F | G | H | I | J | K |
+| WF 2011                   | 2018/02/10    |   1  | A | **B** | C | . | E | F | G | H | I | J | K |
 
 
 - A : 賽內AC
