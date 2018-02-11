@@ -177,6 +177,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XV GP of Karelia          | 2018/02/06    |   2  | A | B | C | D | E | F | G | H |
 | XV GP of Peterhof         | 2018/02/08    |   6  | A | B | C | . | . | . | . | H | I | J | K |
 | WF 2011                   | 2018/02/10    |   1  | A | **B** | C | **D** | E | F | G | H | I | J | K |
+| XVIII GP of Khamovniki    | 2018/02/11    |  15  | A | . | C | D | . | F | G | H | I | . | K |
 
 
 - A : 賽內AC
