@@ -1,62 +1,52 @@
-const int MAXN = 200010;
+/*
+ * sfail: compressed fail links with same diff
+ * O(lgn): length of sfail link path
+ */
+const int MAXN = 1e6+10;
 struct PalT{
-  struct Node{
-    int nxt[ 33 ] , len , fail;
-    ll cnt;
-  };
-  int tot , lst;
-  Node nd[ MAXN * 2 ];
+  int tot,lst;
+  int nxt[MAXN][26], len[MAXN];
+  int fail[MAXN], diff[MAXN], sfail[MAXN];
   char* s;
-  int newNode( int l , int _fail ){
+  int newNode(int l, int _fail) {
     int res = ++tot;
-    memset( nd[ res ].nxt , 0 , sizeof nd[ res ].nxt );
-    nd[ res ].len = l;
-    nd[ res ].cnt = 0;
-    nd[ res ].fail = _fail;
+    fill(nxt[res], nxt[res]+26, 0);
+    len[res] = l, fail[res] = _fail;
+    diff[res] = l - len[_fail];
+    if (diff[res] == diff[_fail]) {
+      sfail[res] = sfail[_fail];
+    } else {
+      sfail[res] = _fail;
+    }
     return res;
   }
-  void push( int p ){
+  void push(int p) {
     int np = lst;
-    int c = s[ p ] - 'a';
-    while( p - nd[ np ].len - 1 < 0
-        || s[ p ] != s[ p - nd[ np ].len - 1 ] )
-      np = nd[ np ].fail;
-
-    if( nd[ np ].nxt[ c ] ){
-      nd[ nd[ np ].nxt[ c ] ].cnt++;
-      lst = nd[ np ].nxt[ c ];
-      return ;
+    int c = s[p]-'a';
+    while (p-len[np]-1 < 0 || s[p] != s[p-len[np]-1])
+      np = fail[np];
+    if ((lst=nxt[np][c])) {
+      return;
     }
-    int nq = newNode( nd[ np ].len + 2 , 0 );
-    nd[ nq ].cnt++;
-    nd[ np ].nxt[ c ] = nq;
-    lst = nq;
-    if( nd[ nq ].len == 1 ){
-      nd[ nq ].fail = 2;
-      return ;
+    int nq_f = 0;
+    if (len[np]+2 == 1) {
+      nq_f = 2;
+    } else {
+      int tf = fail[np];
+      while (p-len[tf]-1 < 0 || s[p] != s[p-len[tf]-1])
+        tf = fail[tf];
+      nq_f = nxt[tf][c];
     }
-    int tf = nd[ np ].fail;
-    while( p - nd[ tf ].len - 1 < 0
-        || s[ p ] != s[ p - nd[ tf ].len - 1 ] )
-      tf = nd[ tf ].fail;
-
-    nd[ nq ].fail = nd[ tf ].nxt[ c ];
-    return ;
+    int nq = newNode(len[np]+2, nq_f);
+    nxt[np][c] = nq;
+    lst=nq;
   }
-  void init( char* _s ){
+  void init(char* _s){
     s = _s;
     tot = 0;
-    newNode( -1 , 1 );
-    newNode( 0 , 1 );
+    newNode(-1, 1);
+    newNode(0, 1);
+    diff[2] = 0;
     lst = 2;
-    for( int i = 0 ; s[ i ] ; i++ )
-      push( i );
   }
-  void yutruli(){
-#define REPD(i, s, e) for(int i = (s); i >= (e); i--)
-    REPD( i , tot , 1 )
-      nd[ nd[ i ].fail ].cnt += nd[ i ].cnt;
-    nd[ 1 ].cnt = nd[ 2 ].cnt = 0ll;
-  }
-} pA;
-int main(){ pA.init( sa ); }
+} palt;
