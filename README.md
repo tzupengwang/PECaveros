@@ -180,6 +180,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XVIII GP of Khamovniki    | 2018/02/11    |  15  | A | . | C | D | . | F | G | H | I | . | K |
 | NEERC 2016                | 2018/02/12    |   1  | A | B | C | D | E | F | G | H | . | J | K | L | **M** |
 | WF 2012                   | 2018/02/24    |   2  | **A** | B | C | D | E | F | G | . | I | . | K | L |
+| XVIII GP of Saratov       | 2018/02/25    |  16  | A | . | C | D | . | . | G | . | I | J | K | L |
 
 
 - A : 賽內AC
