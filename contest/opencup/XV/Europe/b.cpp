@@ -1,7 +1,6 @@
 
 // default code for competitive programming
-// ver 3.1415 {{{
-
+// ver 3.14159 {{{
 // Includes
 #include <bits/stdc++.h>
 
@@ -21,7 +20,7 @@
 #ifdef ONLINE_JUDGE
 #define FILE( fn ) \
     freopen(fn".in","r",stdin); \
-freopen(fn".out","w",stdout);
+    freopen(fn".out","w",stdout);
 #else
 #define FILE( fn )
 #endif
@@ -55,124 +54,127 @@ int _R( int& x ) { return scanf( "%d" , &x ); }
 int _R( ll& x ) { return scanf( "%" PRId64 , &x ); }
 int _R( double& x ) { return scanf( "%lf" , &x ); }
 int _R( char* s ) { return scanf( "%s" , s ); }
-
+int _R( char c ) { return scanf( "%c" , &c ); }
 int R() { return 0; }
 
-  template< typename T1 , typename... T2 >
-int R( T1& x , T2&... tail )
-{
-  int tmp = _R( x );
-  return tmp + R( tail... );
-}
+template< typename T , typename... U > int R( T& x , U&... tail ) { return _R(x) + R(tail...); }
 
-  template< typename Iter , typename F >
-inline void out( Iter s , Iter e , F of )
-{
-  bool flag = 0;
-  for( Iter it = s ; it != e ; it++ )
-  {
-    if( flag ) printf( " " );
-    else flag = 1;
-    of( *it );
-  }
-  puts( "" );
-}
+template<class T> void _W(const T &x) { cout << x; }
+void _W(const int &x) { printf("%d", x); }
+void _W(const int64_t &x) { printf("%" PRId64, x); }
+void _W(const double &x) { printf("%.16f", x); }
+void _W(const char &x) { putchar(x); }
+void _W(const char *x) { printf("%s", x); }
+template<class T> void _W(const vector<T> &x) { for (auto i = x.begin(); i != x.end(); _W(*i++)) if (i != x.cbegin()) putchar(' '); }
+void W() {}
+template<class T, class... U> void W(const T &head, const U &... tail) { _W(head); putchar(sizeof...(tail) ? ' ' : '\n'); W(tail...); }
 
 // }}}
 // start ~~QAQ~~
-
-const int N = 3e5+10;
-
-#define X first
-#define Y second
-
-int n, m;
-pii buf[N], fen[N];
-
-struct XD {
-  int x, y, id, tp;
-  bool operator<(const XD& xd) const {
-    return tie(x, y, tp) > tie(xd.x, xd.y, xd.tp);
+/*
+ * sfail: compressed fail links with same diff
+ * O(lgn): length of sfail link path
+ */
+const int MAXN = 2e5+10;
+const int LOG = 20;
+struct PalT{
+  int tot,lst;
+  int n, ans;
+  int nxt[MAXN][26], len[MAXN];
+  int fail[MAXN], diff[MAXN], sfail[MAXN];
+  int full[MAXN], half[MAXN];
+  int even_jp[LOG][MAXN];
+  char* s;
+  inline int go(int x) { // find deepest parent p of x s.t. len[p]: even and len[p]*2 <= len[x]
+    int tlen = len[x];
+    REPD(k, LOG-1, 0) {
+      int y = even_jp[k][x];
+      if (len[y]*2 > tlen) x = y;
+    }
+    return even_jp[0][x];
   }
-};
+  int newNode(int l, int _fail) {
+    int res = ++tot;
+    fill(nxt[res], nxt[res]+26, 0);
 
-int cnt[N], nxt[N];
-int mom[N];
-
-int find(int x) {
-  if (mom[x] == x) return x;
-  return mom[x] = find(mom[x]);
-}
-
-void merge(int a, int b) {
-  //printf("merge %d %d\n", a, b);
-  a = find(a);
-  b = find(b);
-  if (a == b) return;
-  mom[a] = b;
-  cnt[b] += cnt[a];
-}
-
-void predo() {
-  vector<XD> events;
-  REP(i, 1, n) {
-    events.push_back({buf[i].X, buf[i].Y, i, 1});
-  }
-  REP(i, 1, m) {
-    events.push_back({fen[i].X, fen[i].Y, i, 2});
-  }
-  sort(ALL(events));
-  set<pii> active_fen;
-  for (XD xd: events) {
-    if (xd.tp == 1) {
-      auto it = active_fen.lower_bound({xd.y, -1});
-      if (it != active_fen.end()) {
-        //printf("buf %d -> fen %d\n", xd.id, it->second);
-        cnt[it->second]++;
-      }
+    len[res] = l, fail[res] = _fail;
+    diff[res] = l - len[_fail];
+    if (diff[res] == diff[_fail]) {
+      sfail[res] = sfail[_fail];
     } else {
-      {
-        auto it = active_fen.upper_bound({xd.y, -1});
-        if (it != active_fen.end()) {
-          //printf("nxt %d %d\n", xd.id, it->second);
-          nxt[xd.id] = it->second;
-        }
-      }
-      {
-        auto it = active_fen.upper_bound({xd.y, -1});
-        vector<pii> del;
-        while (it != active_fen.begin()) {
-          it--;
-          if (xd.id < it->second) {
-            del.push_back(*it);
-          } else {
-            break;
-          }
-        }
-        for (auto p: del) active_fen.erase(p);
-      }
+      sfail[res] = _fail;
+    }
 
-      active_fen.insert({xd.y, xd.id});
+    full[res] = half[res] = MAXN;
+    if (len[fail[res]] % 2 == 0) even_jp[0][res] = fail[res];
+    else even_jp[0][res] = even_jp[0][fail[res]];
+    FOR(k, LOG-1)
+      even_jp[k+1][res] = even_jp[k][even_jp[k][res]];
+
+    return res;
+  }
+
+  void push(int p) {
+    int np = lst;
+    int c = s[p]-'a';
+    while (p-len[np]-1 < 0 || s[p] != s[p-len[np]-1])
+      np = fail[np];
+    if ((lst=nxt[np][c])) {
+      return;
+    }
+    int nq_f = 0;
+    if (len[np]+2 == 1) {
+      nq_f = 2;
+    } else {
+      int tf = fail[np];
+      while (p-len[tf]-1 < 0 || s[p] != s[p-len[tf]-1])
+        tf = fail[tf];
+      nq_f = nxt[tf][c];
+    }
+    int nq = newNode(len[np]+2, nq_f);
+    nxt[np][c] = nq;
+    lst=nq;
+    if (len[nq] % 2 == 0) {
+      half[nq] = 1 + half[np];
+      int pt = go(nq);
+      half[nq] = min(half[nq], full[pt] + len[nq] / 2 - len[pt]);
+
+      full[nq] = min(half[nq] + 1, len[nq] - len[fail[nq]] + full[fail[nq]]);
+      full[nq] = min(full[nq], 2 + full[np]);
+
+      ans = min(ans, full[nq] + n - len[nq]);
     }
   }
-}
+  void init(char* _s){
+    s = _s;
+    tot = 0;
+    ans = n = strlen(s);
+    newNode(-1, 1);
+    newNode(0, 1);
 
-int ans[N];
+    diff[2] = 0;
+    half[2] = full[2] = 0;
+    FOR(k, LOG) even_jp[k][2] = 2;
 
-void solve() {
-  REP(i, 1, m) mom[i] = i;
-  REPD(i, m, 1) {
-    ans[i] = cnt[find(i)];
-    merge(i, nxt[i]);
+    lst = 2;
   }
-  REP(i, 1, m) printf("%d\n", ans[i]);
+} palt;
+
+const int N = 1e5+10;
+
+int n;
+char ip[N];
+
+void main2() {
+  R(ip); n = strlen(ip);
+  FOR(i, n) ip[i] = ip[i] - 'A' + 'a';
+  palt.init(ip);
+  FOR(i, n) {
+    palt.push(i);
+  }
+  W(palt.ans);
 }
 
 int main() {
-  R(n);
-  REP(i, 1, n) R(buf[i].X, buf[i].Y);
-  R(m);
-  REP(i, 1, m) R(fen[i].X, fen[i].Y);
-  predo();
-  solve();
+  int tc; R(tc); while (tc--) main2();
 }
