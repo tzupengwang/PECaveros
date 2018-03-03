@@ -13,11 +13,12 @@ vector<int> card;
 int read(){
   char buf[ 20 ];
   scanf( "%s" , buf );
+  int len = strlen( buf );
+  int msk = (buf[ len - 1 ] == 'B');
+  buf[ len - 1 ] = 0;
   int ret;
-  if( sscanf( buf , "%dR" , &ret ) == 1 )
-    return (ret << 1);
-  if( sscanf( buf , "%dB" , &ret ) == 1 )
-    return (ret << 1) | 1;
+  if( sscanf( buf , "%d" , &ret ) == 1 )
+    return (ret << 1) | msk;
   assert( false );
   return -1;
 }
@@ -64,16 +65,21 @@ int DP( state st , int who , int nxt ){
   int val = 0;
   bool gt = false;
 
+  auto upd = [&](int _r){
+    if( !gt or _r > val ){
+      gt = true;
+      val = _r;
+    }
+  };
+
   int take_card = card[ nxt ];
   if( !Acard ){
     {
       state nxt_st;
       nxt_st.C = cc;
-      nxt_st.A = take_card;
-      nxt_st.B = Bcard;
-      int ret = DP( nxt_st , 1 - who , nxt + 1 );
-      if( !gt or ret > val )
-        val = ret;
+      nxt_st.A = Bcard;
+      nxt_st.B = take_card;
+      upd( - DP( nxt_st , 1 - who , nxt + 1 ) );
     }
     for( size_t j = 0 ; j + 1 < cc.size() ; j ++ )
       if( cc[ j ].first == -1 and cc[ j + 1 ].first == +1 ){
@@ -88,89 +94,73 @@ int DP( state st , int who , int nxt ){
         nxt_st.C.push_back( { 0 , take_card } );
         for( size_t k = j + 2 ; k < cc.size() ; k ++ )
           nxt_st.C.push_back( cc[ k ] );
-        int ret = DP( nxt_st , 1 - who , nxt + 1 );
-        ret += bns;
-        if( !gt or ret > val )
-          val = ret;
+        upd( bns - DP( nxt_st , 1 - who , nxt + 1 ) );
       }
   }else{
-  for( size_t j = 0 ; j + 1 < cc.size() ; j ++ )
-    if( cc[ j ].first == -1 and cc[ j + 1 ].first == +1 ){
-      {
+    for( size_t j = 0 ; j + 1 < cc.size() ; j ++ )
+      if( cc[ j ].first == -1 and cc[ j + 1 ].first == +1 ){
+        {
+          state nxt_st;
+          int bns = Goal( cc[ j ].second ,
+                          cc[ j + 1 ].second , 
+                          take_card , who );
+          nxt_st.A = Bcard;
+          nxt_st.B = Acard;
+          for( size_t k = 0 ; k < j ; k ++ )
+            nxt_st.C.push_back( cc[ k ] );
+          nxt_st.C.push_back( { 0 , take_card } );
+          for( size_t k = j + 2 ; k < cc.size() ; k ++ )
+            nxt_st.C.push_back( cc[ k ] );
+          upd( bns - DP( nxt_st , 1 - who , nxt + 1 ) );
+        }
+        {
+          state nxt_st;
+          int bns = Goal( cc[ j ].second ,
+                          cc[ j + 1 ].second , 
+                          Acard , who );
+          nxt_st.A = Bcard;
+          nxt_st.B = take_card;
+          for( size_t k = 0 ; k < j ; k ++ )
+            nxt_st.C.push_back( cc[ k ] );
+          nxt_st.C.push_back( { 0 , Acard } );
+          for( size_t k = j + 2 ; k < cc.size() ; k ++ )
+            nxt_st.C.push_back( cc[ k ] );
+          upd( bns - DP( nxt_st , 1 - who , nxt + 1 ) );
+        }
+      }
+    for( size_t j = 0 ; j < cc.size() ; j ++ )
+      if( cc[ j ].first == 0 ){
         state nxt_st;
         int bns = Goal( cc[ j ].second ,
-                                  cc[ j + 1 ].second , 
-                                  take_card , who );
+                        Acard ,
+                        take_card , who );
         nxt_st.A = Bcard;
-        nxt_st.B = Acard;
-        for( size_t k = 0 ; k < j ; k ++ )
-          nxt_st.C.push_back( cc[ k ] );
-        nxt_st.C.push_back( { 0 , take_card } );
-        for( size_t k = j + 2 ; k < cc.size() ; k ++ )
-          nxt_st.C.push_back( cc[ k ] );
-        int ret = DP( nxt_st , 1 - who , nxt + 1 );
-        ret += bns;
-        if( !gt or ret > val )
-          val = ret;
+        nxt_st.B = 0;
+        {
+          for( size_t k = 0 ; k < j ; k ++ )
+            nxt_st.C.push_back( cc[ k ] );
+          nxt_st.C.push_back( { +1 , Acard } );
+          nxt_st.C.push_back( { -1 , take_card } );
+          for( size_t k = j + 1 ; k < cc.size() ; k ++ )
+            nxt_st.C.push_back( cc[ k ] );
+          upd( bns - DP( nxt_st , 1 - who , nxt + 1 ) );
+        }
+        {
+          nxt_st.C.clear();
+          for( size_t k = 0 ; k < j ; k ++ )
+            nxt_st.C.push_back( cc[ k ] );
+          nxt_st.C.push_back( { +1 , take_card } );
+          nxt_st.C.push_back( { -1 , Acard } );
+          for( size_t k = j + 1 ; k < cc.size() ; k ++ )
+            nxt_st.C.push_back( cc[ k ] );
+          upd( bns - DP( nxt_st , 1 - who , nxt + 1 ) );
+        }
       }
-      {
-        state nxt_st;
-        int bns = Goal( cc[ j ].second ,
-                                  cc[ j + 1 ].second , 
-                                  Acard , who );
-        nxt_st.B = take_card;
-        nxt_st.A = Bcard;
-        for( size_t k = 0 ; k < j ; k ++ )
-          nxt_st.C.push_back( cc[ k ] );
-        nxt_st.C.push_back( { 0 , Acard } );
-        for( size_t k = j + 2 ; k < cc.size() ; k ++ )
-          nxt_st.C.push_back( cc[ k ] );
-        int ret = DP( nxt_st , 1 - who , nxt + 1 );
-        ret += bns;
-        if( !gt or ret > val )
-          val = ret;
-      }
-    }
-  for( size_t j = 0 ; j < cc.size() ; j ++ )
-    if( cc[ j ].first == 0 ){
-      state nxt_st;
-      int bns = Goal( cc[ j ].second ,
-                                Acard ,
-                                take_card , who );
-      nxt_st.B = 0;
-      nxt_st.A = Bcard;
-      {
-        for( size_t k = 0 ; k < j ; k ++ )
-          nxt_st.C.push_back( cc[ k ] );
-        nxt_st.C.push_back( { +1 , Acard } );
-        nxt_st.C.push_back( { -1 , take_card } );
-        for( size_t k = j + 1 ; k < cc.size() ; k ++ )
-          nxt_st.C.push_back( cc[ k ] );
-        int ret = DP( nxt_st , 1 - who , nxt + 1 );
-        ret += bns;
-        if( !gt or ret > val )
-          val = ret;
-      }
-      {
-        nxt_st.C.clear();
-        for( size_t k = 0 ; k < j ; k ++ )
-          nxt_st.C.push_back( cc[ k ] );
-        nxt_st.C.push_back( { +1 , take_card } );
-        nxt_st.C.push_back( { -1 , Acard } );
-        for( size_t k = j + 1 ; k < cc.size() ; k ++ )
-          nxt_st.C.push_back( cc[ k ] );
-        int ret = DP( nxt_st , 1 - who , nxt + 1 );
-        ret += bns;
-        if( !gt or ret > val )
-          val = ret;
-      }
-          }
   }
   return dp[ st ] = val;
 }
 
 int _cs;
-
 int main(){
   while( cin >> name ){
     if( name == "End" ) break;

@@ -182,7 +182,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | WF 2012                   | 2018/02/24    |   2  | **A** | B | C | D | E | F | G | **H** | I | **J** | K | L |
 | XVIII GP of Saratov       | 2018/02/25    |  16  | A | . | C | D | . | . | G | **H** | I | J | K | L |
 | XV GP of Europe           | 2018/02/28    |   9  | A | **B** | C | D | E | F | G | H | I | J | K | **L** |
-| WF 2009                   | 2018/03/03    |   1  | A | B | C | . | E | F | . | H | I | J | K |
+| WF 2009                   | 2018/03/03    |   1  | A | B | C | . | E | F | **G** | H | I | J | K |
 
 
 - A : 賽內AC
