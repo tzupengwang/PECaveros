@@ -184,6 +184,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XV GP of Europe           | 2018/02/28    |   9  | A | **B** | C | D | E | F | G | H | I | J | K | **L** |
 | WF 2009                   | 2018/03/03    |   1  | A | B | C | **D** | E | F | **G** | H | I | J | K |
 | WF 2015                   | 2018/03/04    |   4  | A | **B** | C | D | E | F | . | H | I | J | . | L | M |
+| XV GP of Central Europe   | 2018/03/07    |   2  | A | B | C | D | E | F | G | H | I | J | K |
 
 
 - A : 賽內AC
