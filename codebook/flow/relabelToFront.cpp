@@ -1,66 +1,74 @@
-/* Relabel-to-Front */
-// tested with sgu-212 (more testing suggested)
-int n,m,layer,src,sink,lvl[MAXN];
-Edge ed[MAXM];
-int deg[MAXN],adj[MAXN][MAXN];
-int res[MAXN][MAXN]; // residual capacity
-// graph (i.e. all things above) should be constructed beforehand
-list<int> lst; // discharge list
-int ef[MAXN],ht[MAXN];
-// excess flow, height
-int apt[MAXN]; // the next adj index to try push
-inline void push(int v,int u) {
-  int a=min(ef[v],res[v][u]);
-  ef[v]-=a; ef[u]+=a;
-  res[v][u]-=a; res[u][v]+=a;
-}
-inline void relabel(int v) {
-  int i,u;
-  ht[v]=2*n;
-  for(i=0;i<deg[v];i++) {
-    u=adj[v][i];
-    if(res[v][u]) ht[v]=min(ht[u]+1,ht[v]);
+// O(N^3), 0-base
+struct Edge{
+  int from, to, cap, flow;
+  Edge(int _from, int _to, int _cap, int _flow = 0):
+    from(_from), to(_to), cap(_cap), flow(_flow) {}	
+};
+struct PushRelabel{
+  int n;
+  vector<Edge> edges;
+  vector<int> count;
+  vector<vector<int> > G;
+  vector<int> h, inQ, excess;
+  queue<int> Q;
+  PushRelabel(int _n):
+    n(_n), count(_n<<1), G(_n), h(_n), inQ(_n), excess(_n) {}
+  void addEdge(int from, int to, int cap) {
+    G[from].push_back(edges.size());
+    edges.push_back(Edge(from, to, cap));
+    G[to].push_back(edges.size());
+    edges.push_back(Edge(to, from, 0));
   }
-}
-inline void initPreflow() {
-  int i,u;
-  lst.clear();
-  for(i=0;i<n;i++) {
-    ht[i]=ef[i]=0; apt[i]=0;
-    if(i!=src&&i!=sink) lst.push_back(i);
+  void enQueue(int u) {
+    if(!inQ[u] && excess[u] > 0) Q.push(u), inQ[u] = true;
   }
-  ht[src]=n;
-  for(i=0;i<deg[src];i++) {
-    u=adj[src][i];
-    ef[u]=res[src][u];
-    ef[src]-=ef[u];
-    res[u][src]=ef[u];
-    res[src][u]=0;
-  }
-}
-inline void discharge(int v) {
-  int u;
-  while(ef[v]) {
-    if(apt[v]==deg[v]) {
-      relabel(v);
-      apt[v]=0;
-      continue;
-    }
-    u=adj[v][apt[v]];
-    if(res[v][u]&&ht[v]==ht[u]+1) push(v,u);
-    else apt[v]++;
-  }
-}
-inline void relabelToFront() {
-  int oldh,v;
-  list<int>::iterator it;
-  initPreflow();
-  for(it=lst.begin();it!=lst.end();it++) {
-    v=*it; oldh=ht[v]; discharge(v);
-    if(ht[v]>oldh) {
-      lst.push_front(v);
-      lst.erase(it);
-      it=lst.begin();
+  void Push(int EdgeIdx) {
+    Edge & e = edges[EdgeIdx];
+    int toPush = min<int>(e.cap - e.flow, excess[e.from]);
+    if(toPush > 0 && h[e.from] > h[e.to]) {
+      e.flow += toPush;
+      excess[e.to] += toPush;
+      excess[e.from] -= toPush;
+      edges[EdgeIdx^1].flow -= toPush;
+      enQueue(e.to);
     }
   }
-}
+  void Relabel(int u) {
+    count[h[u]] -= 1; h[u] = 2*n-2;
+    for (size_t i = 0; i < G[u].size(); ++i) {
+      Edge & e = edges[G[u][i]];
+      if(e.cap > e.flow) h[u] = min(h[u], h[e.to]);
+    }
+    count[++h[u]] += 1;
+  }
+  void gapRelabel(int height) {
+    for (int u = 0; u < n; ++u) if(h[u] >= height && h[u] < n) {
+      count[h[u]] -= 1;
+      count[h[u] = n] += 1;
+      enQueue(u);
+    }
+  }
+  void Discharge(int u) {
+    for (size_t i = 0; excess[u] > 0 && i < G[u].size(); ++i)
+      Push(G[u][i]);
+    if(excess[u] > 0) {
+      if(h[u] < n && count[h[u]] < 2) gapRelabel(h[u]);
+      else Relabel(u);
+    }
+    else if(!Q.empty()) { // dequeue
+      Q.pop();
+      inQ[u] = false;
+    }
+  }
+  int solve(int src, int snk) {
+    h[src] = n; inQ[src] = inQ[snk] = true;
+    count[0] = n - (count[n] = 1);
+    for (size_t i = 0; i < G[src].size(); ++i) {
+      excess[src] += edges[G[src][i]].cap;
+      Push(G[src][i]);
+    }
+    while (!Q.empty())
+      Discharge(Q.front());
+    return excess[snk];
+  }
+};
