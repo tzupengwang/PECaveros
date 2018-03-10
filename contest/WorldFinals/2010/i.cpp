@@ -5,7 +5,10 @@ using namespace std;
 typedef long long LL;
 typedef unsigned long long ULL;
 
+typedef pair<int, int> pii;
 typedef pair<pair<int, ULL>, LL> XD;
+
+inline int bit(ULL x, int k) { return (x>>k)&1LL; }
 
 const int N = 10;
 
@@ -31,15 +34,67 @@ inline void uniq(vector<XD>& v) {
       tmp.push_back(v[i]);
     }
   }
+  v.swap(tmp);
+}
+
+bool can[N][N];
+bool vis[N][N];
+
+void bfs(int i, int j) {
+  static pii qu[N*N];
+  int ql = 0, qr = 0;
+  qu[qr++] = {i, j};
+  vis[i][j] = 1;
+  while (ql < qr) {
+    int ci, cj; tie(ci, cj) = qu[ql++];
+    for (int k = 0; k < 4; ++k) {
+      int ni = ci + dx[k];
+      int nj = cj + dy[k];
+      if (0 <= ni && ni < n && 0 <= nj && nj < m) {
+        if (can[ni][nj] && !vis[ni][nj]) {
+          vis[ni][nj] = 1;
+          qu[qr++] = {ni, nj};
+        }
+      }
+    }
+  }
+}
+
+inline bool chk(ULL S) {
+  for (int i = 0; i < n; ++i)
+    for (int j = 0; j < m; ++j) {
+      can[i][j] = bit(S, enc(i, j)) ^ 1;
+      vis[i][j] = 0;
+    }
+  bool flag = 0;
+  for (int i = 0; i < n; ++i)
+    for (int j = 0; j < m; ++j) if (!vis[i][j] && can[i][j]) {
+      if (flag) return 0;
+      bfs(i, j);
+      flag = 1;
+    }
+  return 1;
+}
+
+inline bool good(int t, XD state) {
+  int cx, cy;
+  dec(state.first.first, cx, cy);
+  if (abs(cx - goal_x[t]) + abs(cy - goal_y[t]) <= goal_d[t]) {
+    for (int i = 0; i <= 3; ++i) {
+      int tt = ((i+1) * n * m) / 4;
+      if (t < tt and bit(state.first.second, enc(r[i], c[i])))
+        return 0;
+    }
+    return chk(state.first.second);
+    //return 1;
+  } else return 0;
 }
 
 inline void reg(int t, vector<XD>& v) {
   //printf("time %d %d %d %d\n", t, goal_x[t], goal_y[t], goal_d[t]);
   vector<XD> tmp2;
   for (XD state: v) {
-    int cx, cy;
-    dec(state.first.first, cx, cy);
-    if (abs(cx - goal_x[t]) + abs(cy - goal_y[t]) <= goal_d[t]) {
+    if (good(t, state)) {
       tmp2.push_back(state);
     }
   }
@@ -69,10 +124,10 @@ vector<XD> ok[70], ko[70];
 
 LL main2() {
   r[3] = 0, c[3] = 1;
+  LL ans = 0;
 
   for (int i = 0; i <= 3; ++i) {
     int tt = ((i+1) * n * m) / 4;
-    if (i == 3) tt = n*m;
     int pt = ((i) * n * m) / 4;
     for (int j = pt+1; j <= tt; ++j) {
       goal_x[j] = r[i];
@@ -87,13 +142,23 @@ LL main2() {
   int mid_t = (2 * n * m) / 4;
 
   ok[1].push_back({{enc(0, 0), 1 << enc(0, 0)}, 1});
-  ko[n*m].push_back({{enc(0, 1), 1 << enc(0, 1)}, 1});
 
-  for (int t = 1; t < mid_t; ++t) {
+  for (int t = 1; t < n*m; ++t) {
     relax(ok[t], ok[t+1]);
     reg(t+1, ok[t+1]);
   }
+  ans = 0;
+  if (ok[n*m].size())
+    ans = ok[n*m][0].second;
+  return ans;
+  for (int t = 1; t < mid_t; ++t) {
+    //printf("t %d %d\n", t, ok[t].size());
+    relax(ok[t], ok[t+1]);
+    reg(t+1, ok[t+1]);
+  }
+  ko[n*m].push_back({{enc(0, 1), 1 << enc(0, 1)}, 1});
   for (int t = n*m; t > mid_t; --t) {
+    //printf("t %d %d\n", t, ko[t].size());
     relax(ko[t], ko[t-1]);
     reg(t-1, ko[t-1]);
   }
@@ -105,7 +170,7 @@ LL main2() {
 
   for (XD state: ok[mid_t]) mp[state.first.second] += state.second;
 
-  LL ans = 0;
+  ans = 0;
 
   for (XD state: ko[mid_t]) {
     ULL S = state.first.second;
