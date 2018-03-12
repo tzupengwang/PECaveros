@@ -1,62 +1,13 @@
-K = 38
 print('if head == nil { } else {')
 print('if head #next == nil { } else {')
-for i in range(K):
-  print('var%d = head' % (i))
-print('loop {')
-for i in range(K-1):
-  print('  if var%d #next == nil {' % (K - 1))
-  print('    break')
-  print('  } else {')
-  print('    var%d = var%d #next' % (K-1, K-1))
-  print('  }')
-for i in range(K-1):
-    s = i
-    while s >= 10:
-      print(('  var%d = var%d' % (i, i)) + (' #next' * 10))
-      s -= 10
-    if s > 0:
-      print(('  var%d = var%d' % (i, i)) + (' #next' * s))
-print('}')
-for i in range(K-1):
-  start = "var%d" % (i)
-  end   = "var%d" % (i + 1)
-  s = """if %s == %s { }
-else {
-  i = %s
-  loop {
-    if i #next == %s {
-      break
-    } else {
-      j = i
-      loop {
-        if j #next == %s {
-          break
-        } else {
-          tmp = j #next #next
-          if tmp #value < j #next #value {
-            j #next #next = tmp #next
-            tmp #next = j #next
-            j #next = tmp
-          } else { }
-          j = j #next
-        }
-      }
-      i = i #next
-    }
-  }
-}""" % (start, end, start, end, end)
-  print(s)
-for i in range(1, K-1):
-  s1 = "var%d" % (0)
-  s2 = "var%d" % (i)
-  s3 = "var%d" % (i + 1)
-  s = """
+
+def merge(s1, s2, s3):
+  ret = """
 if %s == %s { }
 else {
   if %s == %s { }
   else {
-    now = head
+    now = %s
     p1 = %s #next
     e1 = %s
     p2 = %s #next
@@ -95,8 +46,53 @@ else {
     %s = now
   }
 }
-""" % (s1, s2, s2, s3, s1, s2, s2, s3, s3, s3)
+""" % (s1, s2, s2, s3, s1, s1, s2, s2, s3, s3, s3)
+  return ret
+
+
+def LIS(ptr):
+  ret = """
+loop {
+  if %s #next == nil {
+    break
+  } else {
+    if %s #next #value < %s #value {
+      break
+    } else {
+      %s = %s #next
+    }
+  }
+}""" % (ptr, ptr, ptr, ptr, ptr)
+  return ret
+
+s = """
+ptr1 = head #next
+%s
+if ptr1 #next == nil {
+} else {
+  ptr2 = ptr1 #next
+  %s
+  %s
+  loop {
+    if ptr2 #next == nil {
+      break
+    } else {
+      ptr3 = ptr2 #next
+      %s
+      if ptr3 #next == nil {
+        break
+      } else { }
+      ptr4 = ptr3 #next
+      %s
+      %s
+      ptr2 = ptr4
+    }
+  }
+}
+""" % (LIS("ptr1"), LIS("ptr2"), merge("head", "ptr1", "ptr2"),LIS("ptr3"), LIS("ptr4"), merge("ptr2", "ptr3", "ptr4"))
+for i in range(18):
   print(s)
+
 s = """
 if head #next == nil { } else {
   if head #next #value < head #value {
@@ -122,4 +118,6 @@ if head #next == nil { } else {
 }
 """
 print(s)
+
+
 print('} }')
