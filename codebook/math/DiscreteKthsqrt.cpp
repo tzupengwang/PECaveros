@@ -1,104 +1,121 @@
-// x^K mod P = A
-const int LimitSave = 100000;
-LL _mod( LL a , LL mo ){return ( a % mo + mo ) % mo;}
-bool ext_gcd(LL A, LL B, LL C, LL &x, LL &y, LL &gn){
-	LL t;
-	if( A == 0 ){
-		gn = B;
-		if( _mod(C, B) == 0 )
-    { x = 0; y = C / B; return true; }
-		return false;
-	}
-  if( ext_gcd( _mod(B , A) , A , C , y , t , gn ) )
-  { x = t - LL(B / A) * y; return true; }
-	return false;
+/*
+ * Solve x for x^P = A mod Q
+ * https://arxiv.org/pdf/1111.4877.pdf
+ * in O((lgQ)^2 + Q^0.25 (lgQ)^3)
+ * Idea:
+ * (P, Q-1) = 1 -> P^-1 mod (Q-1) exists
+ * x has solution iff A^((Q-1) / P) = 1 mod Q
+ * PP | (Q-1) -> P < sqrt(Q), solve lgQ rounds of discrete log
+ * else -> find a s.t. s | (Pa - 1) -> ans = A^a
+ */
+void gcd(LL a, LL b, LL &x, LL &y, LL &g){
+  if (b == 0) {
+    x = 1, y = 0, g = a;
+    return;
+  }
+  LL tx, ty;
+  gcd(b, a%b, tx, ty, g);
+  x = ty;
+  y = tx - ty * (a / b);
+  return;
 }
-LL Division( LL A, LL B, LL modular ){
-	LL gcdnum, K, Y;
-	ext_gcd(modular, B, A, K, Y, gcdnum);
-	Y = _mod(Y, modular);
-  return Y < 0 ? Y + modular : Y;
+LL P, A, Q, g;
+// x^P = A mod Q
+
+const int X = 1e5;
+
+LL base;
+LL ae[X], aXe[X], iaXe[X];
+unordered_map<LL, LL> ht;
+
+void build(LL a) { // ord(a) = P < sqrt(Q)
+  base = a;
+  ht.clear();
+  ae[0] = 1;
+  ae[1] = a;
+  aXe[0] = 1;
+  aXe[1] = pw(a, X, Q);
+  iaXe[0] = 1;
+  iaXe[1] = pw(aXe[1], Q-2, Q);
+  REP(i, 2, X-1) {
+    ae[i] = mul(ae[i-1], ae[1], Q);
+    aXe[i] = mul(aXe[i-1], aXe[1], Q);
+    iaXe[i] = mul(iaXe[i-1], iaXe[1], Q);
+  }
+  FOR(i, X) ht[ae[i]] = i;
 }
-struct tp{
-	LL expo, res;
-}data[ LimitSave + 100 ];
-bool compareab( const tp &a, const tp &b )
-{ return a.res < b.res; }
-bool Binary_Search( LL key, LL &pos ){
-	LL start, stop;
-	start=1; stop=LimitSave;
-	while( start <= stop ){
-		pos = (start + stop)/2;
-		if( data[pos].res == key ) return true;
-		if( data[pos].res < key ) start = pos + 1;
-		else stop = pos - 1;
-	}
-	return false;
+
+LL dis_log(LL x) {
+  FOR(i, X) {
+    LL iaXi = iaXe[i];
+    LL rst = mul(x, iaXi, Q);
+    if (ht.count(rst)) {
+      LL res = i*X + ht[rst];
+      return res;
+    }
+  }
 }
-LL get_log( LL root , LL A , LL mod ){
-	LL i, j, times, XD, XT, position;
-	if( mod - 1 < LimitSave ){
-		LL now = 1;
-    for( i = 0 ; i < mod ; i ++ ){
-			if( now == A ) return i;
-			now = _mod( now * root , mod );
-		}
-	}
-	data[1].expo = 0; data[1].res = 1;
-  for( i = 1 ; i < LimitSave ; i ++ ){
-		data[i+1].expo=i;
-		data[i+1].res=_mod(data[i].res*root,mod);
-	}
-	sort(data+1,data+LimitSave+1,compareab);
-	times=mypow(root,LimitSave,mod);
-	j=0; XD=1;
-	while( 1 ){
-		XT = Division(A, XD, mod);
-		if( Binary_Search( XT, position ) )
-			return j + data[position].expo;
-		j = j + LimitSave;
-		XD = _mod(XD * times, mod);
-	}
-}
-LL P, K, A;
-vector<LL> ans;
-LL get_originroot( LL p ){
-	LL primes[ 100 ];
-	LL tot = 0, tp = P - 1;
-	for( LL i = 2 ; i * i <= P - 1 ; i ++ )
-		if( _mod( tp , i ) == 0 ){
-			primes[ ++ tot ]=i;
-			while( _mod(tp,i) == 0 ) tp /= i;
-		}
-	if( tp != 1 ) primes[ ++ tot] = tp;
-	for( LL i = 2 ; ; i ++ ){
-		bool ok = true;
-    for( LL j = 1 ; j <= tot ; j ++ )
-			if( mypow(i, (P-1)/primes[j], P ) == 1 )
-      { ok = false; break; }
-		if( ok ) return i;
-	}
-}
-//x^K mod P = A
-void work_ans() {
-  cin>>P>>K>>A;
-  A = A % P;
-	ans.clear(); // roots in ans
-	if( A == 0 )
-  { ans.push_back( 0 ); return; }
-	LL root,logs,delta,deltapower,now,gcdnum,x,y;
-  root=get_originroot(P);
-	logs=get_log(root,A,P);
-	if( ext_gcd(K, P-1, logs, x, y, gcdnum) ){
-		delta=(P-1) / gcdnum;
-		x = _mod(x, delta);
-		if(x < 0) x += delta;
-		now = mypow(root, x, P);
-		deltapower = mypow(root, delta, P);
-		while(x < P-1 ){
-			ans.push_back(now);
-			now=_mod(now * deltapower, P);
-			x=x+delta;
-		}
-	}
+
+LL main2() {
+  LL t = 0, s = Q-1;
+  while (s % P == 0) {
+    ++t;
+    s /= P;
+  }
+  if (A == 0) return 0;
+
+  if (t == 0) {
+    // a^{P^-1 mod phi(Q)}
+    LL x, y, _;
+    gcd(P, Q-1, x, y, _);
+    if (x < 0) {
+      x = (x % (Q-1) + Q-1) % (Q-1);
+    }
+    LL ans = pw(A, x, Q);
+    if (pw(ans, P, Q) != A) while(1);
+    return ans;
+  }
+
+  // A is not P-residue
+  if (pw(A, (Q-1) / P, Q) != 1) return -1;
+
+  for (g = 2; g < Q; ++g) {
+    if (pw(g, (Q-1) / P, Q) != 1)
+      break;
+  }
+  LL alpha = 0;
+  {
+    LL y, _;
+    gcd(P, s, alpha, y, _);
+    if (alpha < 0) alpha = (alpha % (Q-1) + Q-1) % (Q-1);
+  }
+
+  if (t == 1) {
+    LL ans = pw(A, alpha, Q);
+    return ans;
+  }
+
+  LL a = pw(g, (Q-1) / P, Q);
+  build(a);
+  LL b = pw(A, add(mul(P%(Q-1), alpha, Q-1), Q-2, Q-1), Q);
+  LL c = pw(g, s, Q);
+  LL h = 1;
+
+  LL e = (Q-1) / s / P; // r^{t-1}
+  REP(i, 1, t-1) {
+    e /= P;
+    LL d = pw(b, e, Q);
+    LL j = 0;
+    if (d != 1) {
+      j = -dis_log(d);
+      if (j < 0) j = (j % (Q-1) + Q-1) % (Q-1);
+    }
+    b = mul(b, pw(c, mul(P%(Q-1), j, Q-1), Q), Q);
+    h = mul(h, pw(c, j, Q), Q);
+    c = pw(c, P, Q);
+  }
+
+  LL ans = mul(pw(A, alpha, Q), h, Q);
+
+  return ans;
 }
