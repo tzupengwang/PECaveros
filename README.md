@@ -187,6 +187,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | XV GP of Central Europe   | 2018/03/07    |   2  | A | B | C | D | E | F | G | H | I | J | K |
 | WF 2010                   | 2018/03/10    |   3  | **A** | B | C | D | **E** | F | G | . | **I** | J | **K** |
 | XVIII GP of Baltic        | 2018/03/11    |  19  | A | B | C | D | E | **F** | **G** | H | I |
+| NEERC 2017                | 2018/03/14    |   3  | A | B | C | D | E | F | G | . | I | . | **K** | L |
 
 
 - A : 賽內AC
