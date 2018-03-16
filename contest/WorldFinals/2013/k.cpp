@@ -2,409 +2,153 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
-#define N 100
+#define N 28
 char c[ 3 ][ N ];
-int len , nxt[ 3 ][ 2 ];
+int msk[ 3 ][ N ] , nxt[ 3 ][ 2 ];
+int at[ 3 ][ N ];
 vector<string> _name = {"Pre", "In", "Post"};
-bool got;
-struct Nd{
-  char r;
-  Nd *tl , *tr;
-  Nd(){
-    tl = tr = NULL;
+vector<int> ord;
+typedef tuple<string,string,string> dat;
+#define Pre(X) get<0>(X)
+#define In(X) get<1>(X)
+#define Post(X) get<2>(X)
+int bs[] = {N, N, N, N, 3, 3, 3};
+int enc( int len , int s0 , int s1 , int s2 , int k0 , int k1 , int k2 ){
+  vector<int> _v = { len , s0 , s1 , s2 , k0 , k1 , k2 };
+  int ret = 0;
+  for( int i = 0 ; i < 7 ; i ++ )
+    ret = (ret * bs[ i ] + _v[ i ]);
+  return ret;
+}
+bool check( int ts , int tlen , int tk , int tat , int& llen ){
+  if( tat < ts or tat >= ts + tlen ) return false;
+  if( tk == 0 and tat != ts ) return false;
+  if( tk == 2 and tat != ts + tlen - 1 ) return false;
+  if( tk == 1 ){
+    int tllen = tat - ts;
+    if( llen != -1 and llen != tllen )
+      return false;
+    llen = tllen;
   }
-};
-
-void pre_go2( Nd* ret , string& ss );
-void in_go2( Nd* ret , string& ss );
-void post_go2( Nd* ret , string& ss );
-void pre_go2( Nd* ret , string& ss ){
-  if( !ret ) return;
-  ss += ret->r;
-  if( nxt[ 0 ][ 0 ] == 0 )
-    pre_go2( ret->tl , ss );
-  if( nxt[ 0 ][ 0 ] == 1 )
-    in_go2( ret->tl , ss );
-  if( nxt[ 0 ][ 0 ] == 2 )
-    post_go2( ret->tl , ss );
-  if( nxt[ 0 ][ 1 ] == 0 )
-    pre_go2( ret->tr , ss );
-  if( nxt[ 0 ][ 1 ] == 1 )
-    in_go2( ret->tr , ss );
-  if( nxt[ 0 ][ 1 ] == 2 )
-    post_go2( ret->tr , ss );
+  return true;
 }
-void in_go2( Nd* ret , string& ss ){
-  if( !ret ) return;
-  if( nxt[ 1 ][ 0 ] == 0 )
-    pre_go2( ret->tl , ss );
-  if( nxt[ 1 ][ 0 ] == 1 )
-    in_go2( ret->tl , ss );
-  if( nxt[ 1 ][ 0 ] == 2 )
-    post_go2( ret->tl , ss );
-  ss += ret->r;
-  if( nxt[ 1 ][ 1 ] == 0 )
-    pre_go2( ret->tr , ss );
-  if( nxt[ 1 ][ 1 ] == 1 )
-    in_go2( ret->tr , ss );
-  if( nxt[ 1 ][ 1 ] == 2 )
-    post_go2( ret->tr , ss );
+void upd( int ts , int tk , int llen , 
+          int& sl , int& kl , int& sr , int& kr ){
+  kl = nxt[ tk ][ 0 ];
+  kr = nxt[ tk ][ 1 ];
+  if( tk == 0 ){
+    sl = ts + 1;
+    sr = ts + llen + 1;
+    return;
+  }
+  if( tk == 1 ){
+    sl = ts;
+    sr = ts + llen + 1;
+    return;
+  }
+  if( tk == 2 ){
+    sl = ts;
+    sr = ts + llen;
+    return;
+  }
+  assert( false );
 }
-void post_go2( Nd* ret , string& ss ){
-  if( !ret ) return;
-  if( nxt[ 2 ][ 0 ] == 0 )
-    pre_go2( ret->tl , ss );
-  if( nxt[ 2 ][ 0 ] == 1 )
-    in_go2( ret->tl , ss );
-  if( nxt[ 2 ][ 0 ] == 2 )
-    post_go2( ret->tl , ss );
-  if( nxt[ 2 ][ 1 ] == 0 )
-    pre_go2( ret->tr , ss );
-  if( nxt[ 2 ][ 1 ] == 1 )
-    in_go2( ret->tr , ss );
-  if( nxt[ 2 ][ 1 ] == 2 )
-    post_go2( ret->tr , ss );
-  ss += ret->r;
-}
-
-void pre_go( Nd* ret , string& ss ){
-  if( !ret ) return;
-  ss += ret->r;
-  pre_go( ret->tl , ss );
-  pre_go( ret->tr , ss );
-}
-void in_go( Nd* ret , string& ss ){
-  if( !ret ) return;
-  in_go( ret->tl , ss );
-  ss += ret->r;
-  in_go( ret->tr , ss );
-}
-void post_go( Nd* ret , string& ss ){
-  if( !ret ) return;
-  post_go( ret->tl , ss );
-  post_go( ret->tr , ss );
-  ss += ret->r;
-}
-#define ID first.first
-#define KD first.second
-#define L second.first
-#define R second.second
-typedef pair< pair<int,int> , pair<int,int> > dat;
-Nd* bst[ 3 ][ N ][ N ];
-int gt[ 3 ][ N ][ N ] , stmp;
-Nd* Bst( int kd , int l , int r ){
-  if( l > r ) return NULL;
-  if( gt[ kd ][ l ][ r ] == stmp )
-    return bst[ kd ][ l ][ r ];
-  gt[ kd ][ l ][ r ] = stmp;
-  if( l == r ){
-    bst[ kd ][ l ][ r ] = new Nd();
-    bst[ kd ][ l ][ r ]->r = c[ 0 ][ l ];
-    return bst[ kd ][ l ][ r ];
+unordered_map< int , pair<dat,bool> > memo;
+dat DP( int len , int s0 , int s1 , int s2 , int k0 , int k1 , int k2 , bool& nok ){
+  int ee = enc( len , s0 , s1 , s2 , k0 , k1 , k2 );
+  nok = true;
+  if( len <= 0 ) return make_tuple( "" , "" , "" );
+  {
+    int vl0 = msk[ 0 ][ s0 + len - 1 ] ^ msk[ 0 ][ s0 - 1 ];
+    int vl1 = msk[ 1 ][ s1 + len - 1 ] ^ msk[ 1 ][ s1 - 1 ];
+    int vl2 = msk[ 2 ][ s2 + len - 1 ] ^ msk[ 2 ][ s2 - 1 ];
+    if( vl0 != vl1 or vl0 != vl2 ){
+      nok = false;
+      return make_tuple( "" , "" , "" );
+    }
+  }
+  {
+    auto it = memo.find( ee );
+    if( it != memo.end() ){
+      nok = it->second.second;
+      return it->second.first;
+    }
+  }
+  if( len == 1 ){
+    string cur = "";
+    cur += c[ 0 ][ s0 ];
+    memo[ ee ] = { make_tuple( cur , cur , cur ) , true };
+    return make_tuple( cur , cur , cur );
   }
   bool found = false;
-  Nd* ret = NULL;
-  string pp = "" , ii = "";
-  if( kd == 0 ){ // pre
-    Nd* tmp = new Nd();
-    tmp->r = c[ 0 ][ l ];
-    
-    for( int i = l + 1 ; i <= r ; i ++ ){
-      Nd *lft = Bst( nxt[ 0 ][ 0 ] , l + 1 , i );
-      Nd *rgt = Bst( nxt[ 0 ][ 1 ] , i + 1 , r );
-      tmp->tl = lft;
-      tmp->tr = rgt;
-
-      string np = "" , ni = "";
-      pre_go( tmp , np );
-      in_go( tmp , ni );
-      if( not found or make_pair(np, ni) < make_pair(pp, ii) ){
-        ret = new Nd();
-        ret->r = c[ 0 ][ l ];
-        ret->tl = lft;
-        ret->tr = rgt;
-        pp = np;
-        ii = ni;
+  dat ret = make_tuple("", "", "");
+  for( int root = 0 ; root < 26 ; root ++ ){
+    int at0 = at[ 0 ][ root ];
+    int at1 = at[ 1 ][ root ];
+    int at2 = at[ 2 ][ root ];
+    int s , t;
+    {
+      int llen = -1;
+      if( not check( s0 , len , k0 , at0 , llen ) ) continue;
+      if( not check( s1 , len , k1 , at1 , llen ) ) continue;
+      if( not check( s2 , len , k2 , at2 , llen ) ) continue;
+      s = (llen == -1 ? 0       : llen );
+      t = (llen == -1 ? len - 1 : llen );
+    }
+    for( int llen = s ; llen <= t ; llen ++ ){
+      int ssl[ 3 ] , kdl[ 3 ];
+      int ssr[ 3 ] , kdr[ 3 ];
+      upd( s0 , k0 , llen , ssl[ 0 ] , kdl[ 0 ] , ssr[ 0 ] , kdr[ 0 ] );
+      upd( s1 , k1 , llen , ssl[ 1 ] , kdl[ 1 ] , ssr[ 1 ] , kdr[ 1 ] );
+      upd( s2 , k2 , llen , ssl[ 2 ] , kdl[ 2 ] , ssr[ 2 ] , kdr[ 2 ] );
+      bool cok;
+      dat lret = DP( llen , ssl[ 0 ] , ssl[ 1 ] , ssl[ 2 ] ,
+                            kdl[ 0 ] , kdl[ 1 ] , kdl[ 2 ] , cok );
+      if( not cok ) continue;
+      dat rret = DP( len - llen - 1 , ssr[ 0 ] , ssr[ 1 ] , ssr[ 2 ] ,
+                                      kdr[ 0 ] , kdr[ 1 ] , kdr[ 2 ] , cok );
+      if( not cok ) continue;
+      dat got;
+      Pre( got ) = (char)(root + 'A') + Pre( lret ) + Pre( rret );
+      In( got ) = In( lret ) + (char)(root + 'A') + In( rret );
+      Post( got ) = Post( lret ) + Post( rret ) + (char)(root + 'A');
+      if( not found or got < ret ){
+        found = true;
+        ret = got;
       }
     }
   }
-  if( kd == 1 ){ // in   
-    for( int i = l ; i <= r ; i ++ ){
-      Nd* tmp = new Nd();
-      tmp->r = c[ 0 ][ i ];
-      Nd *lft = Bst( nxt[ 1 ][ 0 ] , l , i - 1 );
-      Nd *rgt = Bst( nxt[ 1 ][ 1 ] , i + 1 , r );
-      tmp->tl = lft;
-      tmp->tr = rgt;
-
-      string np = "" , ni = "";
-      pre_go( tmp , np );
-      in_go( tmp , ni );
-      if( not found or make_pair(np, ni) < make_pair(pp, ii) ){
-        ret = new Nd();
-        ret->r = c[ 0 ][ i ];
-        ret->tl = lft;
-        ret->tr = rgt;
-        pp = np;
-        ii = ni;
-      }
-    }
-  }
-  if( kd == 2 ){ // post
-    Nd* tmp = new Nd();
-    tmp->r = c[ 0 ][ r ];
-    for( int i = l ; i < r ; i ++ ){
-      Nd *lft = Bst( nxt[ 2 ][ 0 ] , l , i );
-      Nd *rgt = Bst( nxt[ 2 ][ 1 ] , i + 1 , r - 1 );
-      tmp->tl = lft;
-      tmp->tr = rgt;
-
-      string np = "" , ni = "";
-      pre_go( tmp , np );
-      in_go( tmp , ni );
-      if( not found or make_pair(np, ni) < make_pair(pp, ii) ){
-        ret = new Nd();
-        ret->r = c[ 0 ][ r ];
-        ret->tl = lft;
-        ret->tr = rgt;
-        pp = np;
-        ii = ni;
-      }
-    }
-  }
-  return bst[ kd ][ l ][ r ] = ret;
+  memo[ ee ] = { ret , found };
+  nok = found;
+  return ret;
 }
-bool cmp( dat d1 , dat d2 ){
-  return d1.KD < d2.KD;
-}
-bool ggwp( const vector<dat>& vv ){
-  int msk[ 3 ] = {};
-  for( int i = 0 ; i < 3 ; i ++ )
-    for( int j = vv[ i ].L ; j <= vv[ i ].R ; j ++ )
-      msk[ i ] |= (1 << (c[ vv[ i ].ID ][ j ] - 'A'));
-  return msk[ 0 ] != msk[ 1 ] or
-         msk[ 0 ] != msk[ 2 ];
-}
-Nd* go( vector< dat >& v , bool& ok ){
-  ok = true;
-  if( ggwp( v ) ){
-    ok = false;
-    return NULL;
-  }
-  sort( v.begin() , v.end() , cmp );
-  if( v[ 0 ].L > v[ 0 ].R )
-    return NULL;
-  if( v[ 0 ].L == v[ 0 ].R ){
-    for( int i = 1 ; i < 3 ; i ++ )
-      if( c[ v[ 0 ].ID ][ v[ 0 ].L ] !=
-          c[ v[ i ].ID ][ v[ i ].L ] )
-        ok = false;
-    if( not ok ) return NULL;
-    Nd* ret = new Nd();
-    ret->r = c[ v[ 0 ].ID ][ v[ 0 ].L ];
-    return ret;
-  }
-  if( v[ 0 ].KD == v.back().KD ){
-    ok = true;
-    for( int i = 0 ; i < 3 ; i ++ )
-      if( v[ i ].ID == 0 )
-        return Bst( v[ i ].KD , v[ i ].L , v[ i ].R );
-    assert( false );
-    ok = false;
-    return NULL;
-  }
-  for( int i = 0 ; i < 3 ; i ++ )
-    if( v[ i ].KD == 1 ){
-      for( int j = 0 ; j < 3 ; j ++ ){
-        if( v[ j ].KD == 0 or v[ j ].KD == 2 ){
-          Nd* ret = new Nd();
-          if( v[ j ].KD == 0 )
-            ret->r = c[ v[ j ].ID ][ v[ j ].L ];
-          else
-            ret->r = c[ v[ j ].ID ][ v[ j ].R ];
-          char goal = ret->r;
-          int at = -1;
-          for( int k = v[ i ].L ; k <= v[ i ].R ; k ++ )
-            if( c[ v[ i ].ID ][ k ] == ret->r ){
-              at = k;
-              break;
-            }
-          if( at == -1 ){
-            ok = false;
-            return NULL;
-          }
-          int llen = at - v[ i ].L;
-          {
-            bool okl , okr , cur = true;
-            vector< dat > vl , vr;
-            for( int k = 0 ; k < 3 ; k ++ )
-              if( v[ k ].KD == 0 ){
-                if( c[ v[ k ].ID ][ v[ k ].L ] != goal )
-                  cur = false;
-                vl.push_back( { { v[ k ].ID , nxt[ 0 ][ 0 ] } ,
-                                { v[ k ].L + 1 , v[ k ].L + llen } } );
-                vr.push_back( { { v[ k ].ID , nxt[ 0 ][ 1 ] } ,
-                                { v[ k ].L + llen + 1 , v[ k ].R } } );
-              }else if( v[ k ].KD == 1 ){
-                if( c[ v[ k ].ID ][ v[ k ].L + llen ] != goal )
-                  cur = false;
-                vl.push_back( { { v[ k ].ID , nxt[ 1 ][ 0 ] } ,
-                                { v[ k ].L , v[ k ].L + llen - 1 } } );
-                vr.push_back( { { v[ k ].ID , nxt[ 1 ][ 1 ] } ,
-                                { v[ k ].L + llen + 1 , v[ k ].R } } );
-              }else if( v[ k ].KD == 2 ){
-                if( c[ v[ k ].ID ][ v[ k ].R ] != goal )
-                  cur = false;
-                vl.push_back( { { v[ k ].ID , nxt[ 2 ][ 0 ] } ,
-                                { v[ k ].L , v[ k ].L + llen - 1 } } );
-                vr.push_back( { { v[ k ].ID , nxt[ 2 ][ 1 ] } ,
-                                { v[ k ].L + llen , v[ k ].R - 1 } } );
-              }
-            if( !cur ){
-              ok = false;
-              return NULL;
-            }
-            ret->tl = go( vl , okl );
-            if( !okl ){
-              ok = false;
-              return NULL;
-            }
-            ret->tr = go( vr , okr );
-            if( !okr ){
-              ok = false;
-              return NULL;
-            }
-          }
-          ok = true;
-          return ret;
-        }
-      }
-    }
-  for( int i = 0 ; i < 3 ; i ++ )
-    if( v[ i ].KD == 0 )
-      for( int j = 0 ; j < 3 ; j ++ ){
-        if( v[ j ].KD == 2 ){ // i pre , j post
-          bool found = false;
-          Nd *ret = NULL;
-          string pp , ii;
-    
-          int res = v[ i ].R - v[ i ].L;
-
-          for( int llen = 0 ; llen <= res ; llen ++ ){
-
-            Nd* nret = new Nd();
- 
-            nret->r = c[ v[ i ].ID ][ v[ i ].L ];
-
-            char goal = nret -> r;
-
-            bool okl = true , okr = true , cur = true;
-            vector< dat > vl , vr;
-            for( int k = 0 ; k < 3 ; k ++ )
-              if( v[ k ].KD == 0 ){
-                if( c[ v[ k ].ID ][ v[ k ].L ] != goal )
-                  cur = false;
-                vl.push_back( { { v[ k ].ID , nxt[ 0 ][ 0 ] } ,
-                                { v[ k ].L + 1 , v[ k ].L + llen } } );
-                vr.push_back( { { v[ k ].ID , nxt[ 0 ][ 1 ] } ,
-                                { v[ k ].L + llen + 1 , v[ k ].R } } );
-              }else if( v[ k ].KD == 1 ){
-                if( c[ v[ k ].ID ][ v[ k ].L + llen ] != goal )
-                  cur = false;
-                vl.push_back( { { v[ k ].ID , nxt[ 1 ][ 0 ] } ,
-                                { v[ k ].L , v[ k ].L + llen - 1 } } );
-                vr.push_back( { { v[ k ].ID , nxt[ 1 ][ 1 ] } ,
-                                { v[ k ].L + llen + 1 , v[ k ].R } } );
-              }else if( v[ k ].KD == 2 ){
-                if( c[ v[ k ].ID ][ v[ k ].R ] != goal )
-                  cur = false;
-                vl.push_back( { { v[ k ].ID , nxt[ 2 ][ 0 ] } ,
-                                { v[ k ].L , v[ k ].L + llen - 1 } } );
-                vr.push_back( { { v[ k ].ID , nxt[ 2 ][ 1 ] } ,
-                                { v[ k ].L + llen , v[ k ].R - 1 } } );
-              }
-            if( !cur ) continue;
-            nret->tl = go( vl , okl );
-            if( !okl ) continue;
-            nret->tr = go( vr , okr );
-            if( !okr ) continue;
-
-            string np = "" , ni = "";
-            pre_go( nret , np );
-            in_go( nret , ni );
-            if( not found or
-                make_pair( np , ni ) < make_pair( pp , ii ) ){
-              found = true;
-              ret = nret;
-              pp = np;
-              ii = ni;
-            }
-          }
-          ok = found;
-          return ret;
-        }
-      }
-  assert( false );
-  return NULL;
-}
-vector<int> ord;
-void solve(){
-  ++ stmp;
-  bool ok;
-  vector< dat > v;
-  for( int i = 0 ; i < 3 ; i ++ )
-    v.push_back( { { i , i } , {0 , len - 1} } );
-  Nd* ret = go( v , ok );
-  if( not ok ) return;
-
-  {
-    string o = "";
-    pre_go2( ret , o );
-    if( o != string( c[ 0 ] ) )
-      return;
-  }
-  {
-    string o = "";
-    in_go2( ret , o );
-    if( o != string( c[ 1 ] ) )
-      return;
-  }
-  {
-    string o = "";
-    post_go2( ret , o );
-    if( o != string( c[ 2 ] ) )
-      return;
-  }
-
+bool got;
+int n;
+void go(){
+  bool nok;
+  memo.clear();
+  dat ret = DP( n , 1 , 1 , 1 , 0 , 1 , 2 , nok );
+  if( !nok ) return;
   if( got ) puts( "" );
   got = true;
   for( int i = 0 ; i < 6 ; i ++ )
-    cout << _name[ ord[ i ] ] << " \n"[ i + 1 == 6 ];
-
-  {
-    string o = "";
-    pre_go( ret , o );
-    printf( "%s\n" , o.c_str() );
-  }
-  {
-    string o = "";
-    in_go( ret , o );
-    printf( "%s\n" , o.c_str() );
-  }
-  {
-    string o = "";
-    post_go( ret , o );
-    printf( "%s\n" , o.c_str() );
-  }
+    printf( "%s%c" , _name[ ord[ i ] ].c_str() , " \n"[ i == 5 ] );
+  printf( "%s\n%s\n%s\n" , Pre( ret ).c_str() ,
+          In( ret ).c_str() , Post( ret ).c_str() );
 }
 int main(){
-  for( int i = 0 ; i < 3 ; i ++ )
-    scanf( "%s" , c[ i ] );
-  len = strlen( c[ 0 ] );
+  for( int i = 0 ; i < 3 ; i ++ ){
+    scanf( "%s" , c[ i ] + 1 );
+    for( int j = 1 ; c[ i ][ j ] ; j ++ ){
+      at[ i ][ c[ i ][ j ] - 'A' ] = j;
+      msk[ i ][ j ] = msk[ i ][ j - 1 ] | (1 << (c[ i ][ j ] - 'A'));
+    }
+  }
+  n = strlen( c[ 0 ] + 1 );
   ord = {0, 0, 1, 1, 2, 2};
   do{
     for( int i = 0 ; i < 6 ; i ++ )
       nxt[ i >> 1 ][ i & 1 ] = ord[ i ];
-    solve();
+    go();
   }while( next_permutation( ord.begin() , ord.end() ) );
 }
