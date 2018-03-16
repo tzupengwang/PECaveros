@@ -188,7 +188,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | WF 2010                   | 2018/03/10    |   3  | **A** | B | C | D | **E** | F | G | . | **I** | J | **K** |
 | XVIII GP of Baltic        | 2018/03/11    |  19  | A | B | C | D | E | **F** | **G** | H | I |
 | NEERC 2017                | 2018/03/14    |   3  | A | B | C | D | E | F | G | **H** | I | **J** | **K** | L |
-| WF 2013                   | 2018/03/14    |   3  | A | . | C | D | E | F | . | H | I | J | **K** |
+| WF 2013                   | 2018/03/14    |   3  | A | **B** | C | D | E | F | . | H | I | J | **K** |
 
 
 - A : 賽內AC
