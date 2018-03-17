@@ -1,58 +1,68 @@
-struct MaxClique {
-  static const int MV = 210;
-  int V , ans , dp[MV];
-  int el[MV][MV/30+1], s[MV][MV/30+1];
-  vector<int> sol;
-  void init(int v) {
-    V = v; ans = 0;
-    FZ(el); FZ(dp);
-  }
-  /* Zero Base */
-  void addEdge(int u, int v) {
-    if(u > v) swap(u, v);
-    if(u == v) return;
-    el[u][v/32] |= (1<<(v%32));
-  }
-  bool dfs(int v, int k) {
-    int c = 0, d = 0;
-    for(int i=0; i<(V+31)/32; i++) {
-      s[k][i] = el[v][i];
-      if(k != 1) s[k][i] &= s[k-1][i];
-      c += __builtin_popcount(s[k][i]);
+#define N 111
+struct MaxClique{ // 0-base
+  typedef bitset< N > Int;
+  Int linkto[ N ] , v[ N ];
+  int n;
+  void init( int _n ){
+    n = _n;
+    for( int i = 0 ; i < n ; i ++ ){
+      linkto[ i ].reset();
+      v[ i ].reset();
     }
-    if(c == 0) {
-      if(k > ans) {
-        ans = k;
-        sol.clear();
-        sol.push_back(v);
-        return 1;
-      }
-      return 0;
+  }
+  void addEdge( int a , int b ){
+    v[ a ][ b ] = v[ b ][ a ] = 1;
+  }
+  int popcount(const Int& val)
+  { return val.count(); }
+  int lowbit(const Int& val)
+  { return val._Find_first(); }
+  int ans , stk[ N ];
+  int id[ N ] , di[ N ] , deg[ N ];
+  Int cans;
+  void maxclique(int elem_num, Int candi){
+    if(elem_num > ans){
+      ans = elem_num;
+      cans.reset();
+      for( int i = 0 ; i < elem_num ; i ++ )
+        cans[ id[ stk[ i ] ] ] = 1;
     }
-    for(int i=0; i<(V+31)/32; i++) {
-      for(int a = s[k][i]; a ; d++) {
-        if(k + (c-d) <= ans) return 0;
-        int lb = a&(-a), lg = 0;
-        a ^= lb;
-        while(lb!=1) {
-          lb = (unsigned int)(lb) >> 1;
-          lg ++;
-        }
-        int u = i*32 + lg;
-        if(k + dp[u] <= ans) return 0;
-        if(dfs(u, k+1)) { 
-          sol.push_back(v); 
-          return 1;
-        }
+    int potential = elem_num + popcount(candi);
+    if(potential <= ans) return;
+    int pivot = lowbit(candi);
+    Int smaller_candi = candi & (~linkto[pivot]);
+    while(smaller_candi.count() && potential > ans){
+      int next = lowbit(smaller_candi);
+
+      candi[next] = !candi[next];
+      smaller_candi[ next ] = !smaller_candi[ next ];
+      potential --;
+
+      if(next == pivot || (smaller_candi & linkto[next]).count() ){
+        stk[elem_num] = next;
+        maxclique(elem_num + 1, candi & linkto[next]);
       }
     }
-    return 0;
   }
-  int solve() {
-    for(int i=V-1; i>=0; i--) {
-      dfs(i, 1);
-      dp[i] = ans;
+  int solve(){
+    for( int i = 0 ; i < n ; i ++ ){
+      id[ i ] = i;
+      deg[ i ] = v[ i ].count();
     }
+    sort( id , id + n , [&](int id1, int id2){
+          return deg[id1] > deg[id2]; } );
+    for( int i = 0 ; i < n ; i ++ )
+      di[ id[ i ] ] = i;
+    for( int i = 0 ; i < n ; i ++ )
+      for( int j = 0 ; j < n ; j ++ )
+        if( v[ i ][ j ] )
+          linkto[ di[ i ] ][ di[ j ] ] = 1;
+    Int cand; cand.reset();
+    for( int i = 0 ; i < n ; i ++ )
+      cand[ i ] = 1;
+    ans = 1;
+    cans.reset(); cans[ 0 ] = 1;
+    maxclique(0, cand);
     return ans;
   }
-};
+} solver;
