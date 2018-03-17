@@ -3,6 +3,13 @@
 using namespace std;
 typedef long long LL;
 #define N 514
+int p[ N ];
+int f( int x ){
+  return x == p[ x ] ? x : p[ x ] = f( p[ x ] );
+}
+void uni( int x , int y ){
+  p[ f( x ) ] = f( y );
+}
 int n , c[ N ][ N ] , d[ N ][ N ];
 const int inf = 1e9;
 int main(){
@@ -12,6 +19,7 @@ int main(){
     for( int j = 1 ; j <= n + n ; j ++ )
       d[ i ][ j ] = -1;
     d[ i ][ i ] = inf;
+    p[ i ] = i;
   }
   if( n <= 2 ){
     puts( "0" );
@@ -40,6 +48,10 @@ int main(){
     //cerr << e.first << " " << bst << endl;
     int s = e.second.first;
     int t = e.second.second;
+    if( f( s + n ) == f( t ) )
+      continue;
+    uni( s + n , t );
+    uni( t + n , s );
     // s + n -> t
     d[ s + n ][ t ] = max( d[ s + n ][ t ] , e.first );
     d[ t + n ][ s ] = max( d[ t + n ][ s ] , e.first );
