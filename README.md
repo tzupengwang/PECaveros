@@ -190,6 +190,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | NEERC 2017                | 2018/03/14    |   3  | A | B | C | D | E | F | G | **H** | I | **J** | **K** | L |
 | WF 2013                   | 2018/03/16    |   3  | A | **B** | C | D | E | F | . | H | I | J | **K** |
 | WF 2014                   | 2018/03/17    |   1  | A | B | C | D | E | **F** | **G** | . | I | . | K | . |
+| XVIII GP of Belarus       | 2018/03/18    |  20  | A | B | C | . | E | F | G | H | I | J | K |
 
 
 - A : 賽內AC
