@@ -8,6 +8,8 @@ struct CircleCover{
   bool CCinter( Circle& a , Circle& b , Pt& p1 , Pt& p2 ){
     Pt o1 = a.O , o2 = b.O;
     D r1 = a.R , r2 = b.R;
+    if( norm( o1 - o2 ) > r1 + r2 ) return {};
+    if( norm( o1 - o2 ) < max(r1, r2) - min(r1, r2) ) return {};
     D d2 = ( o1 - o2 ) * ( o1 - o2 );
     D d = sqrt(d2);
     if( d > r1 + r2 ) return false;
