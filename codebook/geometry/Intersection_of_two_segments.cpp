@@ -1,10 +1,10 @@
-int ori( const PLL& o , const PLL& a , const PLL& b ){
+int ori( const Pt& o , const Pt& a , const Pt& b ){
   LL ret = ( a - o ) ^ ( b - o );
-  return ret / max( 1ll , abs( ret ) );
+  return (ret > 0) - (ret < 0);
 }
 // p1 == p2 || q1 == q2 need to be handled
-bool banana( const PLL& p1 , const PLL& p2 ,
-             const PLL& q1 , const PLL& q2 ){
+bool banana( const Pt& p1 , const Pt& p2 ,
+             const Pt& q1 , const Pt& q2 ){
   if( ( ( p2 - p1 ) ^ ( q2 - q1 ) ) == 0 ){ // parallel
     if( ori( p1 , p2 , q1 ) ) return false;
     return ( ( p1 - q1 ) * ( p2 - q1 ) ) <= 0 ||
