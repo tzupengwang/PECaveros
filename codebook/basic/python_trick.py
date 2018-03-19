@@ -1,3 +1,4 @@
+from fractions import Fraction
 from decimal import Decimal, getcontext
 getcontext().prec = 250 # set precision
 
