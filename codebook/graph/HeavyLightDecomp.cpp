@@ -2,7 +2,7 @@
 #define ALL(c) (c).begin(), (c).end()
 #define REP(i, s, e) for(int i = (s); i <= (e); i++)
 #define REPD(i, s, e) for(int i = (s); i >= (e); i--)
-typedef tuple< int , int > tii;
+typedef pair< int , int > PII;
 const int MAXN = 100010;
 const int LOG  = 19;
 struct HLD{
@@ -28,7 +28,6 @@ struct HLD{
     }
   }
   void dfshl(int u){
-    //printf("dfshl %d\n", u);
     ts++;
     tid[u] = tl[u] = tr[u] = ts;
     tdi[tid[u]] = u;
@@ -43,10 +42,8 @@ struct HLD{
   }
   inline int lca(int a, int b){
     if(dep[a] > dep[b]) swap(a, b);
-    //printf("lca %d %d\n", a, b);
     int diff = dep[b] - dep[a];
     REPD(k, LOG-1, 0) if(diff & (1<<k)){
-      //printf("b %d\n", mom[b][k]);
       b = mom[b][k];
     }
     if(a == b) return a;
@@ -71,21 +68,20 @@ struct HLD{
     REP(k, 1, LOG-1) REP(i, 1, n)
       mom[i][k] = mom[mom[i][k-1]][k-1];
   }
-  vector< tii > getPath( int u , int v ){
-    vector< tii > res;
+  vector< PII > getPath( int u , int v ){
+    vector< PII > res;
     while( tid[ u ] < tid[ head[ v ] ] ){
-      res.push_back( tii(tid[ head[ v ] ] , tid[ v ]) );
+      res.push_back( PII(tid[ head[ v ] ] , tid[ v ]) );
       v = mom[ head[ v ] ][ 0 ];
     }
-    res.push_back( tii( tid[ u ] , tid[ v ] ) );
+    res.push_back( PII( tid[ u ] , tid[ v ] ) );
     reverse( ALL( res ) );
     return res;
-    /*
-     * res : list of intervals from u to v
+    /* res : list of intervals from u to v
      * u must be ancestor of v
      * usage :
-     * vector< tii >& path = tree.getPath( u , v )
-     * for( tii tp : path ) {
+     * vector< PII >& path = tree.getPath( u , v )
+     * for( PII tp : path ) {
      *   int l , r;tie( l , r ) = tp;
      *   upd( l , r );
      *   uu = tree.tdi[ l ] , vv = tree.tdi[ r ];
