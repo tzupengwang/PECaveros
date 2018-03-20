@@ -4,9 +4,7 @@ struct Splay {
   static Splay nil, mem[MEM], *pmem;
   Splay *ch[2], *f;
   int val, rev, size;
-  Splay () : val(-1), rev(0), size(0)
-  { f = ch[0] = ch[1] = &nil; }
-  Splay (int _val) : val(_val), rev(0), size(1)
+  Splay (int _val=-1) : val(_val), rev(0), size(1)
   { f = ch[0] = ch[1] = &nil; }
   bool isr()
   { return f->ch[0] != this && f->ch[1] != this; }
@@ -56,6 +54,7 @@ void splay(Splay *x){
     else rotate(x),rotate(x);
   }
 }
+int id(Splay *x) { return x - Splay::mem + 1; }
 Splay* access(Splay *x){
   Splay *q = nil;
   for (;x!=nil;x=x->f){
@@ -65,54 +64,45 @@ Splay* access(Splay *x){
   }
   return q;
 }
-void evert(Splay *x){
+void chroot(Splay *x){
   access(x);
   splay(x);
   x->rev ^= 1;
   x->push(); x->pull();
 }
 void link(Splay *x, Splay *y){
-//  evert(x);
   access(x);
   splay(x);
-  evert(y);
+  chroot(y);
   x->setCh(y, 1);
 }
-void cut(Splay *x, Splay *y){
-//  evert(x);
+void cut_p(Splay *y) {
   access(y);
   splay(y);
   y->push();
   y->ch[0] = y->ch[0]->f = nil;
 }
-int N, Q;
-Splay *vt[MXN];
-int ask(Splay *x, Splay *y){
+void cut(Splay *x, Splay *y){
+  chroot(x);
+  cut_p(y);
+}
+Splay* get_root(Splay *x) {
+  access(x);
+  splay(x);
+  for(; x->ch[0] != nil; x = x->ch[0])
+    x->push();
+  splay(x);
+  return x;
+}
+bool conn(Splay *x, Splay *y) {
+  x = get_root(x);
+  y = get_root(y);
+  return x == y;
+}
+Splay* lca(Splay *x, Splay *y) {
   access(x);
   access(y);
   splay(x);
-  int res = x->f->val;
-  if (res == -1) res=x->val;
-  return res;
-}
-int main(int argc, char** argv){
-  scanf("%d%d", &N, &Q);
-  for (int i=1; i<=N; i++)
-    vt[i] = new (Splay::pmem++) Splay(i);
-  while (Q--) {
-    char cmd[105];
-    int u, v;
-    scanf("%s", cmd);
-    if (cmd[1] == 'i') {
-      scanf("%d%d", &u, &v);
-      link(vt[v], vt[u]);
-    } else if (cmd[0] == 'c') {
-      scanf("%d", &v);
-      cut(vt[1], vt[v]);
-    } else {
-      scanf("%d%d", &u, &v);
-      int res=ask(vt[u], vt[v]);
-      printf("%d\n", res);
-    }
-  }
+  if (x->f == nil) return x;
+  else return x->f;
 }
