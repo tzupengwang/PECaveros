@@ -191,6 +191,12 @@ codebook by eddy1021, c2251393, tzupengwang
 | WF 2013                   | 2018/03/16    |   3  | A | **B** | C | D | E | F | . | H | I | J | **K** |
 | WF 2014                   | 2018/03/17    |   1  | A | B | C | D | E | **F** | **G** | . | I | . | K | **L** |
 | XVIII GP of Belarus       | 2018/03/18    |  20  | A | B | C | **D** | E | F | G | H | I | J | K |
+| Moscow PreFinals Day 1    | 2018/03/23    |   6  | A | B | C | D | E | F | G | H | I | **J** | K | L | **M** |
+| Moscow PreFinals Day 3    | 2018/03/25    |   7  | . | B | C | D | E | **F** | . | **H** | I | J | . | L | M |
+| Moscow PreFinals Day 4    | 2018/03/26    |   5  | A | B | C | D | E | F | **G** | H | I | **J** | K |
+| Moscow PreFinals Day 5    | 2018/03/28    |  16  | A | B | **C** | D | E | F | **G** | **H** | **I** | J | K | **L** | **M** |
+| Moscow PreFinals Day 6    | 2018/03/29    |  10  | . | B | **C** | . | . | **F** | G | H | **I** | J | **K** | L | **M** |
+| Moscow PreFinals Day 7    | 2018/03/30    |   6  | A | B | C | **D** | E | F | **G** | H | . | **J** | K |
 
 
 - A : 賽內AC
