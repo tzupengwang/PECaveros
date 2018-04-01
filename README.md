@@ -197,6 +197,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Moscow PreFinals Day 5    | 2018/03/28    |  16  | A | B | **C** | D | E | F | **G** | **H** | **I** | J | K | **L** | **M** |
 | Moscow PreFinals Day 6    | 2018/03/29    |  10  | . | B | **C** | . | . | **F** | G | H | **I** | J | **K** | L | **M** |
 | Moscow PreFinals Day 7    | 2018/03/30    |   6  | A | B | C | **D** | E | F | **G** | H | . | **J** | K |
+| Moscode Fest 2018         | 2018/04/02    |  10  | A | . | . | D | . | . | G | H | I | . | K |
 
 
 - A : 賽內AC
