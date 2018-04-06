@@ -198,6 +198,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Moscow PreFinals Day 6    | 2018/03/29    |  10  | . | B | **C** | . | . | **F** | G | H | **I** | J | **K** | L | **M** |
 | Moscow PreFinals Day 7    | 2018/03/30    |   6  | A | B | C | **D** | E | F | **G** | H | . | **J** | K |
 | Moscode Fest 2018         | 2018/04/02    |  10  | A | . | . | D | . | . | G | H | I | . | K |
+| China Final 2016          | 2018/04/06    |   2  | A | B | C | D | E | F | G | H | . | J | K | L |
 
 
 - A : 賽內AC
