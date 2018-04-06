@@ -1,4 +1,3 @@
-#pragma GCC optimize("O3")
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
@@ -24,99 +23,174 @@ inline int mpow( int ai , int bi ){
   }
   return ret;
 }
-struct Mat{
-  int n , a[ N ][ N ];
-  Mat( int _n ){
-    n = _n;
-    for( int i = 0 ; i < n ; i ++ )
-      for( int j = 0 ; j < n ; j ++ )
-        a[ i ][ j ] = 0;
-  }
-  Mat operator*( const Mat& he ) const{
-    Mat ret( n );
-    for( int i = 0 ; i < n ; i ++ )
-      for( int j = 0 ; j < n ; j ++ )
-        for( int k = 0 ; k < n ; k ++ )
-          ret.a[ i ][ j ] = add( ret.a[ i ][ j ] ,
-              mul( a[ i ][ k ] , he.a[ k ][ j ] ) );
-    return ret;
-  }
-  Mat operator^( LL tk ) const{
-    Mat A , I;
-    for( int i = 0 ; i < n ; i ++ ){
-      for( int j = 0 ; j < n ; j ++ )
-        A.a[ i ][ j ] = a[ i ][ j ];
-      I.a[ i ][ i ] = 1;
+inline int inv(int a) { return mpow(a, mod-2); }
+
+const int MAXN = (1<<16);
+typedef double ld;
+typedef complex<ld> cplx;
+const ld PI = acosl(-1);
+const cplx I(0, 1);
+
+cplx omega[MAXN+1];
+
+void pre_fft(){
+  for(int i=0; i<=MAXN; i++)
+    omega[i] = exp(i * 2 * PI / MAXN * I);
+}
+
+void fft(int n, cplx a[], bool inv=false){
+  int basic = MAXN / n;
+  int theta = basic;
+  for (int m = n; m >= 2; m >>= 1) {
+    int mh = m >> 1;
+    for (int i = 0; i < mh; i++) {
+      cplx w = omega[inv ? MAXN-(i*theta%MAXN)
+                         : i*theta%MAXN];
+      for (int j = i; j < n; j += m) {
+        int k = j + mh;
+        cplx x = a[j] - a[k];
+        a[j] += a[k];
+        a[k] = w * x;
+      }
     }
-    while( tk ){
-      if( tk & 1LL ) I = I * A;
-      A = A * A;
-      tk >>= 1;
-    }
-    return I;
+    theta = (theta * 2) % MAXN;
   }
-};
-#define M 111
-#define K 10001
-int fac[ K ] , ifac[ K ] , inv[ K ];
-void build(){
-  fac[ 0 ] = ifac[ 0 ] = 1;
-  for( int i = 1 ; i < K - 1 ; i ++ )
-    fac[ i ] = mul( fac[ i - 1 ] , i );
-  ifac[ K - 1 ] = mpow( fac[ K - 1 ] , mod - 2 );
-  for( int i = K - 2 ; i >= 1 ; i -- )
-    ifac[ i ] = mul( ifac[ i + 1 ] , i + 1 );
-  inv[ 0 ] = 1;
-  for( int i = 1 ; i < K ; i ++ )
-    inv[ i ] = mpow( i , mod - 2 );
+  int i = 0;
+  for (int j = 1; j < n - 1; j++) {
+    for (int k = n >> 1; k > (i ^= k); k >>= 1);
+    if (j < i) swap(a[i], a[j]);
+  }
+  if (inv)
+    for (i = 0; i < n; i++)
+      a[i] /= n;
 }
-inline int C( int a , int b ){
-  if( a < b ) return 0;
-  return mul( fac[ a ] , mul( ifac[ b ] , ifac[ a - b ] ) );
+
+
+const int M = 111;
+const int K = 2e5+10;
+
+int n, m, P, G;
+int c[M];
+
+void mul(LL a[], LL b[], LL res[]) {
+  static cplx A[MAXN], B[MAXN];
+  int D = 1; while (D < 2*G) D <<= 1;
+  for (int i = 0; i < D; ++i) A[i] = cplx(0, 0);
+  for (int i = 0; i < D; ++i) B[i] = cplx(0, 0);
+  for (int i = 0; i < G; ++i) A[i] = cplx(a[i], 0);
+  for (int i = 0; i < G; ++i) B[i] = cplx(b[i], 0);
+  fft(D, A);
+  fft(D, B);
+  for (int i = 0; i < D; ++i) A[i] *= B[i];
+  fft(D, A, 1);
+  fill(res, res+G, 0);
+  for (int i = 0; i < D; ++i) {
+    LL x = round(A[i].real());
+    res[i % G] = res[i % G] + x;
+  }
 }
-int n , m , p;
-int c[ M ];
-void init(){
-  scanf( "%d%d%d" , &n , &m , &p );
-  for( int i = 0 ; i < m ; i ++ )
-    scanf( "%d" , &c[ i ] );
+
+void mul(int a[], int b[]) {
+  static LL ta[2][MAXN], tb[2][MAXN], tmp[MAXN];
+  for (int i = 0; i < G; ++i) {
+    ta[1][i] = a[i] >> 15;
+    ta[0][i] = a[i] & (0x7fff);
+    tb[1][i] = b[i] >> 15;
+    tb[0][i] = b[i] & (0x7fff);
+  }
+  fill(a, a+G, 0);
+  mul(ta[1], tb[1], tmp);
+  for (int i = 0; i < G; ++i) {
+    LL tx = (tmp[i] % mod + mod) % mod;
+    tx <<= 30; tx %= mod;
+    a[i] = add(a[i], tx);
+  }
+  mul(ta[1], tb[0], tmp);
+  for (int i = 0; i < G; ++i) {
+    LL tx = (tmp[i] % mod + mod) % mod;
+    tx <<= 15; tx %= mod;
+    a[i] = add(a[i], tx);
+  }
+  mul(ta[0], tb[1], tmp);
+  for (int i = 0; i < G; ++i) {
+    LL tx = (tmp[i] % mod + mod) % mod;
+    tx <<= 15; tx %= mod;
+    a[i] = add(a[i], tx);
+  }
+  mul(ta[0], tb[0], tmp);
+  for (int i = 0; i < G; ++i) {
+    LL tx = (tmp[i] % mod + mod) % mod;
+    a[i] = add(a[i], tx);
+  }
 }
-int dp[ N ] , way[ N ];
+
+void build() {
+  pre_fft();
+}
+
+void init() {
+  scanf("%d%d%d", &n, &m, &P);
+  G = 0;
+  for (int i = 1; i <= m; ++i) {
+    scanf("%d", c+i);
+    G = __gcd(G, c[i]);
+  }
+  //printf("G %d\n", G);
+}
+
 bitset<K> can;
-void solve(){
-  go_dp();
-  int g = c[ 0 ];
-  for( int i = 0 ; i < m ; i ++ )
-    g = __gcd( g , c[ i ] );
-  if( m > 1 ){
-    can.reset();
-    can[ 0 ] = 1;
-    for( int i = 0 ; i < m ; i ++ )
-      can = can | (can << c[ i ]);
-    Mat a( g );
-    for( int i = 0 ; i < g ; i ++ ){
-      a[ i ][ i ] = 100 - p;
-      a[ i ][ (i + 1) % g ] = p;
-    }
-    a = a ^ n;
-    for( int i = 0 ; i < g ; i ++ )
-      way[ i ] = a[ 0 ][ i ];
-    int cni = 1;
-    int ans = 0;
-    for( int i = 1 ; i < 10000 ; i ++ ){
-      cni = mul( cni , n - i + 1 );
-      cni = mul( cni , inv[ i ] );
-      int tway = mul( cni , mpow( p , i ) );
-      tway = mul( tway , mpow( 100 - p , n - i ) );
-      way[ i ] = sub( way[ i ] , tway );
-      if( not can[ i ] )
-        ans = add( ans , mul( g - i % g , tway ) );
-    }
-    for( int i = 1 ; i < g ; i ++ )
-      ans = add( ans , mul( g - i , way[ i ] ) );
-    printf( "%d\n" , ans );
+int nxt[K];
+
+int dp[MAXN], base[MAXN], tdp[MAXN];
+
+void build_dp() {
+  fill(dp, dp+G, 0);
+  dp[0] = 1;
+  fill(base, base+G, 0);
+  base[0] = 100 - P;
+  base[1 % G] += P;
+  for (int e = n; e; e >>= 1) {
+    if (e & 1) mul(dp, base);
+    mul(base, base);
   }
 }
+
+int _cs;
+
+void solve() {
+  can.reset();
+  can[0] = 1;
+  for (int i = 1; i <= m; ++i) {
+    for (int j = 0; j < K; ++j) if (j >= c[i] && can[j - c[i]])
+      can[j] = 1;
+  }
+  nxt[K-1] = K;
+  for (int i = K-1; i >= 1; --i) {
+    if (can[i]) nxt[i] = i;
+    else if (i+1 < K) nxt[i] = nxt[i+1];
+  }
+  build_dp();
+  int ans = 0;
+  for (int r = 1; r < G; ++r) {
+    int tmp = mul(G - r, dp[r]);
+    ans = add(ans, tmp);
+  }
+  int way = mpow(100 - P, n);
+  for (int i = 1; i <= min(n, K/2); ++i) {
+    way = mul(way, P);
+    way = mul(way, inv(100 - P));
+    way = mul(way, n - i + 1);
+    way = mul(way, inv(i));
+    if (P == 0 && i == 0) way = mpow(100, n);
+    if (P == 100 && i == n) way = mpow(100, n);
+    int ori_cst = (G - i % G) % G;
+    int real_cst = nxt[i] - i;
+    int dlt = sub(real_cst, ori_cst);
+    ans = add(ans, mul(dlt, way));
+  }
+  printf("Case #%d: %d\n", ++_cs, ans);
+}
+
 int main(){
   build();
   int t; scanf( "%d" , &t ); while( t -- ){
