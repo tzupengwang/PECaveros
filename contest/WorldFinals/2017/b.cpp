@@ -40,6 +40,7 @@ bool check(){
           return false;
         if( ((pos[ asked ] >> who) & 1) == 0 )
           return false;
+        break;
       }
       if( vv[ i ][ 2 + j ] == '*' ){
         bool has = false;
@@ -47,6 +48,7 @@ bool check(){
         if( (pos[ asked ] >> gb) & 1 ) has = true;
         if( (pos[ asked ] >> gc) & 1 ) has = true;
         if( not has ) return false;
+        break;
       }
     }
   }
@@ -73,6 +75,7 @@ void go( int na , int nb , int nc ){
     if( (nrest >> i) & 1 )
       stk[ stksz ++ ] = i;
   if( dfs( 0 ) ){
+    //printf( "%c %c %c\n" , na + 'A' , nb + 'A' , nc + 'A' );
     a |= (1 << na);
     b |= (1 << nb);
     c |= (1 << nc);
