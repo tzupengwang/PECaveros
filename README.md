@@ -199,6 +199,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Moscow PreFinals Day 7    | 2018/03/30    |   6  | A | B | C | **D** | E | F | **G** | H | . | **J** | K |
 | Moscode Fest 2018         | 2018/04/02    |  10  | A | . | . | D | . | **F** | G | H | I | . | K |
 | China Final 2016          | 2018/04/06    |   2  | A | B | C | D | E | F | G | H | **I** | J | K | L |
+| WF 2017                   | 2018/04/07    |  20  | . | . | C | D | E | F | . | . | I | . | . | L |
 
 
 - A : 賽內AC
