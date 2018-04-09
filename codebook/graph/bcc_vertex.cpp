@@ -3,14 +3,11 @@ struct BccVertex {
   vector<int> E[MXN],sccv[MXN];
   int top,stk[MXN];
   void init(int _n) {
-    n = _n;
-    nScc = step = 0;
+    n = _n; nScc = step = 0;
     for (int i=0; i<n; i++) E[i].clear();
   }
-  void add_edge(int u, int v) {
-    E[u].PB(v);
-    E[v].PB(u);
-  }
+  void addEdge(int u, int v)
+  { E[u].PB(v); E[v].PB(u); }
   void DFS(int u, int f) {
     dfn[u] = low[u] = step++;
     stk[top++] = u;
@@ -26,25 +23,21 @@ struct BccVertex {
             z = stk[--top];
             sccv[nScc].PB(z);
           } while (z != v);
-          sccv[nScc].PB(u);
-          nScc++;
+          sccv[nScc++].PB(u);
         }
-      } else {
+      }else
         low[u] = min(low[u],dfn[v]);
-      }
     }
   }
   vector<vector<int>> solve() {
     vector<vector<int>> res;
-    for (int i=0; i<n; i++) {
+    for (int i=0; i<n; i++)
       dfn[i] = low[i] = -1;
-    }
-    for (int i=0; i<n; i++) {
+    for (int i=0; i<n; i++)
       if (dfn[i] == -1) {
         top = 0;
         DFS(i,i);
       }
-    }
     REP(i,nScc) res.PB(sccv[i]);
     return res;
   }

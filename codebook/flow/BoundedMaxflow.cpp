@@ -8,8 +8,7 @@ int solve(){
     in[ r[ i ] ] += a[ i ];
     out[ l[ i ] ] += a[ i ];
     flow.addEdge( l[ i ] , r[ i ] , b[ i ] - a[ i ] );
-    // flow on edge from l[ i ] to r[ i ] should
-    // be in [a[ i ], b[ i ]].
+    // flow from l[i] to r[i] must in [a[ i ], b[ i ]]
   }
   int nd = 0;
   for( int i = 1 ; i <= n ; i ++ ){

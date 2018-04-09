@@ -2,13 +2,10 @@
  * cal power sum formula of all p=1~k in O(k^2) */
 #define MAXK 2500
 const int mod = 1000000007;
-int b[MAXK];
-// bernoulli number
-int inv[MAXK+1];
-// inverse
+int b[MAXK]; // bernoulli number
+int inv[MAXK+1]; // inverse
 int cm[MAXK+1][MAXK+1]; // combinactories
-int co[MAXK][MAXK+2];
-// coeeficient of x^j when p=i
+int co[MAXK][MAXK+2]; // coeeficient of x^j when p=i
 inline int getinv(int x) {
   int a=x,b=mod,a0=1,a1=0,b0=0,b1=1;
   while(b) {
@@ -34,14 +31,16 @@ inline void pre() {
     if(i&1) { b[i]=0; continue; }
     b[i]=1;
     for(int j=0;j<i;j++)
-      b[i]=sub(b[i], mul(cm[i][j],mul(b[j], inv[i-j+1]));
+      b[i]=sub(b[i],
+               mul(cm[i][j],mul(b[j], inv[i-j+1]));
   }
   /* faulhaber */
-  // sigma_x=1~n {x^p} = 1/(p+1) * sigma_j=0~p { C(p+1,j) * Bj * n^(p-j+1)}
+  // sigma_x=1~n {x^p} =
+  //   1/(p+1) * sigma_j=0~p {C(p+1,j)*Bj*n^(p-j+1)}
   for(int i=1;i<MAXK;i++) {
     co[i][0]=0;
     for(int j=0;j<=i;j++)
-      co[i][i-j+1]= mul(inv[i+1], mul(cm[i+1][j], b[j]))
+      co[i][i-j+1]=mul(inv[i+1], mul(cm[i+1][j], b[j]))
   }
 }
 /* sample usage: return f(n,p) = sigma_x=1~n (x^p) */

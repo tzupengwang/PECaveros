@@ -9,9 +9,8 @@ template<LL P, LL root, int MAXN>
 struct NTT{
   static LL bigmod(LL a, LL b) {
     LL res = 1;
-    for (LL bs = a; b; b >>= 1, bs = (bs * bs) % P) {
+    for (LL bs = a; b; b >>= 1, bs = (bs * bs) % P)
       if(b&1) res=(res*bs)%P;
-    }
     return res;
   }
   static LL inv(LL a, LL b) {
@@ -27,8 +26,7 @@ struct NTT{
   }
   // n must be 2^k
   void tran(int n, LL a[], bool inv_ntt=false){
-    int basic = MAXN / n;
-    int theta = basic;
+    int basic = MAXN / n , theta = basic;
     for (int m = n; m >= 2; m >>= 1) {
       int mh = m >> 1;
       for (int i = 0; i < mh; i++) {
@@ -55,9 +53,6 @@ struct NTT{
       for (i = 0; i < n; i++)
         a[i] = (a[i] * ni) % P;
     }
-  }
-  void operator()(int n, LL a[], bool inv_ntt=false) {
-    tran(n, a, inv_ntt);
   }
 };
 const LL P=2013265921,root=31;

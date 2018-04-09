@@ -33,11 +33,9 @@ struct MaxClique{ // 0-base
     Int smaller_candi = candi & (~linkto[pivot]);
     while(smaller_candi.count() && potential > ans){
       int next = lowbit(smaller_candi);
-
       candi[next] = !candi[next];
       smaller_candi[ next ] = !smaller_candi[ next ];
       potential --;
-
       if(next == pivot || (smaller_candi & linkto[next]).count() ){
         stk[elem_num] = next;
         maxclique(elem_num + 1, candi & linkto[next]);

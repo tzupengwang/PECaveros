@@ -1,24 +1,19 @@
 /* minimum mean cycle O(VE) */
 struct MMC{
-#define MAXE 101010
-#define MAXN 1021
+#define E 101010
+#define V 1021
 #define inf 1e9
 #define eps 1e-6
-  struct Edge {
-    int v,u;
-    double c;
-  };
-  int n, m, prv[MAXN][MAXN], prve[MAXN][MAXN], vst[MAXN];
-  Edge e[MAXE];
+  struct Edge { int v,u; double c; };
+  int n, m, prv[V][V], prve[V][V], vst[V];
+  Edge e[E];
   vector<int> edgeID, cycle, rho;
-  double d[MAXN][MAXN];
-  void init( int _n ){
-    n = _n; m = 0;
-  }
+  double d[V][V];
+  void init( int _n )
+  { n = _n; m = 0; }
   // WARNING: TYPE matters
-  void add_edge( int vi , int ui , double ci ){
-    e[ m ++ ] = { vi , ui , ci }; 
-  }
+  void addEdge( int vi , int ui , double ci )
+  { e[ m ++ ] = { vi , ui , ci }; }
   void bellman_ford() {
     for(int i=0; i<n; i++) d[0][i]=0;
     for(int i=0; i<n; i++) {

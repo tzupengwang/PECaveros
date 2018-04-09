@@ -7,9 +7,8 @@ struct Edge{
 struct PushRelabel{
   int n;
   vector<Edge> edges;
-  vector<int> count;
+  vector<int> count, h, inQ, excess;
   vector<vector<int> > G;
-  vector<int> h, inQ, excess;
   queue<int> Q;
   PushRelabel(int _n):
     n(_n), count(_n<<1), G(_n), h(_n), inQ(_n), excess(_n) {}

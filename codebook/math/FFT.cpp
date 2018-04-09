@@ -33,7 +33,5 @@ void fft(int n, cplx a[], bool inv=false){
     for (int k = n >> 1; k > (i ^= k); k >>= 1);
     if (j < i) swap(a[i], a[j]);
   }
-  if (inv)
-    for (i = 0; i < n; i++)
-      a[i] /= n;
+  if(inv) for (i = 0; i < n; i++) a[i] /= n;
 }

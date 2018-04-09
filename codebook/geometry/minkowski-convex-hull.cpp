@@ -7,9 +7,8 @@ vector<Pt> minkowski(vector<Pt> p, vector<Pt> q){
   int cur = -1;
   for( int i = 0; i < m; i ++)
     if( (q[i] ^ (p[0] - p[n-1])) > -eps)
-      if( cur == -1 ||
-          (q[i] ^ (p[0] - p[n-1])) >
-          (q[cur] ^ (p[0] - p[n-1])) )
+      if( cur == -1 || (q[i] ^ (p[0] - p[n-1])) >
+                       (q[cur] ^ (p[0] - p[n-1])) )
         cur = i;
   vector<Pt> h;
   p.push_back(p[0]);

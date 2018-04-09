@@ -28,7 +28,8 @@ struct PolyOp {
     fill(b+n, b+N, 0);
     ntt(N, tmp); ntt(N, b);
     FOR(i, N) {
-      LL t1 = (2 - b[i] * tmp[i]) % P; if (t1 < 0) t1 += P;
+      LL t1 = (2 - b[i] * tmp[i]) % P;
+      if (t1 < 0) t1 += P;
       b[i] = b[i] * t1 % P;
     }
     ntt(N, b, 1);
