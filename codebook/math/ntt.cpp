@@ -5,15 +5,6 @@ typedef long long LL;
    16 	65536 			65537 		 1 		3
    20 	1048576		 	7340033 	 7 		3 */
 // (must be 2^k)
-// To implement poly. multiply:
-// NTT<P, root, MAXN> ntt;
-// ntt( n , a ); // or ntt.tran( n , a );
-// ntt( n , b );
-// for( int i = 0 ; i < n ; i++ )
-//   c[ i ] = a[ i ] * b[ i ];
-// ntt( n , c , 1 );
-//
-// then you have the result in c :: [LL]
 template<LL P, LL root, int MAXN>
 struct NTT{
   static LL bigmod(LL a, LL b) {

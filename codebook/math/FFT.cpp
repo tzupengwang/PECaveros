@@ -1,16 +1,6 @@
 // const int MAXN = 262144;
 // (must be 2^k)
 // before any usage, run pre_fft() first
-// 
-// To implement poly. multiply:
-//
-// fft( n , a );
-// fft( n , b );
-// for( int i = 0 ; i < n ; i++ )
-//   c[ i ] = a[ i ] * b[ i ];
-// fft( n , c , 1 );
-//
-// then you have the result in c :: [cplx]
 typedef long double ld;
 typedef complex<ld> cplx;
 const ld PI = acosl(-1);
