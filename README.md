@@ -200,6 +200,7 @@ codebook by eddy1021, c2251393, tzupengwang
 | Moscode Fest 2018         | 2018/04/02    |  10  | A | . | . | D | . | **F** | G | H | I | . | K |
 | China Final 2016          | 2018/04/06    |   2  | A | B | C | D | E | F | G | H | **I** | J | K | L |
 | WF 2017                   | 2018/04/07    |  20  | **A** | **B** | C | D | E | F | . | . | I | . | . | L |
+| Petrozavodsk 2018 ITMO U  | 2018/04/11    |  10  | A | . | C | D | . | . | G | . | I | J | . | . |
 
 
 - A : 賽內AC
