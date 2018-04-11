@@ -1,7 +1,5 @@
 // does not work when n is prime
-LL f(LL x, LL mod){
-	return add(mul(x,x,mod),1,mod);
-}
+LL f(LL x, LL mod){ return add(mul(x,x,mod),1,mod); }
 LL pollard_rho(LL n) {
 	if(!(n&1)) return 2;
   while(true){

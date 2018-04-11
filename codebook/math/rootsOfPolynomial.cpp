@@ -2,21 +2,16 @@ const double eps = 1e-12;
 const double inf = 1e+12;
 double a[ 10 ], x[ 10 ];
 int n;
-int sign( double x ){
-	return (x < -eps)?(-1):(x>eps);
-}
+int sign( double x ){return (x < -eps)?(-1):(x>eps);}
 double f(double a[], int n, double x){
 	double tmp=1,sum=0;
-	for(int i=0;i<=n;i++){
-		sum=sum+a[i]*tmp;
-		tmp=tmp*x;
-	}
+	for(int i=0;i<=n;i++)
+  { sum=sum+a[i]*tmp; tmp=tmp*x; }
 	return sum;
 }
 double binary(double l,double r,double a[],int n){
 	int sl=sign(f(a,n,l)),sr=sign(f(a,n,r));
-	if(sl==0) return l;
-	if(sr==0) return r;
+	if(sl==0) return l; if(sr==0) return r;
 	if(sl*sr>0) return inf;
 	while(r-l>eps){
 		double mid=(l+r)/2;
@@ -27,13 +22,8 @@ double binary(double l,double r,double a[],int n){
 	return l;
 }
 void solve(int n,double a[],double x[],int &nx){
-	if(n==1){
-		x[1]=-a[0]/a[1];
-		nx=1;
-		return;
-	}
-	double da[10], dx[10];
-	int ndx;
+	if(n==1){ x[1]=-a[0]/a[1]; nx=1; return; }
+	double da[10], dx[10]; int ndx;
 	for(int i=n;i>=1;i--) da[i-1]=a[i]*i;
 	solve(n-1,da,dx,ndx);
 	nx=0;

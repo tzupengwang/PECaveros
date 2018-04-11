@@ -1,19 +1,16 @@
 Pt interPnt( Line l1, Line l2, bool &res ){
   Pt p1, p2, q1, q2;
-  tie(p1, p2) = l1;
-  tie(q1, q2) = l2;
+  tie(p1, p2) = l1; tie(q1, q2) = l2;
   double f1 = (p2 - p1) ^ (q1 - p1);
   double f2 = (p2 - p1) ^ (p1 - q2);
   double f = (f1 + f2);
-  if( fabs(f) < eps)
-  { res = false; return {0, 0}; }
+  if( fabs(f) < eps){ res=0; return {0, 0}; }
   res = true;
   return q1 * (f2 / f) + q2 * (f1 / f);
 }
 bool isin( Line l0, Line l1, Line l2 ){
   // Check inter(l1, l2) in l0
-  bool res;
-  Pt p = interPnt(l1, l2, res);
+  bool res; Pt p = interPnt(l1, l2, res);
   return ( (l0.SE - l0.FI) ^ (p - l0.FI) ) > eps;
 }
 /* If no solution, check: 1. ret.size() < 3

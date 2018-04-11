@@ -16,7 +16,7 @@ struct Conv{
     upper.push_back(a[0]);
   }
   int sign( LL x ){ // fixed when changed to double
-    return x < 0 ? -1 : x > 0 }
+    return x < 0 ? -1 : x > 0; }
   pair<LL,int> get_tang(vector<Pt> &conv, Pt vec){
     int l = 0, r = (int)conv.size() - 2;
     for( ; l + 1 < r; ){

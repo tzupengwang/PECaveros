@@ -7,20 +7,13 @@ const int MAXE = 10010;
 const int INF  = 2147483647;
 struct Edge{
   int u, v, c;
-  Edge(){}
-  Edge(int x, int y, int z) :
-    u(x), v(y), c(z){}
+  Edge(int x=0, int y=0, int z=0) : u(x), v(y), c(z){}
 };
 int V, E, root;
 Edge edges[MAXE];
-inline int newV(){
-  V++;
-  return V;
-}
-inline void addEdge(int u, int v, int c){
-  E++;
-  edges[E] = Edge(u, v, c);
-}
+inline int newV(){ return ++ V; }
+inline void addEdge(int u, int v, int c)
+{ edges[++E] = Edge(u, v, c); }
 bool con[MAXV];
 int mnInW[MAXV], prv[MAXV], cyc[MAXV], vis[MAXV];
 inline int DMST(){
@@ -47,12 +40,10 @@ inline int DMST(){
         vis[s] = i;
       if(s > 0 && vis[s] == i){
          // get a cycle
-        jf = 1;
-        int v = s;
+        jf = 1; int v = s;
         do{
           cyc[v] = s, con[v] = 1;
-          r2 += mnInW[v];
-          v = prv[v];
+          r2 += mnInW[v]; v = prv[v];
         }while(v != s);
         con[s] = 0;
       }

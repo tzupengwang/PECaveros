@@ -13,11 +13,10 @@ struct PalT{
     fill(nxt[res], nxt[res]+26, 0);
     len[res] = l, fail[res] = _fail;
     diff[res] = l - len[_fail];
-    if (diff[res] == diff[_fail]) {
+    if (diff[res] == diff[_fail])
       sfail[res] = sfail[_fail];
-    } else {
+    else
       sfail[res] = _fail;
-    }
     return res;
   }
   void push(int p) {
@@ -25,13 +24,10 @@ struct PalT{
     int c = s[p]-'a';
     while (p-len[np]-1 < 0 || s[p] != s[p-len[np]-1])
       np = fail[np];
-    if ((lst=nxt[np][c])) {
-      return;
-    }
+    if ((lst=nxt[np][c])) return;
     int nq_f = 0;
-    if (len[np]+2 == 1) {
-      nq_f = 2;
-    } else {
+    if (len[np]+2 == 1) nq_f = 2;
+    else {
       int tf = fail[np];
       while (p-len[tf]-1 < 0 || s[p] != s[p-len[tf]-1])
         tf = fail[tf];

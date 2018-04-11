@@ -4,13 +4,10 @@ struct SW{ // O(V^3)
 	int n,vst[MXN],del[MXN];
 	int edge[MXN][MXN],wei[MXN];
 	void init(int _n){
-		n = _n;
-		FZ(edge);
-		FZ(del);
+		n = _n; FZ(edge); FZ(del);
 	}
-	void add_edge(int u, int v, int w){
-		edge[u][v] += w;
-		edge[v][u] += w;
+	void addEdge(int u, int v, int w){
+		edge[u][v] += w; edge[v][u] += w;
 	}
 	void search(int &s, int &t){
 		FZ(vst); FZ(wei);
@@ -22,8 +19,7 @@ struct SW{ // O(V^3)
 					cur = i, mx = wei[i];
 			if (mx == -1) break;
 			vst[cur] = 1;
-			s = t;
-			t = cur;
+			s = t; t = cur;
 			for (int i=0; i<n; i++)
 				if (!vst[i] && !del[i]) wei[i] += edge[cur][i];
 		}

@@ -3,28 +3,23 @@
 struct KSP{ // 1-base
   struct nd{
     int u, v, d;
-    nd(int ui = 0, int vi = 0, int di = INF){
-      u = ui; v = vi; d = di;
-    }
+    nd(int ui = 0, int vi = 0, int di = INF)
+    { u = ui; v = vi; d = di; }
   };
   struct heap{
     nd* edge; int dep; heap* chd[4];
   };
-  static int cmp(heap* a,heap* b){
-    return a->edge->d > b->edge->d;
-  }
+  static int cmp(heap* a,heap* b)
+  { return a->edge->d > b->edge->d; }
   struct node{
     int v; LL d; heap* H; nd* E;
     node(){}
-    node(LL _d, int _v, nd* _E){
-      d =_d; v = _v; E = _E;
-    }
-    node(heap* _H, LL _d){
-      H = _H; d = _d;
-    }
-    friend bool operator<(node a, node b){
-      return a.d > b.d;
-    }
+    node(LL _d, int _v, nd* _E)
+    { d =_d; v = _v; E = _E; }
+    node(heap* _H, LL _d)
+    { H = _H; d = _d; }
+    friend bool operator<(node a, node b)
+    { return a.d > b.d; }
   };
   int n, k, s, t, dst[ N ];
   nd *nxt[ N ];
@@ -33,10 +28,8 @@ struct KSP{ // 1-base
   void init( int _n , int _k , int _s , int _t ){
     n = _n; k = _k; s = _s; t = _t;
     for( int i = 1 ; i <= n ; i ++ ){
-      g[ i ].clear();
-      rg[ i ].clear();
-      nxt[ i ] = NULL;
-      head[ i ] = NULL;
+      g[ i ].clear(); rg[ i ].clear();
+      nxt[ i ] = head[ i ] = NULL;
       dst[ i ] = -1;
     }
   }

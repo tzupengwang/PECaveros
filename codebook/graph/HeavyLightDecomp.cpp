@@ -1,8 +1,5 @@
-#define SZ(c) (int)(c).size()
-#define ALL(c) (c).begin(), (c).end()
 #define REP(i, s, e) for(int i = (s); i <= (e); i++)
 #define REPD(i, s, e) for(int i = (s); i >= (e); i--)
-typedef pair< int , int > PII;
 const int MAXN = 100010;
 const int LOG  = 19;
 struct HLD{
@@ -14,13 +11,11 @@ struct HLD{
   //  tid[ u ] : pos. of node u in the seq.
   //  tdi[ i ] : node at pos i of the seq.
   //  tl , tr[ u ] : subtree interval in the seq. of node u
-  int mom[MAXN][LOG], head[MAXN];
+  int prt[MAXN][LOG], head[MAXN];
   // head[ u ] : head of the chain contains u
   void dfssz(int u, int p){
     dep[u] = dep[p] + 1;
-    mom[u][0] = p;
-    sz[u] = 1;
-    head[u] = u;
+    prt[u][0] = p; sz[u] = 1; head[u] = u;
     for(int& v:g[u]) if(v != p){
       dep[v] = dep[u] + 1;
       dfssz(v, u);
@@ -34,7 +29,7 @@ struct HLD{
     sort(ALL(g[u]),
          [&](int a, int b){return sz[a] > sz[b];});
     bool flag = 1;
-    for(int& v:g[u]) if(v != mom[u][0]){
+    for(int& v:g[u]) if(v != prt[u][0]){
       if(flag) head[v] = head[u], flag = 0;
       dfshl(v);
       tr[u] = tr[v];
@@ -44,18 +39,16 @@ struct HLD{
     if(dep[a] > dep[b]) swap(a, b);
     int diff = dep[b] - dep[a];
     REPD(k, LOG-1, 0) if(diff & (1<<k)){
-      b = mom[b][k];
+      b = prt[b][k];
     }
     if(a == b) return a;
-    REPD(k, LOG-1, 0) if(mom[a][k] != mom[b][k]){
-      a = mom[a][k];
-      b = mom[b][k];
+    REPD(k, LOG-1, 0) if(prt[a][k] != prt[b][k]){
+      a = prt[a][k]; b = prt[b][k];
     }
-    return mom[a][0];
+    return prt[a][0];
   }
   void init( int _n ){
-    n = _n;
-    REP( i , 1 , n ) g[ i ].clear();
+    n = _n; REP( i , 1 , n ) g[ i ].clear();
   }
   void addEdge( int u , int v ){
     g[ u ].push_back( v );
@@ -66,13 +59,13 @@ struct HLD{
     ts = 0;
     dfshl(1);
     REP(k, 1, LOG-1) REP(i, 1, n)
-      mom[i][k] = mom[mom[i][k-1]][k-1];
+      prt[i][k] = prt[prt[i][k-1]][k-1];
   }
   vector< PII > getPath( int u , int v ){
     vector< PII > res;
     while( tid[ u ] < tid[ head[ v ] ] ){
       res.push_back( PII(tid[ head[ v ] ] , tid[ v ]) );
-      v = mom[ head[ v ] ][ 0 ];
+      v = prt[ head[ v ] ][ 0 ];
     }
     res.push_back( PII( tid[ u ] , tid[ v ] ) );
     reverse( ALL( res ) );

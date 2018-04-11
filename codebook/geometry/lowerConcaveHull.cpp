@@ -14,12 +14,8 @@ class Seg {
   Seg(
     LD _m,LD _c,LD _x1=-inf,LD _x2=inf,bool _flag=0)
     :m(_m),c(_c),x1(_x1),x2(_x2),flag(_flag) {}
-  LD evaly(LD x) const {
-    return m*x+c;
-  }
-  const bool operator<(LD x) const {
-    return x2-eps<x;
-  }
+  LD evaly(LD x) const { return m*x+c;}
+  const bool operator<(LD x) const{return x2-eps<x;}
   const bool operator<(const Seg &b) const {
     if(flag||b.flag) return *this<b.x1;
     return m+eps<b.m;
@@ -29,9 +25,8 @@ class LowerConcaveHull { // maintain a hull like: \__/
  public:
   set<Seg> hull;
   /* functions */
-  LD xintersection(Seg a,Seg b) {
-    return (a.c-b.c)/(b.m-a.m);
-  }
+  LD xintersection(Seg a,Seg b)
+  { return (a.c-b.c)/(b.m-a.m); }
   inline set<Seg>::iterator replace(set<Seg> &
       hull,set<Seg>::iterator it,Seg s) {
     hull.erase(it);

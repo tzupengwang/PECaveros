@@ -1,9 +1,7 @@
 struct MaxCostCirc {
   static const int MAXN = 33;
   int n , m;
-  struct Edge {
-    int v , w , c , r;
-  };
+  struct Edge { int v , w , c , r; };
   vector<Edge> g[ MAXN ];
   int dis[ MAXN ] , prv[ MAXN ] , prve[ MAXN ];
   bool vis[ MAXN ];
@@ -29,27 +27,21 @@ struct MaxCostCirc {
             if( t == n ) {
               tmp = i;
               break;
-            }
-          }
-        }
-      }
-    }
+            } } } } }
     if( tmp == -1 ) return 0;
     int cur = tmp;
     while( !vis[ cur ] ) {
       vis[ cur ] = 1;
       cur = prv[ cur ];
     }
-    int now = cur;
-    int cost = 0 , df = 100000;
+    int now = cur , cost = 0 , df = 100000;
     do{
       Edge &e = g[ prv[ now ] ][ prve[ now ] ];
       df = min( df , e.c );
       cost += e.w;
       now = prv[ now ];
     }while( now != cur );
-    ans += df*cost;
-    now = cur;
+    ans += df*cost; now = cur;
     do{
       Edge &e = g[ prv[ now ] ][ prve[ now ] ];
       Edge &re = g[ now ][ e.r ];
